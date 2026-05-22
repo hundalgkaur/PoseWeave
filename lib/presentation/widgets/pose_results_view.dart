@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:dartz/dartz.dart' hide State;
@@ -23,6 +24,7 @@ class PoseResultsView extends StatefulWidget {
     required this.frameCount,
     super.key,
     this.videoPath,
+    this.framePaths = const <String>[],
     this.onRestart,
     this.restartLabel = 'Try again',
   });
@@ -32,6 +34,10 @@ class PoseResultsView extends StatefulWidget {
 
   /// Source video, bundled into the export when present.
   final String? videoPath;
+
+  /// Extracted frame images, index-aligned with [poses]. When present, the
+  /// skeleton is drawn over the real frame instead of a black panel.
+  final List<String> framePaths;
   final VoidCallback? onRestart;
   final String restartLabel;
 
@@ -41,6 +47,43 @@ class PoseResultsView extends StatefulWidget {
 
 class _PoseResultsViewState extends State<PoseResultsView> {
   int _index = 0;
+  Timer? _player;
+
+  bool get _playing => _player != null;
+
+  /// Steps through the analyzed frames at the sample rate — the extracted
+  /// frames are the video at ~5 FPS, so this "plays" it with the overlay.
+  void _togglePlay() {
+    if (_playing) {
+      setState(() {
+        _player!.cancel();
+        _player = null;
+      });
+      return;
+    }
+    setState(() {
+      _player = Timer.periodic(const Duration(milliseconds: 200), (_) {
+        setState(() => _index = (_index + 1) % widget.poses.length);
+      });
+    });
+  }
+
+  void _seek(int i) {
+    if (_playing) _togglePlay(); // pause when the user scrubs
+    setState(() => _index = i);
+  }
+
+  @override
+  void dispose() {
+    _player?.cancel();
+    super.dispose();
+  }
+
+  String? _frameFor(int i) {
+    if (i >= widget.framePaths.length) return null;
+    final String p = widget.framePaths[i];
+    return p.isNotEmpty && File(p).existsSync() ? p : null;
+  }
 
   Future<void> _export() async {
     final ScaffoldMessengerState messenger = ScaffoldMessenger.of(context);
@@ -90,6 +133,7 @@ class _PoseResultsViewState extends State<PoseResultsView> {
     }
 
     final PoseEntity pose = widget.poses[_index];
+    final String? framePath = _frameFor(_index);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
@@ -97,17 +141,32 @@ class _PoseResultsViewState extends State<PoseResultsView> {
           aspectRatio: 3 / 4,
           child: GlassPanel(
             padding: EdgeInsets.zero,
-            child: CustomPaint(
-              painter: PoseOverlayPainter(
-                landmarks: pose.landmarks,
-                imageSize: pose.imageSize ?? const Size(1, 1),
-              ),
+            child: Stack(
+              fit: StackFit.expand,
+              children: <Widget>[
+                // The real video frame this pose was detected from. BoxFit
+                // .contain matches the painter's aspect-preserving letterbox,
+                // so the skeleton lands on the body.
+                if (framePath != null)
+                  Image.file(File(framePath), fit: BoxFit.contain),
+                CustomPaint(
+                  painter: PoseOverlayPainter(
+                    landmarks: pose.landmarks,
+                    imageSize: pose.imageSize ?? const Size(1, 1),
+                  ),
+                ),
+              ],
             ),
           ),
         ),
         const SizedBox(height: 8),
         Row(
           children: <Widget>[
+            IconButton(
+              icon: Icon(_playing ? Icons.pause : Icons.play_arrow),
+              color: AppColors.primary,
+              onPressed: widget.poses.length > 1 ? _togglePlay : null,
+            ),
             Text(
               'FRM ${_index + 1}/${widget.poses.length}',
               style: AppTheme.mono(color: AppColors.primary, fontSize: 12),
@@ -119,7 +178,7 @@ class _PoseResultsViewState extends State<PoseResultsView> {
                 divisions:
                     widget.poses.length > 1 ? widget.poses.length - 1 : null,
                 activeColor: AppColors.primaryContainer,
-                onChanged: (double v) => setState(() => _index = v.round()),
+                onChanged: (double v) => _seek(v.round()),
               ),
             ),
           ],

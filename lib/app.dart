@@ -8,6 +8,7 @@ import 'package:poseweave/presentation/pages/camera_pose_page.dart';
 import 'package:poseweave/presentation/pages/gallery_pose_page.dart';
 import 'package:poseweave/presentation/pages/home_page.dart';
 import 'package:poseweave/presentation/pages/skeleton_3d_page.dart';
+import 'package:poseweave/presentation/pages/splash_page.dart';
 
 /// Root widget: dark theme + named-route table. Each route builds its page;
 /// the page itself provides its `PoseBloc` so the bloc disposes on pop.
@@ -20,8 +21,9 @@ class PoseWeaveApp extends StatelessWidget {
       title: 'PoseWeave',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.dark,
-      initialRoute: AppRoutes.home,
+      initialRoute: AppRoutes.splash,
       routes: <String, WidgetBuilder>{
+        AppRoutes.splash: (_) => const SplashPage(),
         AppRoutes.home: (_) => const HomePage(),
         AppRoutes.camera: (_) => const CameraPosePage(),
         AppRoutes.gallery: (_) => const GalleryPosePage(),

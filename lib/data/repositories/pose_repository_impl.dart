@@ -157,6 +157,7 @@ class PoseRepositoryImpl implements PoseRepository {
           currentFrame: p.currentFrame,
           totalFrames: p.totalFrames,
           pose: entity,
+          framePath: p.framePath,
         );
       },
     );

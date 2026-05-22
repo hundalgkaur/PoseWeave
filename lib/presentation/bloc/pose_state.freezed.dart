@@ -40,6 +40,7 @@ mixin _$PoseState {
       List<PoseEntity> poses,
       int frameCount,
       String? videoPath,
+      List<String> framePaths,
     )
     videoComplete,
     required TResult Function(String message, bool isRecoverable) error,
@@ -63,6 +64,7 @@ mixin _$PoseState {
       List<PoseEntity> poses,
       int frameCount,
       String? videoPath,
+      List<String> framePaths,
     )?
     videoComplete,
     TResult? Function(String message, bool isRecoverable)? error,
@@ -82,7 +84,12 @@ mixin _$PoseState {
       PoseEntity? currentPose,
     )?
     videoProcessing,
-    TResult Function(List<PoseEntity> poses, int frameCount, String? videoPath)?
+    TResult Function(
+      List<PoseEntity> poses,
+      int frameCount,
+      String? videoPath,
+      List<String> framePaths,
+    )?
     videoComplete,
     TResult Function(String message, bool isRecoverable)? error,
     required TResult orElse(),
@@ -210,6 +217,7 @@ class _$PoseInitialImpl implements PoseInitial {
       List<PoseEntity> poses,
       int frameCount,
       String? videoPath,
+      List<String> framePaths,
     )
     videoComplete,
     required TResult Function(String message, bool isRecoverable) error,
@@ -237,6 +245,7 @@ class _$PoseInitialImpl implements PoseInitial {
       List<PoseEntity> poses,
       int frameCount,
       String? videoPath,
+      List<String> framePaths,
     )?
     videoComplete,
     TResult? Function(String message, bool isRecoverable)? error,
@@ -260,7 +269,12 @@ class _$PoseInitialImpl implements PoseInitial {
       PoseEntity? currentPose,
     )?
     videoProcessing,
-    TResult Function(List<PoseEntity> poses, int frameCount, String? videoPath)?
+    TResult Function(
+      List<PoseEntity> poses,
+      int frameCount,
+      String? videoPath,
+      List<String> framePaths,
+    )?
     videoComplete,
     TResult Function(String message, bool isRecoverable)? error,
     required TResult orElse(),
@@ -392,6 +406,7 @@ class _$PoseLoadingImpl implements PoseLoading {
       List<PoseEntity> poses,
       int frameCount,
       String? videoPath,
+      List<String> framePaths,
     )
     videoComplete,
     required TResult Function(String message, bool isRecoverable) error,
@@ -419,6 +434,7 @@ class _$PoseLoadingImpl implements PoseLoading {
       List<PoseEntity> poses,
       int frameCount,
       String? videoPath,
+      List<String> framePaths,
     )?
     videoComplete,
     TResult? Function(String message, bool isRecoverable)? error,
@@ -442,7 +458,12 @@ class _$PoseLoadingImpl implements PoseLoading {
       PoseEntity? currentPose,
     )?
     videoProcessing,
-    TResult Function(List<PoseEntity> poses, int frameCount, String? videoPath)?
+    TResult Function(
+      List<PoseEntity> poses,
+      int frameCount,
+      String? videoPath,
+      List<String> framePaths,
+    )?
     videoComplete,
     TResult Function(String message, bool isRecoverable)? error,
     required TResult orElse(),
@@ -574,6 +595,7 @@ class _$PoseNoPermissionImpl implements PoseNoPermission {
       List<PoseEntity> poses,
       int frameCount,
       String? videoPath,
+      List<String> framePaths,
     )
     videoComplete,
     required TResult Function(String message, bool isRecoverable) error,
@@ -601,6 +623,7 @@ class _$PoseNoPermissionImpl implements PoseNoPermission {
       List<PoseEntity> poses,
       int frameCount,
       String? videoPath,
+      List<String> framePaths,
     )?
     videoComplete,
     TResult? Function(String message, bool isRecoverable)? error,
@@ -624,7 +647,12 @@ class _$PoseNoPermissionImpl implements PoseNoPermission {
       PoseEntity? currentPose,
     )?
     videoProcessing,
-    TResult Function(List<PoseEntity> poses, int frameCount, String? videoPath)?
+    TResult Function(
+      List<PoseEntity> poses,
+      int frameCount,
+      String? videoPath,
+      List<String> framePaths,
+    )?
     videoComplete,
     TResult Function(String message, bool isRecoverable)? error,
     required TResult orElse(),
@@ -756,6 +784,7 @@ class _$PoseStreamingImpl implements PoseStreaming {
       List<PoseEntity> poses,
       int frameCount,
       String? videoPath,
+      List<String> framePaths,
     )
     videoComplete,
     required TResult Function(String message, bool isRecoverable) error,
@@ -783,6 +812,7 @@ class _$PoseStreamingImpl implements PoseStreaming {
       List<PoseEntity> poses,
       int frameCount,
       String? videoPath,
+      List<String> framePaths,
     )?
     videoComplete,
     TResult? Function(String message, bool isRecoverable)? error,
@@ -806,7 +836,12 @@ class _$PoseStreamingImpl implements PoseStreaming {
       PoseEntity? currentPose,
     )?
     videoProcessing,
-    TResult Function(List<PoseEntity> poses, int frameCount, String? videoPath)?
+    TResult Function(
+      List<PoseEntity> poses,
+      int frameCount,
+      String? videoPath,
+      List<String> framePaths,
+    )?
     videoComplete,
     TResult Function(String message, bool isRecoverable)? error,
     required TResult orElse(),
@@ -991,6 +1026,7 @@ class _$PoseActiveImpl implements PoseActive {
       List<PoseEntity> poses,
       int frameCount,
       String? videoPath,
+      List<String> framePaths,
     )
     videoComplete,
     required TResult Function(String message, bool isRecoverable) error,
@@ -1018,6 +1054,7 @@ class _$PoseActiveImpl implements PoseActive {
       List<PoseEntity> poses,
       int frameCount,
       String? videoPath,
+      List<String> framePaths,
     )?
     videoComplete,
     TResult? Function(String message, bool isRecoverable)? error,
@@ -1041,7 +1078,12 @@ class _$PoseActiveImpl implements PoseActive {
       PoseEntity? currentPose,
     )?
     videoProcessing,
-    TResult Function(List<PoseEntity> poses, int frameCount, String? videoPath)?
+    TResult Function(
+      List<PoseEntity> poses,
+      int frameCount,
+      String? videoPath,
+      List<String> framePaths,
+    )?
     videoComplete,
     TResult Function(String message, bool isRecoverable)? error,
     required TResult orElse(),
@@ -1187,6 +1229,7 @@ class _$PoseRecordingVideoImpl implements PoseRecordingVideo {
       List<PoseEntity> poses,
       int frameCount,
       String? videoPath,
+      List<String> framePaths,
     )
     videoComplete,
     required TResult Function(String message, bool isRecoverable) error,
@@ -1214,6 +1257,7 @@ class _$PoseRecordingVideoImpl implements PoseRecordingVideo {
       List<PoseEntity> poses,
       int frameCount,
       String? videoPath,
+      List<String> framePaths,
     )?
     videoComplete,
     TResult? Function(String message, bool isRecoverable)? error,
@@ -1237,7 +1281,12 @@ class _$PoseRecordingVideoImpl implements PoseRecordingVideo {
       PoseEntity? currentPose,
     )?
     videoProcessing,
-    TResult Function(List<PoseEntity> poses, int frameCount, String? videoPath)?
+    TResult Function(
+      List<PoseEntity> poses,
+      int frameCount,
+      String? videoPath,
+      List<String> framePaths,
+    )?
     videoComplete,
     TResult Function(String message, bool isRecoverable)? error,
     required TResult orElse(),
@@ -1428,6 +1477,7 @@ class _$PoseVideoProcessingImpl implements PoseVideoProcessing {
       List<PoseEntity> poses,
       int frameCount,
       String? videoPath,
+      List<String> framePaths,
     )
     videoComplete,
     required TResult Function(String message, bool isRecoverable) error,
@@ -1455,6 +1505,7 @@ class _$PoseVideoProcessingImpl implements PoseVideoProcessing {
       List<PoseEntity> poses,
       int frameCount,
       String? videoPath,
+      List<String> framePaths,
     )?
     videoComplete,
     TResult? Function(String message, bool isRecoverable)? error,
@@ -1478,7 +1529,12 @@ class _$PoseVideoProcessingImpl implements PoseVideoProcessing {
       PoseEntity? currentPose,
     )?
     videoProcessing,
-    TResult Function(List<PoseEntity> poses, int frameCount, String? videoPath)?
+    TResult Function(
+      List<PoseEntity> poses,
+      int frameCount,
+      String? videoPath,
+      List<String> framePaths,
+    )?
     videoComplete,
     TResult Function(String message, bool isRecoverable)? error,
     required TResult orElse(),
@@ -1567,7 +1623,12 @@ abstract class _$$PoseVideoCompleteImplCopyWith<$Res> {
     $Res Function(_$PoseVideoCompleteImpl) then,
   ) = __$$PoseVideoCompleteImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<PoseEntity> poses, int frameCount, String? videoPath});
+  $Res call({
+    List<PoseEntity> poses,
+    int frameCount,
+    String? videoPath,
+    List<String> framePaths,
+  });
 }
 
 /// @nodoc
@@ -1587,6 +1648,7 @@ class __$$PoseVideoCompleteImplCopyWithImpl<$Res>
     Object? poses = null,
     Object? frameCount = null,
     Object? videoPath = freezed,
+    Object? framePaths = null,
   }) {
     return _then(
       _$PoseVideoCompleteImpl(
@@ -1605,6 +1667,11 @@ class __$$PoseVideoCompleteImplCopyWithImpl<$Res>
                 ? _value.videoPath
                 : videoPath // ignore: cast_nullable_to_non_nullable
                     as String?,
+        framePaths:
+            null == framePaths
+                ? _value._framePaths
+                : framePaths // ignore: cast_nullable_to_non_nullable
+                    as List<String>,
       ),
     );
   }
@@ -1617,7 +1684,9 @@ class _$PoseVideoCompleteImpl implements PoseVideoComplete {
     required final List<PoseEntity> poses,
     required this.frameCount,
     this.videoPath,
-  }) : _poses = poses;
+    final List<String> framePaths = const <String>[],
+  }) : _poses = poses,
+       _framePaths = framePaths;
 
   final List<PoseEntity> _poses;
   @override
@@ -1631,10 +1700,18 @@ class _$PoseVideoCompleteImpl implements PoseVideoComplete {
   final int frameCount;
   @override
   final String? videoPath;
+  final List<String> _framePaths;
+  @override
+  @JsonKey()
+  List<String> get framePaths {
+    if (_framePaths is EqualUnmodifiableListView) return _framePaths;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_framePaths);
+  }
 
   @override
   String toString() {
-    return 'PoseState.videoComplete(poses: $poses, frameCount: $frameCount, videoPath: $videoPath)';
+    return 'PoseState.videoComplete(poses: $poses, frameCount: $frameCount, videoPath: $videoPath, framePaths: $framePaths)';
   }
 
   @override
@@ -1646,7 +1723,11 @@ class _$PoseVideoCompleteImpl implements PoseVideoComplete {
             (identical(other.frameCount, frameCount) ||
                 other.frameCount == frameCount) &&
             (identical(other.videoPath, videoPath) ||
-                other.videoPath == videoPath));
+                other.videoPath == videoPath) &&
+            const DeepCollectionEquality().equals(
+              other._framePaths,
+              _framePaths,
+            ));
   }
 
   @override
@@ -1655,6 +1736,7 @@ class _$PoseVideoCompleteImpl implements PoseVideoComplete {
     const DeepCollectionEquality().hash(_poses),
     frameCount,
     videoPath,
+    const DeepCollectionEquality().hash(_framePaths),
   );
 
   /// Create a copy of PoseState
@@ -1692,11 +1774,12 @@ class _$PoseVideoCompleteImpl implements PoseVideoComplete {
       List<PoseEntity> poses,
       int frameCount,
       String? videoPath,
+      List<String> framePaths,
     )
     videoComplete,
     required TResult Function(String message, bool isRecoverable) error,
   }) {
-    return videoComplete(poses, frameCount, videoPath);
+    return videoComplete(poses, frameCount, videoPath, framePaths);
   }
 
   @override
@@ -1719,11 +1802,12 @@ class _$PoseVideoCompleteImpl implements PoseVideoComplete {
       List<PoseEntity> poses,
       int frameCount,
       String? videoPath,
+      List<String> framePaths,
     )?
     videoComplete,
     TResult? Function(String message, bool isRecoverable)? error,
   }) {
-    return videoComplete?.call(poses, frameCount, videoPath);
+    return videoComplete?.call(poses, frameCount, videoPath, framePaths);
   }
 
   @override
@@ -1742,13 +1826,18 @@ class _$PoseVideoCompleteImpl implements PoseVideoComplete {
       PoseEntity? currentPose,
     )?
     videoProcessing,
-    TResult Function(List<PoseEntity> poses, int frameCount, String? videoPath)?
+    TResult Function(
+      List<PoseEntity> poses,
+      int frameCount,
+      String? videoPath,
+      List<String> framePaths,
+    )?
     videoComplete,
     TResult Function(String message, bool isRecoverable)? error,
     required TResult orElse(),
   }) {
     if (videoComplete != null) {
-      return videoComplete(poses, frameCount, videoPath);
+      return videoComplete(poses, frameCount, videoPath, framePaths);
     }
     return orElse();
   }
@@ -1811,11 +1900,13 @@ abstract class PoseVideoComplete implements PoseState {
     required final List<PoseEntity> poses,
     required final int frameCount,
     final String? videoPath,
+    final List<String> framePaths,
   }) = _$PoseVideoCompleteImpl;
 
   List<PoseEntity> get poses;
   int get frameCount;
   String? get videoPath;
+  List<String> get framePaths;
 
   /// Create a copy of PoseState
   /// with the given fields replaced by the non-null parameter values.
@@ -1925,6 +2016,7 @@ class _$PoseErrorImpl implements PoseError {
       List<PoseEntity> poses,
       int frameCount,
       String? videoPath,
+      List<String> framePaths,
     )
     videoComplete,
     required TResult Function(String message, bool isRecoverable) error,
@@ -1952,6 +2044,7 @@ class _$PoseErrorImpl implements PoseError {
       List<PoseEntity> poses,
       int frameCount,
       String? videoPath,
+      List<String> framePaths,
     )?
     videoComplete,
     TResult? Function(String message, bool isRecoverable)? error,
@@ -1975,7 +2068,12 @@ class _$PoseErrorImpl implements PoseError {
       PoseEntity? currentPose,
     )?
     videoProcessing,
-    TResult Function(List<PoseEntity> poses, int frameCount, String? videoPath)?
+    TResult Function(
+      List<PoseEntity> poses,
+      int frameCount,
+      String? videoPath,
+      List<String> framePaths,
+    )?
     videoComplete,
     TResult Function(String message, bool isRecoverable)? error,
     required TResult orElse(),

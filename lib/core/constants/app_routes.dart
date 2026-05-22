@@ -3,7 +3,8 @@
 class AppRoutes {
   const AppRoutes._();
 
-  static const String home = '/';
+  static const String splash = '/';
+  static const String home = '/home';
   static const String camera = '/camera';
   static const String gallery = '/gallery';
   static const String skeleton3d = '/skeleton3d';

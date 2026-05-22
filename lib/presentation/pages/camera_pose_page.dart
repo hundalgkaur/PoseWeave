@@ -427,6 +427,7 @@ class _RecordingResults extends StatelessWidget {
                 poses: state.poses,
                 frameCount: state.frameCount,
                 videoPath: state.videoPath,
+                framePaths: state.framePaths,
                 restartLabel: 'Back to live camera',
                 onRestart: () =>
                     context.read<PoseBloc>().add(const PoseEvent.startDetection()),

@@ -19,11 +19,16 @@ class VideoProcessingProgress {
     required this.currentFrame,
     required this.totalFrames,
     this.pose,
+    this.framePath,
   });
 
   final int currentFrame;
   final int totalFrames;
   final PoseModel? pose;
+
+  /// Path to the extracted JPEG for this frame (for overlaying the skeleton on
+  /// the real image in results).
+  final String? framePath;
 
   double get progress => totalFrames == 0 ? 0 : currentFrame / totalFrames;
   bool get isComplete => currentFrame >= totalFrames;
@@ -76,12 +81,13 @@ class VideoFrameDataSourceImpl implements VideoFrameDataSource {
 
       for (int i = 0; i < totalFrames; i++) {
         final int timeMs = i * _kSampleInterval.inMilliseconds;
-        final PoseModel? pose =
+        final ({PoseModel? pose, String? framePath}) frame =
             await _detectAtTime(detector, filePath, timeMs, tempDir.path, i);
         yield VideoProcessingProgress(
           currentFrame: i + 1,
           totalFrames: totalFrames,
-          pose: pose,
+          pose: frame.pose,
+          framePath: frame.framePath,
         );
       }
     } catch (e) {
@@ -103,8 +109,9 @@ class VideoFrameDataSourceImpl implements VideoFrameDataSource {
   }
 
   /// Extracts a JPEG at [timeMs], decodes its size, and detects a pose.
-  /// Returns null if extraction or detection yields nothing (frame skipped).
-  Future<PoseModel?> _detectAtTime(
+  /// Returns the (nullable) pose and the frame's image path so the UI can draw
+  /// the skeleton over the real frame.
+  Future<({PoseModel? pose, String? framePath})> _detectAtTime(
     PoseDetector detector,
     String videoPath,
     int timeMs,
@@ -119,18 +126,21 @@ class VideoFrameDataSourceImpl implements VideoFrameDataSource {
       timeMs: timeMs,
       quality: 75,
     );
-    if (framePath == null) return null;
+    if (framePath == null) return (pose: null, framePath: null);
 
     final File frameFile = File(framePath);
     final ui.Size size = await _decodeSize(await frameFile.readAsBytes());
     final List<Pose> poses =
         await detector.processImage(InputImage.fromFilePath(framePath));
-    if (poses.isEmpty) return null;
+    if (poses.isEmpty) return (pose: null, framePath: framePath);
 
-    return PoseModel.fromMLKitPose(
-      poses.first,
-      imageSize: size,
-      source: PoseSource.videoFile,
+    return (
+      pose: PoseModel.fromMLKitPose(
+        poses.first,
+        imageSize: size,
+        source: PoseSource.videoFile,
+      ),
+      framePath: framePath,
     );
   }
 

@@ -41,6 +41,7 @@ class PoseState with _$PoseState {
     required List<PoseEntity> poses,
     required int frameCount,
     String? videoPath,
+    @Default(<String>[]) List<String> framePaths,
   }) = PoseVideoComplete;
 
   /// Something failed. [isRecoverable] gates whether the UI offers a retry.

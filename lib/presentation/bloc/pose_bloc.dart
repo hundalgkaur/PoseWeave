@@ -202,10 +202,14 @@ class PoseBloc extends Bloc<PoseEvent, PoseState> {
   Future<void> _analyze(String path, Emitter<PoseState> emit) async {
     emit(const PoseState.videoProcessing(progress: 0, framesProcessed: 0));
     final List<PoseEntity> poses = <PoseEntity>[];
+    final List<String> framePaths = <String>[];
     try {
       await for (final VideoAnalysisProgress p
           in _repository.analyzeVideo(path)) {
-        if (p.pose != null) poses.add(p.pose!);
+        if (p.pose != null) {
+          poses.add(p.pose!);
+          framePaths.add(p.framePath ?? ''); // stays index-aligned with poses
+        }
         emit(
           PoseState.videoProcessing(
             progress: p.progress,
@@ -214,7 +218,14 @@ class PoseBloc extends Bloc<PoseEvent, PoseState> {
           ),
         );
       }
-      emit(PoseState.videoComplete(poses: poses, frameCount: poses.length));
+      emit(
+        PoseState.videoComplete(
+          poses: poses,
+          frameCount: poses.length,
+          videoPath: path,
+          framePaths: framePaths,
+        ),
+      );
     } catch (e) {
       emit(PoseState.error(message: 'Video analysis failed: $e', isRecoverable: true));
     }

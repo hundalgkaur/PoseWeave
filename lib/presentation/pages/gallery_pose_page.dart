@@ -49,6 +49,7 @@ class _GalleryView extends StatelessWidget {
                   poses: state.poses,
                   frameCount: state.frameCount,
                   videoPath: state.videoPath,
+                  framePaths: state.framePaths,
                   restartLabel: 'Pick another video',
                   onRestart: () => context
                       .read<PoseBloc>()
