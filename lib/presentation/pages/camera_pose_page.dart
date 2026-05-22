@@ -1,5 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:poseweave/core/constants/app_colors.dart';
 import 'package:poseweave/core/constants/app_theme.dart';
@@ -219,11 +220,14 @@ class _Controls extends StatelessWidget {
             // Detection is disabled while recording (mutually exclusive).
             onPressed: recording
                 ? null
-                : () => bloc.add(
+                : () {
+                    HapticFeedback.mediumImpact();
+                    bloc.add(
                       detecting
                           ? const PoseEvent.stopDetection()
                           : const PoseEvent.startDetection(),
-                    ),
+                    );
+                  },
             icon: Icon(detecting ? Icons.stop : Icons.play_arrow),
             label: Text(
               detecting ? 'STOP DETECTION' : 'START DETECTION',
@@ -249,11 +253,14 @@ class _Controls extends StatelessWidget {
                 label: recording ? 'STOP REC' : 'RECORD',
                 color: recording ? AppColors.error : null,
                 onTap: canRecord
-                    ? () => bloc.add(
+                    ? () {
+                        HapticFeedback.mediumImpact();
+                        bloc.add(
                           recording
                               ? const PoseEvent.stopVideoRecording()
                               : const PoseEvent.startVideoRecording(),
-                        )
+                        );
+                      }
                     : null,
               ),
             ],
@@ -264,8 +271,25 @@ class _Controls extends StatelessWidget {
   }
 }
 
-class _RecBadge extends StatelessWidget {
+class _RecBadge extends StatefulWidget {
   const _RecBadge();
+
+  @override
+  State<_RecBadge> createState() => _RecBadgeState();
+}
+
+class _RecBadgeState extends State<_RecBadge>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _pulse = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 800),
+  )..repeat(reverse: true);
+
+  @override
+  void dispose() {
+    _pulse.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -279,12 +303,15 @@ class _RecBadge extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Container(
-            width: 8,
-            height: 8,
-            decoration: const BoxDecoration(
-              color: AppColors.error,
-              shape: BoxShape.circle,
+          FadeTransition(
+            opacity: Tween<double>(begin: 0.35, end: 1).animate(_pulse),
+            child: Container(
+              width: 8,
+              height: 8,
+              decoration: const BoxDecoration(
+                color: AppColors.error,
+                shape: BoxShape.circle,
+              ),
             ),
           ),
           const SizedBox(width: 8),

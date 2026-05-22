@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:poseweave/core/constants/app_colors.dart';
 import 'package:poseweave/presentation/widgets/glass_panel.dart';
 
@@ -31,7 +32,12 @@ class ModeSelectorCard extends StatelessWidget {
     return Opacity(
       opacity: enabled ? 1.0 : 0.5,
       child: GestureDetector(
-        onTap: enabled ? onTap : null,
+        onTap: enabled && onTap != null
+            ? () {
+                HapticFeedback.selectionClick();
+                onTap!.call();
+              }
+            : null,
         child: GlassPanel(
           padding: const EdgeInsets.all(20),
           borderColor: active
