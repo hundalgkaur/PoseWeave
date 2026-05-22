@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PoseWeave - Live Camera Pose Detection</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-variant": "#2e3638",
+                        "on-primary": "#00363d",
+                        "error-container": "#93000a",
+                        "on-primary-fixed": "#001f24",
+                        "on-error-container": "#ffdad6",
+                        "on-tertiary": "#3e2e00",
+                        "surface-container-low": "#151d1e",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "tertiary-container": "#fec931",
+                        "tertiary-fixed-dim": "#f3bf26",
+                        "primary": "#c3f5ff",
+                        "on-surface-variant": "#bac9cc",
+                        "secondary-fixed": "#e3e2e2",
+                        "inverse-on-surface": "#2a3233",
+                        "surface-container-lowest": "#080f11",
+                        "surface": "#0d1516",
+                        "error": "#ffb4ab",
+                        "surface-container-high": "#242b2d",
+                        "on-tertiary-container": "#6f5500",
+                        "surface-tint": "#00daf3",
+                        "tertiary-fixed": "#ffdf96",
+                        "outline": "#849396",
+                        "on-primary-fixed-variant": "#004f58",
+                        "on-secondary-fixed-variant": "#464747",
+                        "inverse-primary": "#006875",
+                        "inverse-surface": "#dce4e5",
+                        "on-secondary": "#2f3131",
+                        "on-error": "#690005",
+                        "on-tertiary-fixed-variant": "#594400",
+                        "primary-fixed-dim": "#00daf3",
+                        "on-surface": "#dce4e5",
+                        "background": "#0d1516",
+                        "tertiary": "#ffeac0",
+                        "on-primary-container": "#00626e",
+                        "outline-variant": "#3b494c",
+                        "on-background": "#dce4e5",
+                        "surface-container": "#192122",
+                        "secondary-container": "#484949",
+                        "surface-bright": "#333a3c",
+                        "on-secondary-container": "#b8b8b8",
+                        "secondary": "#c7c6c6",
+                        "primary-container": "#00e5ff",
+                        "surface-dim": "#0d1516",
+                        "secondary-fixed-dim": "#c7c6c6",
+                        "on-tertiary-fixed": "#251a00",
+                        "primary-fixed": "#9cf0ff",
+                        "surface-container-highest": "#2e3638"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-desktop": "40px",
+                        "unit": "4px",
+                        "margin-mobile": "20px",
+                        "container-max": "1200px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "metric-sm": ["JetBrains Mono"],
+                        "display-lg": ["Inter"],
+                        "headline-md-mobile": ["Inter"],
+                        "metric-xl": ["JetBrains Mono"],
+                        "body-md": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "label-caps": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "metric-sm": ["14px", { "lineHeight": "1.0", "fontWeight": "500" }],
+                        "display-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "headline-md-mobile": ["20px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "metric-xl": ["32px", { "lineHeight": "1.0", "letterSpacing": "-0.05em", "fontWeight": "500" }],
+                        "body-md": ["16px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "label-caps": ["12px", { "lineHeight": "1.0", "letterSpacing": "0.1em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .glass-panel {
+            background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 100%);
+            backdrop-filter: blur(12px);
+            border: 1px solid #1E1E1E;
+        }
+        .neon-glow {
+            box-shadow: 0 0 15px rgba(0, 229, 255, 0.4);
+        }
+        .skeleton-dot {
+            box-shadow: 0 0 8px rgba(255,255,255,0.8);
+        }
+        .wireframe-line {
+            transform-origin: 0 50%;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background h-screen w-full overflow-hidden flex flex-col relative font-body-md select-none">
+<!-- Camera Background Feed -->
+<div class="absolute inset-0 z-0">
+<img alt="Live Camera Feed" class="w-full h-full object-cover opacity-60" data-alt="A low-angle view of an athlete performing a dynamic fitness movement in a dark, high-end gym environment. The scene is illuminated by dramatic, high-contrast spotlighting, creating deep obsidian shadows and crisp highlights. The overall aesthetic is gritty, cinematic, and slightly futuristic, perfectly suited as a background for a biometric tracking application. The tone is intense, focused, and professional." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQxGnxBvEebSHRiKW2jIcy8YAC-b-wV3govixvWcY70ketoWEDWeVskVmGcB-HUsk71HOp48c3ofQVjEc9GBpFsZ1POojw4qm8uSuL0J8-amYtjjcdccOFPh4dkiBHqJpufMPxuKhk9UTAZRox0Qx_OlmZS7pPF1O4KvPOdBzCDLyNxfIFygzZQMWE68isIys2ihwkqZ2TOLBEhyQ7z39yiCl94LCJDb_BzO4vNAelaao_DnDps4lVRLqbe-7SfuLXPQA1F3wr51E"/>
+<!-- Grid Overlay -->
+<div class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none"></div>
+<!-- HUD Corners -->
+<div class="absolute top-8 left-8 w-12 h-12 border-t-2 border-l-2 border-primary/50 pointer-events-none"></div>
+<div class="absolute top-8 right-8 w-12 h-12 border-t-2 border-r-2 border-primary/50 pointer-events-none"></div>
+<div class="absolute bottom-32 left-8 w-12 h-12 border-b-2 border-l-2 border-primary/50 pointer-events-none"></div>
+<div class="absolute bottom-32 right-8 w-12 h-12 border-b-2 border-r-2 border-primary/50 pointer-events-none"></div>
+</div>
+<!-- TopAppBar -->
+<header class="bg-surface/10 dark:bg-surface/10 backdrop-blur-md border-b border-outline-variant/30 flex justify-between items-center px-margin-mobile md:px-margin-desktop py-4 w-full z-20 absolute docked full-width top-0">
+<div class="flex items-center gap-4">
+<button class="text-primary-fixed-dim hover:text-primary transition-colors hover:scale-95 duration-150 p-2">
+<span class="material-symbols-outlined text-2xl">menu</span>
+</button>
+<h1 class="font-headline-md-mobile md:font-headline-md text-headline-md-mobile md:text-headline-md font-bold text-primary tracking-tight">PoseWeave</h1>
+</div>
+<!-- Confidence Status -->
+<div class="flex items-center gap-3 bg-surface-container/50 glass-panel rounded-full px-4 py-1.5 border border-outline-variant/30">
+<div class="flex flex-col items-end">
+<span class="font-label-caps text-label-caps text-on-surface-variant">CONFIDENCE</span>
+<span class="font-metric-sm text-metric-sm text-primary">92%</span>
+</div>
+<!-- Progress Ring -->
+<div class="relative w-8 h-8">
+<svg class="w-8 h-8 transform -rotate-90" viewbox="0 0 36 36">
+<circle class="stroke-surface-variant" cx="18" cy="18" fill="none" r="16" stroke-width="3"></circle>
+<circle class="stroke-primary" cx="18" cy="18" fill="none" r="16" stroke-dasharray="100" stroke-dashoffset="8" stroke-linecap="round" stroke-width="3"></circle>
+</svg>
+</div>
+</div>
+</header>
+<!-- Center Canvas Overlay (Wireframe) -->
+<main class="flex-1 relative z-10 w-full h-full flex items-center justify-center mt-20 mb-24 pointer-events-none">
+<!-- Simulated 2D Skeleton -->
+<div class="relative w-[300px] h-[500px] flex items-center justify-center">
+<!-- Torso (Green) -->
+<div class="absolute top-[20%] left-[50%] w-0.5 h-[150px] bg-green-500 transform -translate-x-1/2 shadow-[0_0_8px_rgba(34,197,94,0.6)]"></div>
+<!-- Shoulders -->
+<div class="absolute top-[20%] left-[30%] w-[120px] h-0.5 bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)]"></div>
+<!-- Hips -->
+<div class="absolute top-[50%] left-[35%] w-[90px] h-0.5 bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)]"></div>
+<!-- Left Arm (Orange) -->
+<div class="absolute top-[20%] left-[30%] w-[80px] h-0.5 bg-orange-500 wireframe-line rotate-[110deg] shadow-[0_0_8px_rgba(249,115,22,0.6)]"></div>
+<div class="absolute top-[34%] left-[21%] w-[70px] h-0.5 bg-orange-500 wireframe-line rotate-[70deg] shadow-[0_0_8px_rgba(249,115,22,0.6)]"></div>
+<!-- Right Arm (Purple) -->
+<div class="absolute top-[20%] right-[30%] w-[80px] h-0.5 bg-purple-500 wireframe-line origin-right -rotate-[110deg] shadow-[0_0_8px_rgba(168,85,247,0.6)]"></div>
+<div class="absolute top-[34%] right-[21%] w-[70px] h-0.5 bg-purple-500 wireframe-line origin-right -rotate-[70deg] shadow-[0_0_8px_rgba(168,85,247,0.6)]"></div>
+<!-- Left Leg (Red) -->
+<div class="absolute top-[50%] left-[35%] w-[100px] h-0.5 bg-red-500 wireframe-line rotate-[80deg] shadow-[0_0_8px_rgba(239,68,68,0.6)]"></div>
+<div class="absolute top-[69%] left-[29%] w-[90px] h-0.5 bg-red-500 wireframe-line rotate-[95deg] shadow-[0_0_8px_rgba(239,68,68,0.6)]"></div>
+<!-- Right Leg (Blue) -->
+<div class="absolute top-[50%] right-[35%] w-[100px] h-0.5 bg-blue-500 wireframe-line origin-right -rotate-[80deg] shadow-[0_0_8px_rgba(59,130,246,0.6)]"></div>
+<div class="absolute top-[69%] right-[29%] w-[90px] h-0.5 bg-blue-500 wireframe-line origin-right -rotate-[95deg] shadow-[0_0_8px_rgba(59,130,246,0.6)]"></div>
+<!-- Joints (Dots) -->
+<!-- Head -->
+<div class="absolute top-[10%] left-[50%] w-4 h-4 bg-white rounded-full transform -translate-x-1/2 skeleton-dot"></div>
+<!-- Shoulders -->
+<div class="absolute top-[19%] left-[29%] w-3 h-3 bg-white rounded-full skeleton-dot"></div>
+<div class="absolute top-[19%] right-[29%] w-3 h-3 bg-white rounded-full skeleton-dot"></div>
+<!-- Elbows -->
+<div class="absolute top-[33%] left-[20%] w-2 h-2 bg-white rounded-full skeleton-dot"></div>
+<div class="absolute top-[33%] right-[20%] w-2 h-2 bg-white rounded-full skeleton-dot"></div>
+<!-- Wrists -->
+<div class="absolute top-[47%] left-[27%] w-2 h-2 bg-white rounded-full skeleton-dot"></div>
+<div class="absolute top-[47%] right-[27%] w-2 h-2 bg-white rounded-full skeleton-dot"></div>
+<!-- Hips -->
+<div class="absolute top-[49%] left-[34%] w-3 h-3 bg-white rounded-full skeleton-dot"></div>
+<div class="absolute top-[49%] right-[34%] w-3 h-3 bg-white rounded-full skeleton-dot"></div>
+<!-- Knees -->
+<div class="absolute top-[68%] left-[28%] w-2 h-2 bg-white rounded-full skeleton-dot"></div>
+<div class="absolute top-[68%] right-[28%] w-2 h-2 bg-white rounded-full skeleton-dot"></div>
+<!-- Ankles -->
+<div class="absolute top-[86%] left-[26%] w-2 h-2 bg-white rounded-full skeleton-dot"></div>
+<div class="absolute top-[86%] right-[26%] w-2 h-2 bg-white rounded-full skeleton-dot"></div>
+</div>
+</main>
+<!-- Right Edge Vertical Legend -->
+<div class="absolute right-4 top-1/2 transform -translate-y-1/2 flex flex-col gap-4 p-2 glass-panel rounded-full z-20 border border-outline-variant/30">
+<div class="w-3 h-3 rounded-full bg-green-500 shadow-[0_0_6px_rgba(34,197,94,0.8)]" title="Torso"></div>
+<div class="w-3 h-3 rounded-full bg-orange-500 shadow-[0_0_6px_rgba(249,115,22,0.8)]" title="Left Arm"></div>
+<div class="w-3 h-3 rounded-full bg-purple-500 shadow-[0_0_6px_rgba(168,85,247,0.8)]" title="Right Arm"></div>
+<div class="w-3 h-3 rounded-full bg-red-500 shadow-[0_0_6px_rgba(239,68,68,0.8)]" title="Left Leg"></div>
+<div class="w-3 h-3 rounded-full bg-blue-500 shadow-[0_0_6px_rgba(59,130,246,0.8)]" title="Right Leg"></div>
+</div>
+<!-- Floating Start Detection Button -->
+<div class="absolute bottom-28 left-1/2 transform -translate-x-1/2 z-30">
+<button class="bg-primary text-on-primary-fixed px-8 py-3 rounded-full font-label-caps text-label-caps tracking-wider flex items-center gap-2 hover:bg-primary-fixed transition-colors neon-glow shadow-lg active:scale-95 duration-150">
+<span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+            Start Detection
+        </button>
+</div>
+<!-- Bottom Dock -->
+<div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-20 flex items-center gap-8 glass-panel px-8 py-3 rounded-3xl border border-outline-variant/30 shadow-2xl">
+<!-- Switch Camera -->
+<button class="text-on-surface-variant hover:text-primary transition-colors p-2 flex flex-col items-center gap-1 active:scale-90 duration-150">
+<span class="material-symbols-outlined text-2xl">cameraswitch</span>
+<span class="font-label-caps text-[10px] opacity-70">FLIP</span>
+</button>
+<!-- Record Button -->
+<button class="relative w-14 h-14 rounded-full border-2 border-outline-variant/50 flex items-center justify-center hover:border-error transition-colors group active:scale-95 duration-150">
+<div class="w-10 h-10 rounded-full bg-error shadow-[0_0_12px_rgba(255,180,171,0.5)] group-hover:bg-error-container transition-colors"></div>
+</button>
+<!-- Settings -->
+<button class="text-on-surface-variant hover:text-primary transition-colors p-2 flex flex-col items-center gap-1 active:scale-90 duration-150">
+<span class="material-symbols-outlined text-2xl">tune</span>
+<span class="font-label-caps text-[10px] opacity-70">TUNE</span>
+</button>
+</div>
+<!-- BottomNavBar (Hidden on desktop, present for Semantic Shell Mandate if Live is top destination) -->
+<!-- Assuming this is a focus task (Live Camera), suppressing BottomNavBar per rules to prioritize canvas -->
+</body></html>

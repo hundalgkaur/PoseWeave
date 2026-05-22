@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PoseWeave - 3D Viewer</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-variant": "#2e3638",
+                        "on-primary": "#00363d",
+                        "error-container": "#93000a",
+                        "on-primary-fixed": "#001f24",
+                        "on-error-container": "#ffdad6",
+                        "on-tertiary": "#3e2e00",
+                        "surface-container-low": "#151d1e",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "tertiary-container": "#fec931",
+                        "tertiary-fixed-dim": "#f3bf26",
+                        "primary": "#c3f5ff",
+                        "on-surface-variant": "#bac9cc",
+                        "secondary-fixed": "#e3e2e2",
+                        "inverse-on-surface": "#2a3233",
+                        "surface-container-lowest": "#080f11",
+                        "surface": "#0d1516",
+                        "error": "#ffb4ab",
+                        "surface-container-high": "#242b2d",
+                        "on-tertiary-container": "#6f5500",
+                        "surface-tint": "#00daf3",
+                        "tertiary-fixed": "#ffdf96",
+                        "outline": "#849396",
+                        "on-primary-fixed-variant": "#004f58",
+                        "on-secondary-fixed-variant": "#464747",
+                        "inverse-primary": "#006875",
+                        "inverse-surface": "#dce4e5",
+                        "on-secondary": "#2f3131",
+                        "on-error": "#690005",
+                        "on-tertiary-fixed-variant": "#594400",
+                        "primary-fixed-dim": "#00daf3",
+                        "on-surface": "#dce4e5",
+                        "background": "#0d1516",
+                        "tertiary": "#ffeac0",
+                        "on-primary-container": "#00626e",
+                        "outline-variant": "#3b494c",
+                        "on-background": "#dce4e5",
+                        "surface-container": "#192122",
+                        "secondary-container": "#484949",
+                        "surface-bright": "#333a3c",
+                        "on-secondary-container": "#b8b8b8",
+                        "secondary": "#c7c6c6",
+                        "primary-container": "#00e5ff",
+                        "surface-dim": "#0d1516",
+                        "secondary-fixed-dim": "#c7c6c6",
+                        "on-tertiary-fixed": "#251a00",
+                        "primary-fixed": "#9cf0ff",
+                        "surface-container-highest": "#2e3638"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-desktop": "40px",
+                        "unit": "4px",
+                        "margin-mobile": "20px",
+                        "container-max": "1200px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "metric-sm": ["JetBrains Mono"],
+                        "display-lg": ["Inter"],
+                        "headline-md-mobile": ["Inter"],
+                        "metric-xl": ["JetBrains Mono"],
+                        "body-md": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "label-caps": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "metric-sm": ["14px", { "lineHeight": "1.0", "fontWeight": "500" }],
+                        "display-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "headline-md-mobile": ["20px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "metric-xl": ["32px", { "lineHeight": "1.0", "letterSpacing": "-0.05em", "fontWeight": "500" }],
+                        "body-md": ["16px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "label-caps": ["12px", { "lineHeight": "1.0", "letterSpacing": "0.1em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .neo-glass {
+            background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 100%), rgba(30, 30, 30, 0.4);
+            backdrop-filter: blur(12px);
+            border: 1px solid #1E1E1E;
+        }
+        .neon-text-primary {
+            text-shadow: 0 0 8px rgba(0, 229, 255, 0.6);
+        }
+        .perspective-grid {
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(0, 229, 255, 0.1) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0, 229, 255, 0.1) 1px, transparent 1px);
+            transform: perspective(500px) rotateX(60deg);
+            transform-origin: top;
+            position: absolute;
+            bottom: -50%;
+            left: -50%;
+            right: -50%;
+            height: 200%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .glow-bloom {
+            box-shadow: 0 0 15px rgba(0, 229, 255, 0.4);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-[#0A0A0A] text-on-surface h-screen w-full overflow-hidden flex flex-col font-body-md selection:bg-primary selection:text-on-primary relative">
+<!-- Background Noise Overlay -->
+<div class="absolute inset-0 z-0 opacity-[0.03] pointer-events-none bg-[url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E')]"></div>
+<!-- Perspective Floor Grid -->
+<div class="perspective-grid"></div>
+<!-- TopAppBar -->
+<header class="flex justify-between items-center px-margin-desktop py-4 w-full bg-surface/10 dark:bg-surface/10 backdrop-blur-md full-width top-0 z-50">
+<button class="text-on-surface-variant hover:text-primary transition-colors flex items-center justify-center p-2 rounded-full hover:bg-surface-variant/20">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+<h1 class="font-headline-md text-headline-md font-bold text-primary tracking-tight">PoseWeave</h1>
+<div class="w-8 h-8 rounded-full bg-surface-variant overflow-hidden border border-outline-variant/30 flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant text-sm" data-icon="person">person</span>
+</div>
+</header>
+<!-- Main Canvas Area -->
+<main class="flex-grow relative z-10 flex items-center justify-center w-full h-full overflow-hidden">
+<!-- Left Side: Joint Angles Data Panel -->
+<div class="absolute left-margin-desktop top-1/4 neo-glass rounded-lg p-4 flex flex-col gap-3 min-w-[160px] shadow-2xl hidden md:flex">
+<div class="flex items-center gap-2 mb-1 border-b border-outline-variant/30 pb-2">
+<span class="material-symbols-outlined text-primary text-sm" data-icon="timeline">timeline</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant tracking-widest uppercase">Live Angles</span>
+</div>
+<div class="flex justify-between items-center group">
+<span class="font-metric-sm text-metric-sm text-on-surface">Knee</span>
+<div class="flex items-center gap-1">
+<span class="font-metric-sm text-metric-sm text-primary neon-text-primary">142°</span>
+<div class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></div>
+</div>
+</div>
+<div class="flex justify-between items-center group">
+<span class="font-metric-sm text-metric-sm text-on-surface">Elbow</span>
+<div class="flex items-center gap-1">
+<span class="font-metric-sm text-metric-sm text-primary neon-text-primary">89°</span>
+<div class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" style="animation-delay: 0.5s;"></div>
+</div>
+</div>
+<div class="flex justify-between items-center group">
+<span class="font-metric-sm text-metric-sm text-on-surface">Hip</span>
+<div class="flex items-center gap-1">
+<span class="font-metric-sm text-metric-sm text-primary neon-text-primary">175°</span>
+<div class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" style="animation-delay: 0.2s;"></div>
+</div>
+</div>
+<div class="mt-2 h-8 w-full border border-outline-variant/20 rounded flex items-end overflow-hidden relative opacity-60">
+<div class="absolute inset-0 bg-gradient-to-t from-primary/10 to-transparent"></div>
+<!-- Sparkline mock -->
+<svg class="w-full h-full stroke-primary fill-none stroke-[1.5px]" preserveaspectratio="none" viewbox="0 0 100 20">
+<path d="M0,15 L10,12 L20,18 L30,5 L40,14 L50,8 L60,16 L70,10 L80,15 L90,6 L100,12"></path>
+</svg>
+</div>
+</div>
+<!-- Center 3D Subject Placeholder -->
+<div class="relative w-full max-w-[600px] aspect-square flex items-center justify-center">
+<!-- Simulated 3D wireframe image -->
+<div class="w-3/4 h-3/4 relative z-20">
+<img alt="3D Skeleton Wireframe" class="w-full h-full object-contain filter invert sepia hue-rotate-[180deg] saturate-[500%] brightness-[120%] contrast-[150%] mix-blend-screen opacity-80" data-alt="A 3D wireframe rendering of a human skeleton floating in a dark cyberpunk medical visualizer environment. The skeleton is glowing with an intense electric cyan neon light, set against a deep obsidian black void. Subtle perspective grid lines fade into the background distance, creating a sense of scientific depth and clinical precision. The overall aesthetic is minimalist, futuristic, and highly technical." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDNmUiFbcsTReacLdTjaGDglnlazOdBIvTldtsnRXAbGLTUDWMhgAiCwM89olxwuy10sf4f9gF6LEZaA_qo3bUtUzNWawJvOzGce1IkX4bQ0TH9LNgDeD_IrDULsTrgY_BZnzfOfvhQRT6xA-zfrqcGImkGt_psxKOzCmak-bjmpmilYa5YUn_RPl0Z_IQeQANfeQ8tubvL9ybMgj7UvVMaeyMM-uvCHaF8Q_Jt1A3V5Tl-I4aWDoxAPwN_3X-rcgjUbSAI0_e6t4A" style="transform: rotate(15deg) scale(1.1); filter: drop-shadow(0 0 20px rgba(0, 229, 255, 0.5));"/>
+</div>
+<!-- Scanner HUD Overlays -->
+<div class="absolute top-10 left-10 w-8 h-8 border-t border-l border-primary/50"></div>
+<div class="absolute top-10 right-10 w-8 h-8 border-t border-r border-primary/50"></div>
+<div class="absolute bottom-10 left-10 w-8 h-8 border-b border-l border-primary/50"></div>
+<div class="absolute bottom-10 right-10 w-8 h-8 border-b border-r border-primary/50"></div>
+</div>
+<!-- Gesture Hint -->
+<div class="absolute bottom-32 left-1/2 -translate-x-1/2 z-30">
+<div class="neo-glass rounded-full px-6 py-2 flex items-center gap-3 animate-bounce shadow-lg">
+<span class="material-symbols-outlined text-on-surface-variant text-sm">arrow_left_alt</span>
+<span class="font-metric-sm text-metric-sm text-on-surface-variant">Drag to rotate</span>
+<span class="material-symbols-outlined text-on-surface-variant text-sm">arrow_right_alt</span>
+</div>
+</div>
+<!-- Bottom Control Dock -->
+<div class="absolute bottom-16 left-1/2 -translate-x-1/2 z-40">
+<div class="neo-glass p-1.5 rounded-full flex gap-1 shadow-2xl items-center">
+<button class="px-6 py-2.5 rounded-full font-label-caps text-label-caps text-on-surface hover:text-primary transition-colors flex items-center gap-2 group">
+<span class="material-symbols-outlined text-sm group-hover:text-primary transition-colors" data-icon="restart_alt">restart_alt</span>
+                    Reset
+                </button>
+<button class="px-6 py-2.5 rounded-full bg-surface-variant/40 font-label-caps text-label-caps text-primary border border-outline-variant/30 flex items-center gap-2 glow-bloom relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent"></div>
+<span class="material-symbols-outlined text-sm text-primary animate-spin" data-icon="360" style="animation-duration: 4s;">360</span>
+<span class="relative z-10 neon-text-primary">Auto-Rotate</span>
+</button>
+<button class="px-6 py-2.5 rounded-full font-label-caps text-label-caps text-on-surface hover:text-primary transition-colors flex items-center gap-2 group">
+<span class="material-symbols-outlined text-sm group-hover:text-primary transition-colors" data-icon="download">download</span>
+                    Export
+                </button>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="flex justify-around items-center w-full h-20 px-4 bg-surface-container-lowest/80 dark:bg-surface-container-lowest/80 backdrop-blur-xl fixed bottom-0 z-50 rounded-t-xl md:hidden">
+<button class="flex flex-col items-center justify-center text-on-surface-variant/70 hover:bg-surface-variant/20 p-2 rounded-xl transition-colors">
+<span class="material-symbols-outlined mb-1" data-icon="videocam">videocam</span>
+<span class="font-label-caps text-label-caps">Live</span>
+</button>
+<button class="flex flex-col items-center justify-center text-primary-fixed-dim bg-primary/10 rounded-xl px-4 py-1.5 transform scale-90 duration-200">
+<span class="material-symbols-outlined mb-1" data-icon="view_in_ar" data-weight="fill" style="font-variation-settings: 'FILL' 1;">view_in_ar</span>
+<span class="font-label-caps text-label-caps">3D</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant/70 hover:bg-surface-variant/20 p-2 rounded-xl transition-colors">
+<span class="material-symbols-outlined mb-1" data-icon="folder_open">folder_open</span>
+<span class="font-label-caps text-label-caps">Vault</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant/70 hover:bg-surface-variant/20 p-2 rounded-xl transition-colors">
+<span class="material-symbols-outlined mb-1" data-icon="query_stats">query_stats</span>
+<span class="font-label-caps text-label-caps">Stats</span>
+</button>
+</nav>
+<!-- Side Navigation Shell for Desktop -->
+<aside class="fixed top-20 right-0 h-full w-20 flex-col gap-6 py-6 items-center hidden md:flex border-l border-outline-variant/10 z-40 bg-surface-container-lowest/50 backdrop-blur-sm">
+<button class="flex flex-col items-center justify-center text-on-surface-variant/70 hover:text-primary transition-colors group p-2">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform" data-icon="videocam">videocam</span>
+<span class="font-label-caps text-[10px] mt-1 opacity-0 group-hover:opacity-100 transition-opacity">Live</span>
+</button>
+<button class="flex flex-col items-center justify-center text-primary relative p-2">
+<div class="absolute inset-0 bg-primary/10 rounded-lg blur-sm"></div>
+<span class="material-symbols-outlined relative z-10" data-icon="view_in_ar" data-weight="fill" style="font-variation-settings: 'FILL' 1;">view_in_ar</span>
+<span class="font-label-caps text-[10px] mt-1 relative z-10">3D</span>
+<div class="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-primary rounded-r-full shadow-[0_0_8px_rgba(0,229,255,0.8)]"></div>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant/70 hover:text-primary transition-colors group p-2">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform" data-icon="folder_open">folder_open</span>
+<span class="font-label-caps text-[10px] mt-1 opacity-0 group-hover:opacity-100 transition-opacity">Vault</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant/70 hover:text-primary transition-colors group p-2">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform" data-icon="query_stats">query_stats</span>
+<span class="font-label-caps text-[10px] mt-1 opacity-0 group-hover:opacity-100 transition-opacity">Stats</span>
+</button>
+</aside>
+</body></html>

@@ -1,0 +1,2056 @@
+// coverage:ignore-file
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
+
+part of 'pose_state.dart';
+
+// **************************************************************************
+// FreezedGenerator
+// **************************************************************************
+
+T _$identity<T>(T value) => value;
+
+final _privateConstructorUsedError = UnsupportedError(
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
+
+/// @nodoc
+mixin _$PoseState {
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function() noPermission,
+    required TResult Function() streaming,
+    required TResult Function(
+      PoseEntity pose,
+      double averageConfidence,
+      double fps,
+    )
+    active,
+    required TResult Function() recordingVideo,
+    required TResult Function(
+      double progress,
+      int framesProcessed,
+      PoseEntity? currentPose,
+    )
+    videoProcessing,
+    required TResult Function(
+      List<PoseEntity> poses,
+      int frameCount,
+      String? videoPath,
+    )
+    videoComplete,
+    required TResult Function(String message, bool isRecoverable) error,
+  }) => throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function()? noPermission,
+    TResult? Function()? streaming,
+    TResult? Function(PoseEntity pose, double averageConfidence, double fps)?
+    active,
+    TResult? Function()? recordingVideo,
+    TResult? Function(
+      double progress,
+      int framesProcessed,
+      PoseEntity? currentPose,
+    )?
+    videoProcessing,
+    TResult? Function(
+      List<PoseEntity> poses,
+      int frameCount,
+      String? videoPath,
+    )?
+    videoComplete,
+    TResult? Function(String message, bool isRecoverable)? error,
+  }) => throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function()? noPermission,
+    TResult Function()? streaming,
+    TResult Function(PoseEntity pose, double averageConfidence, double fps)?
+    active,
+    TResult Function()? recordingVideo,
+    TResult Function(
+      double progress,
+      int framesProcessed,
+      PoseEntity? currentPose,
+    )?
+    videoProcessing,
+    TResult Function(List<PoseEntity> poses, int frameCount, String? videoPath)?
+    videoComplete,
+    TResult Function(String message, bool isRecoverable)? error,
+    required TResult orElse(),
+  }) => throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(PoseInitial value) initial,
+    required TResult Function(PoseLoading value) loading,
+    required TResult Function(PoseNoPermission value) noPermission,
+    required TResult Function(PoseStreaming value) streaming,
+    required TResult Function(PoseActive value) active,
+    required TResult Function(PoseRecordingVideo value) recordingVideo,
+    required TResult Function(PoseVideoProcessing value) videoProcessing,
+    required TResult Function(PoseVideoComplete value) videoComplete,
+    required TResult Function(PoseError value) error,
+  }) => throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(PoseInitial value)? initial,
+    TResult? Function(PoseLoading value)? loading,
+    TResult? Function(PoseNoPermission value)? noPermission,
+    TResult? Function(PoseStreaming value)? streaming,
+    TResult? Function(PoseActive value)? active,
+    TResult? Function(PoseRecordingVideo value)? recordingVideo,
+    TResult? Function(PoseVideoProcessing value)? videoProcessing,
+    TResult? Function(PoseVideoComplete value)? videoComplete,
+    TResult? Function(PoseError value)? error,
+  }) => throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(PoseInitial value)? initial,
+    TResult Function(PoseLoading value)? loading,
+    TResult Function(PoseNoPermission value)? noPermission,
+    TResult Function(PoseStreaming value)? streaming,
+    TResult Function(PoseActive value)? active,
+    TResult Function(PoseRecordingVideo value)? recordingVideo,
+    TResult Function(PoseVideoProcessing value)? videoProcessing,
+    TResult Function(PoseVideoComplete value)? videoComplete,
+    TResult Function(PoseError value)? error,
+    required TResult orElse(),
+  }) => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $PoseStateCopyWith<$Res> {
+  factory $PoseStateCopyWith(PoseState value, $Res Function(PoseState) then) =
+      _$PoseStateCopyWithImpl<$Res, PoseState>;
+}
+
+/// @nodoc
+class _$PoseStateCopyWithImpl<$Res, $Val extends PoseState>
+    implements $PoseStateCopyWith<$Res> {
+  _$PoseStateCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of PoseState
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+abstract class _$$PoseInitialImplCopyWith<$Res> {
+  factory _$$PoseInitialImplCopyWith(
+    _$PoseInitialImpl value,
+    $Res Function(_$PoseInitialImpl) then,
+  ) = __$$PoseInitialImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$PoseInitialImplCopyWithImpl<$Res>
+    extends _$PoseStateCopyWithImpl<$Res, _$PoseInitialImpl>
+    implements _$$PoseInitialImplCopyWith<$Res> {
+  __$$PoseInitialImplCopyWithImpl(
+    _$PoseInitialImpl _value,
+    $Res Function(_$PoseInitialImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of PoseState
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$PoseInitialImpl implements PoseInitial {
+  const _$PoseInitialImpl();
+
+  @override
+  String toString() {
+    return 'PoseState.initial()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$PoseInitialImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function() noPermission,
+    required TResult Function() streaming,
+    required TResult Function(
+      PoseEntity pose,
+      double averageConfidence,
+      double fps,
+    )
+    active,
+    required TResult Function() recordingVideo,
+    required TResult Function(
+      double progress,
+      int framesProcessed,
+      PoseEntity? currentPose,
+    )
+    videoProcessing,
+    required TResult Function(
+      List<PoseEntity> poses,
+      int frameCount,
+      String? videoPath,
+    )
+    videoComplete,
+    required TResult Function(String message, bool isRecoverable) error,
+  }) {
+    return initial();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function()? noPermission,
+    TResult? Function()? streaming,
+    TResult? Function(PoseEntity pose, double averageConfidence, double fps)?
+    active,
+    TResult? Function()? recordingVideo,
+    TResult? Function(
+      double progress,
+      int framesProcessed,
+      PoseEntity? currentPose,
+    )?
+    videoProcessing,
+    TResult? Function(
+      List<PoseEntity> poses,
+      int frameCount,
+      String? videoPath,
+    )?
+    videoComplete,
+    TResult? Function(String message, bool isRecoverable)? error,
+  }) {
+    return initial?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function()? noPermission,
+    TResult Function()? streaming,
+    TResult Function(PoseEntity pose, double averageConfidence, double fps)?
+    active,
+    TResult Function()? recordingVideo,
+    TResult Function(
+      double progress,
+      int framesProcessed,
+      PoseEntity? currentPose,
+    )?
+    videoProcessing,
+    TResult Function(List<PoseEntity> poses, int frameCount, String? videoPath)?
+    videoComplete,
+    TResult Function(String message, bool isRecoverable)? error,
+    required TResult orElse(),
+  }) {
+    if (initial != null) {
+      return initial();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(PoseInitial value) initial,
+    required TResult Function(PoseLoading value) loading,
+    required TResult Function(PoseNoPermission value) noPermission,
+    required TResult Function(PoseStreaming value) streaming,
+    required TResult Function(PoseActive value) active,
+    required TResult Function(PoseRecordingVideo value) recordingVideo,
+    required TResult Function(PoseVideoProcessing value) videoProcessing,
+    required TResult Function(PoseVideoComplete value) videoComplete,
+    required TResult Function(PoseError value) error,
+  }) {
+    return initial(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(PoseInitial value)? initial,
+    TResult? Function(PoseLoading value)? loading,
+    TResult? Function(PoseNoPermission value)? noPermission,
+    TResult? Function(PoseStreaming value)? streaming,
+    TResult? Function(PoseActive value)? active,
+    TResult? Function(PoseRecordingVideo value)? recordingVideo,
+    TResult? Function(PoseVideoProcessing value)? videoProcessing,
+    TResult? Function(PoseVideoComplete value)? videoComplete,
+    TResult? Function(PoseError value)? error,
+  }) {
+    return initial?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(PoseInitial value)? initial,
+    TResult Function(PoseLoading value)? loading,
+    TResult Function(PoseNoPermission value)? noPermission,
+    TResult Function(PoseStreaming value)? streaming,
+    TResult Function(PoseActive value)? active,
+    TResult Function(PoseRecordingVideo value)? recordingVideo,
+    TResult Function(PoseVideoProcessing value)? videoProcessing,
+    TResult Function(PoseVideoComplete value)? videoComplete,
+    TResult Function(PoseError value)? error,
+    required TResult orElse(),
+  }) {
+    if (initial != null) {
+      return initial(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class PoseInitial implements PoseState {
+  const factory PoseInitial() = _$PoseInitialImpl;
+}
+
+/// @nodoc
+abstract class _$$PoseLoadingImplCopyWith<$Res> {
+  factory _$$PoseLoadingImplCopyWith(
+    _$PoseLoadingImpl value,
+    $Res Function(_$PoseLoadingImpl) then,
+  ) = __$$PoseLoadingImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$PoseLoadingImplCopyWithImpl<$Res>
+    extends _$PoseStateCopyWithImpl<$Res, _$PoseLoadingImpl>
+    implements _$$PoseLoadingImplCopyWith<$Res> {
+  __$$PoseLoadingImplCopyWithImpl(
+    _$PoseLoadingImpl _value,
+    $Res Function(_$PoseLoadingImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of PoseState
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$PoseLoadingImpl implements PoseLoading {
+  const _$PoseLoadingImpl();
+
+  @override
+  String toString() {
+    return 'PoseState.loading()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$PoseLoadingImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function() noPermission,
+    required TResult Function() streaming,
+    required TResult Function(
+      PoseEntity pose,
+      double averageConfidence,
+      double fps,
+    )
+    active,
+    required TResult Function() recordingVideo,
+    required TResult Function(
+      double progress,
+      int framesProcessed,
+      PoseEntity? currentPose,
+    )
+    videoProcessing,
+    required TResult Function(
+      List<PoseEntity> poses,
+      int frameCount,
+      String? videoPath,
+    )
+    videoComplete,
+    required TResult Function(String message, bool isRecoverable) error,
+  }) {
+    return loading();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function()? noPermission,
+    TResult? Function()? streaming,
+    TResult? Function(PoseEntity pose, double averageConfidence, double fps)?
+    active,
+    TResult? Function()? recordingVideo,
+    TResult? Function(
+      double progress,
+      int framesProcessed,
+      PoseEntity? currentPose,
+    )?
+    videoProcessing,
+    TResult? Function(
+      List<PoseEntity> poses,
+      int frameCount,
+      String? videoPath,
+    )?
+    videoComplete,
+    TResult? Function(String message, bool isRecoverable)? error,
+  }) {
+    return loading?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function()? noPermission,
+    TResult Function()? streaming,
+    TResult Function(PoseEntity pose, double averageConfidence, double fps)?
+    active,
+    TResult Function()? recordingVideo,
+    TResult Function(
+      double progress,
+      int framesProcessed,
+      PoseEntity? currentPose,
+    )?
+    videoProcessing,
+    TResult Function(List<PoseEntity> poses, int frameCount, String? videoPath)?
+    videoComplete,
+    TResult Function(String message, bool isRecoverable)? error,
+    required TResult orElse(),
+  }) {
+    if (loading != null) {
+      return loading();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(PoseInitial value) initial,
+    required TResult Function(PoseLoading value) loading,
+    required TResult Function(PoseNoPermission value) noPermission,
+    required TResult Function(PoseStreaming value) streaming,
+    required TResult Function(PoseActive value) active,
+    required TResult Function(PoseRecordingVideo value) recordingVideo,
+    required TResult Function(PoseVideoProcessing value) videoProcessing,
+    required TResult Function(PoseVideoComplete value) videoComplete,
+    required TResult Function(PoseError value) error,
+  }) {
+    return loading(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(PoseInitial value)? initial,
+    TResult? Function(PoseLoading value)? loading,
+    TResult? Function(PoseNoPermission value)? noPermission,
+    TResult? Function(PoseStreaming value)? streaming,
+    TResult? Function(PoseActive value)? active,
+    TResult? Function(PoseRecordingVideo value)? recordingVideo,
+    TResult? Function(PoseVideoProcessing value)? videoProcessing,
+    TResult? Function(PoseVideoComplete value)? videoComplete,
+    TResult? Function(PoseError value)? error,
+  }) {
+    return loading?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(PoseInitial value)? initial,
+    TResult Function(PoseLoading value)? loading,
+    TResult Function(PoseNoPermission value)? noPermission,
+    TResult Function(PoseStreaming value)? streaming,
+    TResult Function(PoseActive value)? active,
+    TResult Function(PoseRecordingVideo value)? recordingVideo,
+    TResult Function(PoseVideoProcessing value)? videoProcessing,
+    TResult Function(PoseVideoComplete value)? videoComplete,
+    TResult Function(PoseError value)? error,
+    required TResult orElse(),
+  }) {
+    if (loading != null) {
+      return loading(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class PoseLoading implements PoseState {
+  const factory PoseLoading() = _$PoseLoadingImpl;
+}
+
+/// @nodoc
+abstract class _$$PoseNoPermissionImplCopyWith<$Res> {
+  factory _$$PoseNoPermissionImplCopyWith(
+    _$PoseNoPermissionImpl value,
+    $Res Function(_$PoseNoPermissionImpl) then,
+  ) = __$$PoseNoPermissionImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$PoseNoPermissionImplCopyWithImpl<$Res>
+    extends _$PoseStateCopyWithImpl<$Res, _$PoseNoPermissionImpl>
+    implements _$$PoseNoPermissionImplCopyWith<$Res> {
+  __$$PoseNoPermissionImplCopyWithImpl(
+    _$PoseNoPermissionImpl _value,
+    $Res Function(_$PoseNoPermissionImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of PoseState
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$PoseNoPermissionImpl implements PoseNoPermission {
+  const _$PoseNoPermissionImpl();
+
+  @override
+  String toString() {
+    return 'PoseState.noPermission()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$PoseNoPermissionImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function() noPermission,
+    required TResult Function() streaming,
+    required TResult Function(
+      PoseEntity pose,
+      double averageConfidence,
+      double fps,
+    )
+    active,
+    required TResult Function() recordingVideo,
+    required TResult Function(
+      double progress,
+      int framesProcessed,
+      PoseEntity? currentPose,
+    )
+    videoProcessing,
+    required TResult Function(
+      List<PoseEntity> poses,
+      int frameCount,
+      String? videoPath,
+    )
+    videoComplete,
+    required TResult Function(String message, bool isRecoverable) error,
+  }) {
+    return noPermission();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function()? noPermission,
+    TResult? Function()? streaming,
+    TResult? Function(PoseEntity pose, double averageConfidence, double fps)?
+    active,
+    TResult? Function()? recordingVideo,
+    TResult? Function(
+      double progress,
+      int framesProcessed,
+      PoseEntity? currentPose,
+    )?
+    videoProcessing,
+    TResult? Function(
+      List<PoseEntity> poses,
+      int frameCount,
+      String? videoPath,
+    )?
+    videoComplete,
+    TResult? Function(String message, bool isRecoverable)? error,
+  }) {
+    return noPermission?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function()? noPermission,
+    TResult Function()? streaming,
+    TResult Function(PoseEntity pose, double averageConfidence, double fps)?
+    active,
+    TResult Function()? recordingVideo,
+    TResult Function(
+      double progress,
+      int framesProcessed,
+      PoseEntity? currentPose,
+    )?
+    videoProcessing,
+    TResult Function(List<PoseEntity> poses, int frameCount, String? videoPath)?
+    videoComplete,
+    TResult Function(String message, bool isRecoverable)? error,
+    required TResult orElse(),
+  }) {
+    if (noPermission != null) {
+      return noPermission();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(PoseInitial value) initial,
+    required TResult Function(PoseLoading value) loading,
+    required TResult Function(PoseNoPermission value) noPermission,
+    required TResult Function(PoseStreaming value) streaming,
+    required TResult Function(PoseActive value) active,
+    required TResult Function(PoseRecordingVideo value) recordingVideo,
+    required TResult Function(PoseVideoProcessing value) videoProcessing,
+    required TResult Function(PoseVideoComplete value) videoComplete,
+    required TResult Function(PoseError value) error,
+  }) {
+    return noPermission(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(PoseInitial value)? initial,
+    TResult? Function(PoseLoading value)? loading,
+    TResult? Function(PoseNoPermission value)? noPermission,
+    TResult? Function(PoseStreaming value)? streaming,
+    TResult? Function(PoseActive value)? active,
+    TResult? Function(PoseRecordingVideo value)? recordingVideo,
+    TResult? Function(PoseVideoProcessing value)? videoProcessing,
+    TResult? Function(PoseVideoComplete value)? videoComplete,
+    TResult? Function(PoseError value)? error,
+  }) {
+    return noPermission?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(PoseInitial value)? initial,
+    TResult Function(PoseLoading value)? loading,
+    TResult Function(PoseNoPermission value)? noPermission,
+    TResult Function(PoseStreaming value)? streaming,
+    TResult Function(PoseActive value)? active,
+    TResult Function(PoseRecordingVideo value)? recordingVideo,
+    TResult Function(PoseVideoProcessing value)? videoProcessing,
+    TResult Function(PoseVideoComplete value)? videoComplete,
+    TResult Function(PoseError value)? error,
+    required TResult orElse(),
+  }) {
+    if (noPermission != null) {
+      return noPermission(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class PoseNoPermission implements PoseState {
+  const factory PoseNoPermission() = _$PoseNoPermissionImpl;
+}
+
+/// @nodoc
+abstract class _$$PoseStreamingImplCopyWith<$Res> {
+  factory _$$PoseStreamingImplCopyWith(
+    _$PoseStreamingImpl value,
+    $Res Function(_$PoseStreamingImpl) then,
+  ) = __$$PoseStreamingImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$PoseStreamingImplCopyWithImpl<$Res>
+    extends _$PoseStateCopyWithImpl<$Res, _$PoseStreamingImpl>
+    implements _$$PoseStreamingImplCopyWith<$Res> {
+  __$$PoseStreamingImplCopyWithImpl(
+    _$PoseStreamingImpl _value,
+    $Res Function(_$PoseStreamingImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of PoseState
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$PoseStreamingImpl implements PoseStreaming {
+  const _$PoseStreamingImpl();
+
+  @override
+  String toString() {
+    return 'PoseState.streaming()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$PoseStreamingImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function() noPermission,
+    required TResult Function() streaming,
+    required TResult Function(
+      PoseEntity pose,
+      double averageConfidence,
+      double fps,
+    )
+    active,
+    required TResult Function() recordingVideo,
+    required TResult Function(
+      double progress,
+      int framesProcessed,
+      PoseEntity? currentPose,
+    )
+    videoProcessing,
+    required TResult Function(
+      List<PoseEntity> poses,
+      int frameCount,
+      String? videoPath,
+    )
+    videoComplete,
+    required TResult Function(String message, bool isRecoverable) error,
+  }) {
+    return streaming();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function()? noPermission,
+    TResult? Function()? streaming,
+    TResult? Function(PoseEntity pose, double averageConfidence, double fps)?
+    active,
+    TResult? Function()? recordingVideo,
+    TResult? Function(
+      double progress,
+      int framesProcessed,
+      PoseEntity? currentPose,
+    )?
+    videoProcessing,
+    TResult? Function(
+      List<PoseEntity> poses,
+      int frameCount,
+      String? videoPath,
+    )?
+    videoComplete,
+    TResult? Function(String message, bool isRecoverable)? error,
+  }) {
+    return streaming?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function()? noPermission,
+    TResult Function()? streaming,
+    TResult Function(PoseEntity pose, double averageConfidence, double fps)?
+    active,
+    TResult Function()? recordingVideo,
+    TResult Function(
+      double progress,
+      int framesProcessed,
+      PoseEntity? currentPose,
+    )?
+    videoProcessing,
+    TResult Function(List<PoseEntity> poses, int frameCount, String? videoPath)?
+    videoComplete,
+    TResult Function(String message, bool isRecoverable)? error,
+    required TResult orElse(),
+  }) {
+    if (streaming != null) {
+      return streaming();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(PoseInitial value) initial,
+    required TResult Function(PoseLoading value) loading,
+    required TResult Function(PoseNoPermission value) noPermission,
+    required TResult Function(PoseStreaming value) streaming,
+    required TResult Function(PoseActive value) active,
+    required TResult Function(PoseRecordingVideo value) recordingVideo,
+    required TResult Function(PoseVideoProcessing value) videoProcessing,
+    required TResult Function(PoseVideoComplete value) videoComplete,
+    required TResult Function(PoseError value) error,
+  }) {
+    return streaming(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(PoseInitial value)? initial,
+    TResult? Function(PoseLoading value)? loading,
+    TResult? Function(PoseNoPermission value)? noPermission,
+    TResult? Function(PoseStreaming value)? streaming,
+    TResult? Function(PoseActive value)? active,
+    TResult? Function(PoseRecordingVideo value)? recordingVideo,
+    TResult? Function(PoseVideoProcessing value)? videoProcessing,
+    TResult? Function(PoseVideoComplete value)? videoComplete,
+    TResult? Function(PoseError value)? error,
+  }) {
+    return streaming?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(PoseInitial value)? initial,
+    TResult Function(PoseLoading value)? loading,
+    TResult Function(PoseNoPermission value)? noPermission,
+    TResult Function(PoseStreaming value)? streaming,
+    TResult Function(PoseActive value)? active,
+    TResult Function(PoseRecordingVideo value)? recordingVideo,
+    TResult Function(PoseVideoProcessing value)? videoProcessing,
+    TResult Function(PoseVideoComplete value)? videoComplete,
+    TResult Function(PoseError value)? error,
+    required TResult orElse(),
+  }) {
+    if (streaming != null) {
+      return streaming(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class PoseStreaming implements PoseState {
+  const factory PoseStreaming() = _$PoseStreamingImpl;
+}
+
+/// @nodoc
+abstract class _$$PoseActiveImplCopyWith<$Res> {
+  factory _$$PoseActiveImplCopyWith(
+    _$PoseActiveImpl value,
+    $Res Function(_$PoseActiveImpl) then,
+  ) = __$$PoseActiveImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({PoseEntity pose, double averageConfidence, double fps});
+}
+
+/// @nodoc
+class __$$PoseActiveImplCopyWithImpl<$Res>
+    extends _$PoseStateCopyWithImpl<$Res, _$PoseActiveImpl>
+    implements _$$PoseActiveImplCopyWith<$Res> {
+  __$$PoseActiveImplCopyWithImpl(
+    _$PoseActiveImpl _value,
+    $Res Function(_$PoseActiveImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of PoseState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? pose = null,
+    Object? averageConfidence = null,
+    Object? fps = null,
+  }) {
+    return _then(
+      _$PoseActiveImpl(
+        pose:
+            null == pose
+                ? _value.pose
+                : pose // ignore: cast_nullable_to_non_nullable
+                    as PoseEntity,
+        averageConfidence:
+            null == averageConfidence
+                ? _value.averageConfidence
+                : averageConfidence // ignore: cast_nullable_to_non_nullable
+                    as double,
+        fps:
+            null == fps
+                ? _value.fps
+                : fps // ignore: cast_nullable_to_non_nullable
+                    as double,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+
+class _$PoseActiveImpl implements PoseActive {
+  const _$PoseActiveImpl({
+    required this.pose,
+    required this.averageConfidence,
+    required this.fps,
+  });
+
+  @override
+  final PoseEntity pose;
+  @override
+  final double averageConfidence;
+  @override
+  final double fps;
+
+  @override
+  String toString() {
+    return 'PoseState.active(pose: $pose, averageConfidence: $averageConfidence, fps: $fps)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$PoseActiveImpl &&
+            (identical(other.pose, pose) || other.pose == pose) &&
+            (identical(other.averageConfidence, averageConfidence) ||
+                other.averageConfidence == averageConfidence) &&
+            (identical(other.fps, fps) || other.fps == fps));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, pose, averageConfidence, fps);
+
+  /// Create a copy of PoseState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$PoseActiveImplCopyWith<_$PoseActiveImpl> get copyWith =>
+      __$$PoseActiveImplCopyWithImpl<_$PoseActiveImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function() noPermission,
+    required TResult Function() streaming,
+    required TResult Function(
+      PoseEntity pose,
+      double averageConfidence,
+      double fps,
+    )
+    active,
+    required TResult Function() recordingVideo,
+    required TResult Function(
+      double progress,
+      int framesProcessed,
+      PoseEntity? currentPose,
+    )
+    videoProcessing,
+    required TResult Function(
+      List<PoseEntity> poses,
+      int frameCount,
+      String? videoPath,
+    )
+    videoComplete,
+    required TResult Function(String message, bool isRecoverable) error,
+  }) {
+    return active(pose, averageConfidence, fps);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function()? noPermission,
+    TResult? Function()? streaming,
+    TResult? Function(PoseEntity pose, double averageConfidence, double fps)?
+    active,
+    TResult? Function()? recordingVideo,
+    TResult? Function(
+      double progress,
+      int framesProcessed,
+      PoseEntity? currentPose,
+    )?
+    videoProcessing,
+    TResult? Function(
+      List<PoseEntity> poses,
+      int frameCount,
+      String? videoPath,
+    )?
+    videoComplete,
+    TResult? Function(String message, bool isRecoverable)? error,
+  }) {
+    return active?.call(pose, averageConfidence, fps);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function()? noPermission,
+    TResult Function()? streaming,
+    TResult Function(PoseEntity pose, double averageConfidence, double fps)?
+    active,
+    TResult Function()? recordingVideo,
+    TResult Function(
+      double progress,
+      int framesProcessed,
+      PoseEntity? currentPose,
+    )?
+    videoProcessing,
+    TResult Function(List<PoseEntity> poses, int frameCount, String? videoPath)?
+    videoComplete,
+    TResult Function(String message, bool isRecoverable)? error,
+    required TResult orElse(),
+  }) {
+    if (active != null) {
+      return active(pose, averageConfidence, fps);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(PoseInitial value) initial,
+    required TResult Function(PoseLoading value) loading,
+    required TResult Function(PoseNoPermission value) noPermission,
+    required TResult Function(PoseStreaming value) streaming,
+    required TResult Function(PoseActive value) active,
+    required TResult Function(PoseRecordingVideo value) recordingVideo,
+    required TResult Function(PoseVideoProcessing value) videoProcessing,
+    required TResult Function(PoseVideoComplete value) videoComplete,
+    required TResult Function(PoseError value) error,
+  }) {
+    return active(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(PoseInitial value)? initial,
+    TResult? Function(PoseLoading value)? loading,
+    TResult? Function(PoseNoPermission value)? noPermission,
+    TResult? Function(PoseStreaming value)? streaming,
+    TResult? Function(PoseActive value)? active,
+    TResult? Function(PoseRecordingVideo value)? recordingVideo,
+    TResult? Function(PoseVideoProcessing value)? videoProcessing,
+    TResult? Function(PoseVideoComplete value)? videoComplete,
+    TResult? Function(PoseError value)? error,
+  }) {
+    return active?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(PoseInitial value)? initial,
+    TResult Function(PoseLoading value)? loading,
+    TResult Function(PoseNoPermission value)? noPermission,
+    TResult Function(PoseStreaming value)? streaming,
+    TResult Function(PoseActive value)? active,
+    TResult Function(PoseRecordingVideo value)? recordingVideo,
+    TResult Function(PoseVideoProcessing value)? videoProcessing,
+    TResult Function(PoseVideoComplete value)? videoComplete,
+    TResult Function(PoseError value)? error,
+    required TResult orElse(),
+  }) {
+    if (active != null) {
+      return active(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class PoseActive implements PoseState {
+  const factory PoseActive({
+    required final PoseEntity pose,
+    required final double averageConfidence,
+    required final double fps,
+  }) = _$PoseActiveImpl;
+
+  PoseEntity get pose;
+  double get averageConfidence;
+  double get fps;
+
+  /// Create a copy of PoseState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$PoseActiveImplCopyWith<_$PoseActiveImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$PoseRecordingVideoImplCopyWith<$Res> {
+  factory _$$PoseRecordingVideoImplCopyWith(
+    _$PoseRecordingVideoImpl value,
+    $Res Function(_$PoseRecordingVideoImpl) then,
+  ) = __$$PoseRecordingVideoImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$PoseRecordingVideoImplCopyWithImpl<$Res>
+    extends _$PoseStateCopyWithImpl<$Res, _$PoseRecordingVideoImpl>
+    implements _$$PoseRecordingVideoImplCopyWith<$Res> {
+  __$$PoseRecordingVideoImplCopyWithImpl(
+    _$PoseRecordingVideoImpl _value,
+    $Res Function(_$PoseRecordingVideoImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of PoseState
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$PoseRecordingVideoImpl implements PoseRecordingVideo {
+  const _$PoseRecordingVideoImpl();
+
+  @override
+  String toString() {
+    return 'PoseState.recordingVideo()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$PoseRecordingVideoImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function() noPermission,
+    required TResult Function() streaming,
+    required TResult Function(
+      PoseEntity pose,
+      double averageConfidence,
+      double fps,
+    )
+    active,
+    required TResult Function() recordingVideo,
+    required TResult Function(
+      double progress,
+      int framesProcessed,
+      PoseEntity? currentPose,
+    )
+    videoProcessing,
+    required TResult Function(
+      List<PoseEntity> poses,
+      int frameCount,
+      String? videoPath,
+    )
+    videoComplete,
+    required TResult Function(String message, bool isRecoverable) error,
+  }) {
+    return recordingVideo();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function()? noPermission,
+    TResult? Function()? streaming,
+    TResult? Function(PoseEntity pose, double averageConfidence, double fps)?
+    active,
+    TResult? Function()? recordingVideo,
+    TResult? Function(
+      double progress,
+      int framesProcessed,
+      PoseEntity? currentPose,
+    )?
+    videoProcessing,
+    TResult? Function(
+      List<PoseEntity> poses,
+      int frameCount,
+      String? videoPath,
+    )?
+    videoComplete,
+    TResult? Function(String message, bool isRecoverable)? error,
+  }) {
+    return recordingVideo?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function()? noPermission,
+    TResult Function()? streaming,
+    TResult Function(PoseEntity pose, double averageConfidence, double fps)?
+    active,
+    TResult Function()? recordingVideo,
+    TResult Function(
+      double progress,
+      int framesProcessed,
+      PoseEntity? currentPose,
+    )?
+    videoProcessing,
+    TResult Function(List<PoseEntity> poses, int frameCount, String? videoPath)?
+    videoComplete,
+    TResult Function(String message, bool isRecoverable)? error,
+    required TResult orElse(),
+  }) {
+    if (recordingVideo != null) {
+      return recordingVideo();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(PoseInitial value) initial,
+    required TResult Function(PoseLoading value) loading,
+    required TResult Function(PoseNoPermission value) noPermission,
+    required TResult Function(PoseStreaming value) streaming,
+    required TResult Function(PoseActive value) active,
+    required TResult Function(PoseRecordingVideo value) recordingVideo,
+    required TResult Function(PoseVideoProcessing value) videoProcessing,
+    required TResult Function(PoseVideoComplete value) videoComplete,
+    required TResult Function(PoseError value) error,
+  }) {
+    return recordingVideo(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(PoseInitial value)? initial,
+    TResult? Function(PoseLoading value)? loading,
+    TResult? Function(PoseNoPermission value)? noPermission,
+    TResult? Function(PoseStreaming value)? streaming,
+    TResult? Function(PoseActive value)? active,
+    TResult? Function(PoseRecordingVideo value)? recordingVideo,
+    TResult? Function(PoseVideoProcessing value)? videoProcessing,
+    TResult? Function(PoseVideoComplete value)? videoComplete,
+    TResult? Function(PoseError value)? error,
+  }) {
+    return recordingVideo?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(PoseInitial value)? initial,
+    TResult Function(PoseLoading value)? loading,
+    TResult Function(PoseNoPermission value)? noPermission,
+    TResult Function(PoseStreaming value)? streaming,
+    TResult Function(PoseActive value)? active,
+    TResult Function(PoseRecordingVideo value)? recordingVideo,
+    TResult Function(PoseVideoProcessing value)? videoProcessing,
+    TResult Function(PoseVideoComplete value)? videoComplete,
+    TResult Function(PoseError value)? error,
+    required TResult orElse(),
+  }) {
+    if (recordingVideo != null) {
+      return recordingVideo(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class PoseRecordingVideo implements PoseState {
+  const factory PoseRecordingVideo() = _$PoseRecordingVideoImpl;
+}
+
+/// @nodoc
+abstract class _$$PoseVideoProcessingImplCopyWith<$Res> {
+  factory _$$PoseVideoProcessingImplCopyWith(
+    _$PoseVideoProcessingImpl value,
+    $Res Function(_$PoseVideoProcessingImpl) then,
+  ) = __$$PoseVideoProcessingImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({double progress, int framesProcessed, PoseEntity? currentPose});
+}
+
+/// @nodoc
+class __$$PoseVideoProcessingImplCopyWithImpl<$Res>
+    extends _$PoseStateCopyWithImpl<$Res, _$PoseVideoProcessingImpl>
+    implements _$$PoseVideoProcessingImplCopyWith<$Res> {
+  __$$PoseVideoProcessingImplCopyWithImpl(
+    _$PoseVideoProcessingImpl _value,
+    $Res Function(_$PoseVideoProcessingImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of PoseState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? progress = null,
+    Object? framesProcessed = null,
+    Object? currentPose = freezed,
+  }) {
+    return _then(
+      _$PoseVideoProcessingImpl(
+        progress:
+            null == progress
+                ? _value.progress
+                : progress // ignore: cast_nullable_to_non_nullable
+                    as double,
+        framesProcessed:
+            null == framesProcessed
+                ? _value.framesProcessed
+                : framesProcessed // ignore: cast_nullable_to_non_nullable
+                    as int,
+        currentPose:
+            freezed == currentPose
+                ? _value.currentPose
+                : currentPose // ignore: cast_nullable_to_non_nullable
+                    as PoseEntity?,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+
+class _$PoseVideoProcessingImpl implements PoseVideoProcessing {
+  const _$PoseVideoProcessingImpl({
+    required this.progress,
+    required this.framesProcessed,
+    this.currentPose,
+  });
+
+  @override
+  final double progress;
+  @override
+  final int framesProcessed;
+  @override
+  final PoseEntity? currentPose;
+
+  @override
+  String toString() {
+    return 'PoseState.videoProcessing(progress: $progress, framesProcessed: $framesProcessed, currentPose: $currentPose)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$PoseVideoProcessingImpl &&
+            (identical(other.progress, progress) ||
+                other.progress == progress) &&
+            (identical(other.framesProcessed, framesProcessed) ||
+                other.framesProcessed == framesProcessed) &&
+            (identical(other.currentPose, currentPose) ||
+                other.currentPose == currentPose));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, progress, framesProcessed, currentPose);
+
+  /// Create a copy of PoseState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$PoseVideoProcessingImplCopyWith<_$PoseVideoProcessingImpl> get copyWith =>
+      __$$PoseVideoProcessingImplCopyWithImpl<_$PoseVideoProcessingImpl>(
+        this,
+        _$identity,
+      );
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function() noPermission,
+    required TResult Function() streaming,
+    required TResult Function(
+      PoseEntity pose,
+      double averageConfidence,
+      double fps,
+    )
+    active,
+    required TResult Function() recordingVideo,
+    required TResult Function(
+      double progress,
+      int framesProcessed,
+      PoseEntity? currentPose,
+    )
+    videoProcessing,
+    required TResult Function(
+      List<PoseEntity> poses,
+      int frameCount,
+      String? videoPath,
+    )
+    videoComplete,
+    required TResult Function(String message, bool isRecoverable) error,
+  }) {
+    return videoProcessing(progress, framesProcessed, currentPose);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function()? noPermission,
+    TResult? Function()? streaming,
+    TResult? Function(PoseEntity pose, double averageConfidence, double fps)?
+    active,
+    TResult? Function()? recordingVideo,
+    TResult? Function(
+      double progress,
+      int framesProcessed,
+      PoseEntity? currentPose,
+    )?
+    videoProcessing,
+    TResult? Function(
+      List<PoseEntity> poses,
+      int frameCount,
+      String? videoPath,
+    )?
+    videoComplete,
+    TResult? Function(String message, bool isRecoverable)? error,
+  }) {
+    return videoProcessing?.call(progress, framesProcessed, currentPose);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function()? noPermission,
+    TResult Function()? streaming,
+    TResult Function(PoseEntity pose, double averageConfidence, double fps)?
+    active,
+    TResult Function()? recordingVideo,
+    TResult Function(
+      double progress,
+      int framesProcessed,
+      PoseEntity? currentPose,
+    )?
+    videoProcessing,
+    TResult Function(List<PoseEntity> poses, int frameCount, String? videoPath)?
+    videoComplete,
+    TResult Function(String message, bool isRecoverable)? error,
+    required TResult orElse(),
+  }) {
+    if (videoProcessing != null) {
+      return videoProcessing(progress, framesProcessed, currentPose);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(PoseInitial value) initial,
+    required TResult Function(PoseLoading value) loading,
+    required TResult Function(PoseNoPermission value) noPermission,
+    required TResult Function(PoseStreaming value) streaming,
+    required TResult Function(PoseActive value) active,
+    required TResult Function(PoseRecordingVideo value) recordingVideo,
+    required TResult Function(PoseVideoProcessing value) videoProcessing,
+    required TResult Function(PoseVideoComplete value) videoComplete,
+    required TResult Function(PoseError value) error,
+  }) {
+    return videoProcessing(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(PoseInitial value)? initial,
+    TResult? Function(PoseLoading value)? loading,
+    TResult? Function(PoseNoPermission value)? noPermission,
+    TResult? Function(PoseStreaming value)? streaming,
+    TResult? Function(PoseActive value)? active,
+    TResult? Function(PoseRecordingVideo value)? recordingVideo,
+    TResult? Function(PoseVideoProcessing value)? videoProcessing,
+    TResult? Function(PoseVideoComplete value)? videoComplete,
+    TResult? Function(PoseError value)? error,
+  }) {
+    return videoProcessing?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(PoseInitial value)? initial,
+    TResult Function(PoseLoading value)? loading,
+    TResult Function(PoseNoPermission value)? noPermission,
+    TResult Function(PoseStreaming value)? streaming,
+    TResult Function(PoseActive value)? active,
+    TResult Function(PoseRecordingVideo value)? recordingVideo,
+    TResult Function(PoseVideoProcessing value)? videoProcessing,
+    TResult Function(PoseVideoComplete value)? videoComplete,
+    TResult Function(PoseError value)? error,
+    required TResult orElse(),
+  }) {
+    if (videoProcessing != null) {
+      return videoProcessing(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class PoseVideoProcessing implements PoseState {
+  const factory PoseVideoProcessing({
+    required final double progress,
+    required final int framesProcessed,
+    final PoseEntity? currentPose,
+  }) = _$PoseVideoProcessingImpl;
+
+  double get progress;
+  int get framesProcessed;
+  PoseEntity? get currentPose;
+
+  /// Create a copy of PoseState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$PoseVideoProcessingImplCopyWith<_$PoseVideoProcessingImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$PoseVideoCompleteImplCopyWith<$Res> {
+  factory _$$PoseVideoCompleteImplCopyWith(
+    _$PoseVideoCompleteImpl value,
+    $Res Function(_$PoseVideoCompleteImpl) then,
+  ) = __$$PoseVideoCompleteImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({List<PoseEntity> poses, int frameCount, String? videoPath});
+}
+
+/// @nodoc
+class __$$PoseVideoCompleteImplCopyWithImpl<$Res>
+    extends _$PoseStateCopyWithImpl<$Res, _$PoseVideoCompleteImpl>
+    implements _$$PoseVideoCompleteImplCopyWith<$Res> {
+  __$$PoseVideoCompleteImplCopyWithImpl(
+    _$PoseVideoCompleteImpl _value,
+    $Res Function(_$PoseVideoCompleteImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of PoseState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? poses = null,
+    Object? frameCount = null,
+    Object? videoPath = freezed,
+  }) {
+    return _then(
+      _$PoseVideoCompleteImpl(
+        poses:
+            null == poses
+                ? _value._poses
+                : poses // ignore: cast_nullable_to_non_nullable
+                    as List<PoseEntity>,
+        frameCount:
+            null == frameCount
+                ? _value.frameCount
+                : frameCount // ignore: cast_nullable_to_non_nullable
+                    as int,
+        videoPath:
+            freezed == videoPath
+                ? _value.videoPath
+                : videoPath // ignore: cast_nullable_to_non_nullable
+                    as String?,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+
+class _$PoseVideoCompleteImpl implements PoseVideoComplete {
+  const _$PoseVideoCompleteImpl({
+    required final List<PoseEntity> poses,
+    required this.frameCount,
+    this.videoPath,
+  }) : _poses = poses;
+
+  final List<PoseEntity> _poses;
+  @override
+  List<PoseEntity> get poses {
+    if (_poses is EqualUnmodifiableListView) return _poses;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_poses);
+  }
+
+  @override
+  final int frameCount;
+  @override
+  final String? videoPath;
+
+  @override
+  String toString() {
+    return 'PoseState.videoComplete(poses: $poses, frameCount: $frameCount, videoPath: $videoPath)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$PoseVideoCompleteImpl &&
+            const DeepCollectionEquality().equals(other._poses, _poses) &&
+            (identical(other.frameCount, frameCount) ||
+                other.frameCount == frameCount) &&
+            (identical(other.videoPath, videoPath) ||
+                other.videoPath == videoPath));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    runtimeType,
+    const DeepCollectionEquality().hash(_poses),
+    frameCount,
+    videoPath,
+  );
+
+  /// Create a copy of PoseState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$PoseVideoCompleteImplCopyWith<_$PoseVideoCompleteImpl> get copyWith =>
+      __$$PoseVideoCompleteImplCopyWithImpl<_$PoseVideoCompleteImpl>(
+        this,
+        _$identity,
+      );
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function() noPermission,
+    required TResult Function() streaming,
+    required TResult Function(
+      PoseEntity pose,
+      double averageConfidence,
+      double fps,
+    )
+    active,
+    required TResult Function() recordingVideo,
+    required TResult Function(
+      double progress,
+      int framesProcessed,
+      PoseEntity? currentPose,
+    )
+    videoProcessing,
+    required TResult Function(
+      List<PoseEntity> poses,
+      int frameCount,
+      String? videoPath,
+    )
+    videoComplete,
+    required TResult Function(String message, bool isRecoverable) error,
+  }) {
+    return videoComplete(poses, frameCount, videoPath);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function()? noPermission,
+    TResult? Function()? streaming,
+    TResult? Function(PoseEntity pose, double averageConfidence, double fps)?
+    active,
+    TResult? Function()? recordingVideo,
+    TResult? Function(
+      double progress,
+      int framesProcessed,
+      PoseEntity? currentPose,
+    )?
+    videoProcessing,
+    TResult? Function(
+      List<PoseEntity> poses,
+      int frameCount,
+      String? videoPath,
+    )?
+    videoComplete,
+    TResult? Function(String message, bool isRecoverable)? error,
+  }) {
+    return videoComplete?.call(poses, frameCount, videoPath);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function()? noPermission,
+    TResult Function()? streaming,
+    TResult Function(PoseEntity pose, double averageConfidence, double fps)?
+    active,
+    TResult Function()? recordingVideo,
+    TResult Function(
+      double progress,
+      int framesProcessed,
+      PoseEntity? currentPose,
+    )?
+    videoProcessing,
+    TResult Function(List<PoseEntity> poses, int frameCount, String? videoPath)?
+    videoComplete,
+    TResult Function(String message, bool isRecoverable)? error,
+    required TResult orElse(),
+  }) {
+    if (videoComplete != null) {
+      return videoComplete(poses, frameCount, videoPath);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(PoseInitial value) initial,
+    required TResult Function(PoseLoading value) loading,
+    required TResult Function(PoseNoPermission value) noPermission,
+    required TResult Function(PoseStreaming value) streaming,
+    required TResult Function(PoseActive value) active,
+    required TResult Function(PoseRecordingVideo value) recordingVideo,
+    required TResult Function(PoseVideoProcessing value) videoProcessing,
+    required TResult Function(PoseVideoComplete value) videoComplete,
+    required TResult Function(PoseError value) error,
+  }) {
+    return videoComplete(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(PoseInitial value)? initial,
+    TResult? Function(PoseLoading value)? loading,
+    TResult? Function(PoseNoPermission value)? noPermission,
+    TResult? Function(PoseStreaming value)? streaming,
+    TResult? Function(PoseActive value)? active,
+    TResult? Function(PoseRecordingVideo value)? recordingVideo,
+    TResult? Function(PoseVideoProcessing value)? videoProcessing,
+    TResult? Function(PoseVideoComplete value)? videoComplete,
+    TResult? Function(PoseError value)? error,
+  }) {
+    return videoComplete?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(PoseInitial value)? initial,
+    TResult Function(PoseLoading value)? loading,
+    TResult Function(PoseNoPermission value)? noPermission,
+    TResult Function(PoseStreaming value)? streaming,
+    TResult Function(PoseActive value)? active,
+    TResult Function(PoseRecordingVideo value)? recordingVideo,
+    TResult Function(PoseVideoProcessing value)? videoProcessing,
+    TResult Function(PoseVideoComplete value)? videoComplete,
+    TResult Function(PoseError value)? error,
+    required TResult orElse(),
+  }) {
+    if (videoComplete != null) {
+      return videoComplete(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class PoseVideoComplete implements PoseState {
+  const factory PoseVideoComplete({
+    required final List<PoseEntity> poses,
+    required final int frameCount,
+    final String? videoPath,
+  }) = _$PoseVideoCompleteImpl;
+
+  List<PoseEntity> get poses;
+  int get frameCount;
+  String? get videoPath;
+
+  /// Create a copy of PoseState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$PoseVideoCompleteImplCopyWith<_$PoseVideoCompleteImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$PoseErrorImplCopyWith<$Res> {
+  factory _$$PoseErrorImplCopyWith(
+    _$PoseErrorImpl value,
+    $Res Function(_$PoseErrorImpl) then,
+  ) = __$$PoseErrorImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String message, bool isRecoverable});
+}
+
+/// @nodoc
+class __$$PoseErrorImplCopyWithImpl<$Res>
+    extends _$PoseStateCopyWithImpl<$Res, _$PoseErrorImpl>
+    implements _$$PoseErrorImplCopyWith<$Res> {
+  __$$PoseErrorImplCopyWithImpl(
+    _$PoseErrorImpl _value,
+    $Res Function(_$PoseErrorImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of PoseState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? message = null, Object? isRecoverable = null}) {
+    return _then(
+      _$PoseErrorImpl(
+        message:
+            null == message
+                ? _value.message
+                : message // ignore: cast_nullable_to_non_nullable
+                    as String,
+        isRecoverable:
+            null == isRecoverable
+                ? _value.isRecoverable
+                : isRecoverable // ignore: cast_nullable_to_non_nullable
+                    as bool,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+
+class _$PoseErrorImpl implements PoseError {
+  const _$PoseErrorImpl({required this.message, required this.isRecoverable});
+
+  @override
+  final String message;
+  @override
+  final bool isRecoverable;
+
+  @override
+  String toString() {
+    return 'PoseState.error(message: $message, isRecoverable: $isRecoverable)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$PoseErrorImpl &&
+            (identical(other.message, message) || other.message == message) &&
+            (identical(other.isRecoverable, isRecoverable) ||
+                other.isRecoverable == isRecoverable));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, message, isRecoverable);
+
+  /// Create a copy of PoseState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$PoseErrorImplCopyWith<_$PoseErrorImpl> get copyWith =>
+      __$$PoseErrorImplCopyWithImpl<_$PoseErrorImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function() noPermission,
+    required TResult Function() streaming,
+    required TResult Function(
+      PoseEntity pose,
+      double averageConfidence,
+      double fps,
+    )
+    active,
+    required TResult Function() recordingVideo,
+    required TResult Function(
+      double progress,
+      int framesProcessed,
+      PoseEntity? currentPose,
+    )
+    videoProcessing,
+    required TResult Function(
+      List<PoseEntity> poses,
+      int frameCount,
+      String? videoPath,
+    )
+    videoComplete,
+    required TResult Function(String message, bool isRecoverable) error,
+  }) {
+    return error(message, isRecoverable);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function()? noPermission,
+    TResult? Function()? streaming,
+    TResult? Function(PoseEntity pose, double averageConfidence, double fps)?
+    active,
+    TResult? Function()? recordingVideo,
+    TResult? Function(
+      double progress,
+      int framesProcessed,
+      PoseEntity? currentPose,
+    )?
+    videoProcessing,
+    TResult? Function(
+      List<PoseEntity> poses,
+      int frameCount,
+      String? videoPath,
+    )?
+    videoComplete,
+    TResult? Function(String message, bool isRecoverable)? error,
+  }) {
+    return error?.call(message, isRecoverable);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function()? noPermission,
+    TResult Function()? streaming,
+    TResult Function(PoseEntity pose, double averageConfidence, double fps)?
+    active,
+    TResult Function()? recordingVideo,
+    TResult Function(
+      double progress,
+      int framesProcessed,
+      PoseEntity? currentPose,
+    )?
+    videoProcessing,
+    TResult Function(List<PoseEntity> poses, int frameCount, String? videoPath)?
+    videoComplete,
+    TResult Function(String message, bool isRecoverable)? error,
+    required TResult orElse(),
+  }) {
+    if (error != null) {
+      return error(message, isRecoverable);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(PoseInitial value) initial,
+    required TResult Function(PoseLoading value) loading,
+    required TResult Function(PoseNoPermission value) noPermission,
+    required TResult Function(PoseStreaming value) streaming,
+    required TResult Function(PoseActive value) active,
+    required TResult Function(PoseRecordingVideo value) recordingVideo,
+    required TResult Function(PoseVideoProcessing value) videoProcessing,
+    required TResult Function(PoseVideoComplete value) videoComplete,
+    required TResult Function(PoseError value) error,
+  }) {
+    return error(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(PoseInitial value)? initial,
+    TResult? Function(PoseLoading value)? loading,
+    TResult? Function(PoseNoPermission value)? noPermission,
+    TResult? Function(PoseStreaming value)? streaming,
+    TResult? Function(PoseActive value)? active,
+    TResult? Function(PoseRecordingVideo value)? recordingVideo,
+    TResult? Function(PoseVideoProcessing value)? videoProcessing,
+    TResult? Function(PoseVideoComplete value)? videoComplete,
+    TResult? Function(PoseError value)? error,
+  }) {
+    return error?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(PoseInitial value)? initial,
+    TResult Function(PoseLoading value)? loading,
+    TResult Function(PoseNoPermission value)? noPermission,
+    TResult Function(PoseStreaming value)? streaming,
+    TResult Function(PoseActive value)? active,
+    TResult Function(PoseRecordingVideo value)? recordingVideo,
+    TResult Function(PoseVideoProcessing value)? videoProcessing,
+    TResult Function(PoseVideoComplete value)? videoComplete,
+    TResult Function(PoseError value)? error,
+    required TResult orElse(),
+  }) {
+    if (error != null) {
+      return error(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class PoseError implements PoseState {
+  const factory PoseError({
+    required final String message,
+    required final bool isRecoverable,
+  }) = _$PoseErrorImpl;
+
+  String get message;
+  bool get isRecoverable;
+
+  /// Create a copy of PoseState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$PoseErrorImplCopyWith<_$PoseErrorImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}

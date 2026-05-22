@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PoseWeave - Enable Camera Access</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-variant": "#2e3638",
+                        "on-primary": "#00363d",
+                        "error-container": "#93000a",
+                        "on-primary-fixed": "#001f24",
+                        "on-error-container": "#ffdad6",
+                        "on-tertiary": "#3e2e00",
+                        "surface-container-low": "#151d1e",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "tertiary-container": "#fec931",
+                        "tertiary-fixed-dim": "#f3bf26",
+                        "primary": "#c3f5ff",
+                        "on-surface-variant": "#bac9cc",
+                        "secondary-fixed": "#e3e2e2",
+                        "inverse-on-surface": "#2a3233",
+                        "surface-container-lowest": "#080f11",
+                        "surface": "#0d1516",
+                        "error": "#ffb4ab",
+                        "surface-container-high": "#242b2d",
+                        "on-tertiary-container": "#6f5500",
+                        "surface-tint": "#00daf3",
+                        "tertiary-fixed": "#ffdf96",
+                        "outline": "#849396",
+                        "on-primary-fixed-variant": "#004f58",
+                        "on-secondary-fixed-variant": "#464747",
+                        "inverse-primary": "#006875",
+                        "inverse-surface": "#dce4e5",
+                        "on-secondary": "#2f3131",
+                        "on-error": "#690005",
+                        "on-tertiary-fixed-variant": "#594400",
+                        "primary-fixed-dim": "#00daf3",
+                        "on-surface": "#dce4e5",
+                        "background": "#0d1516",
+                        "tertiary": "#ffeac0",
+                        "on-primary-container": "#00626e",
+                        "outline-variant": "#3b494c",
+                        "on-background": "#dce4e5",
+                        "surface-container": "#192122",
+                        "secondary-container": "#484949",
+                        "surface-bright": "#333a3c",
+                        "on-secondary-container": "#b8b8b8",
+                        "secondary": "#c7c6c6",
+                        "primary-container": "#00e5ff",
+                        "surface-dim": "#0d1516",
+                        "secondary-fixed-dim": "#c7c6c6",
+                        "on-tertiary-fixed": "#251a00",
+                        "primary-fixed": "#9cf0ff",
+                        "surface-container-highest": "#2e3638"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-desktop": "40px",
+                        "unit": "4px",
+                        "margin-mobile": "20px",
+                        "container-max": "1200px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "metric-sm": ["JetBrains Mono"],
+                        "display-lg": ["Inter"],
+                        "headline-md-mobile": ["Inter"],
+                        "metric-xl": ["JetBrains Mono"],
+                        "body-md": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "label-caps": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "metric-sm": ["14px", { "lineHeight": "1.0", "fontWeight": "500" }],
+                        "display-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "headline-md-mobile": ["20px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "metric-xl": ["32px", { "lineHeight": "1.0", "letterSpacing": "-0.05em", "fontWeight": "500" }],
+                        "body-md": ["16px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "label-caps": ["12px", { "lineHeight": "1.0", "letterSpacing": "0.1em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .neo-glass {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 100%), rgba(30, 30, 30, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .neon-bloom {
+            box-shadow: 0 0 15px rgba(0, 229, 255, 0.4);
+        }
+
+        .neon-text-bloom {
+            text-shadow: 0 0 8px rgba(0, 229, 255, 0.6);
+        }
+        
+        /* Particle Background Effect Simulation */
+        .particle-bg {
+            background-image: radial-gradient(circle at 50% 50%, rgba(0, 229, 255, 0.05) 0%, transparent 50%);
+            background-size: 100vw 100vh;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background h-screen w-full flex items-center justify-center overflow-hidden particle-bg relative">
+<!-- Abstract Particle Silhouette Background (Image Representation) -->
+<div class="absolute inset-0 z-0 opacity-40 pointer-events-none flex items-center justify-center">
+<img alt="Abstract cyan particle network forming a human silhouette." class="object-cover w-full h-full max-w-4xl mx-auto opacity-50 mix-blend-screen" data-alt="An abstract, high-tech background featuring an intricate network of electric cyan glowing particles interconnected by fine, luminous lines. The nodes and connections subtly arrange to form the ghostly silhouette of a human figure in mid-motion against a deep obsidian background. The visual style is futuristic neo-glassmorphism, evoking a high-performance biomechanics HUD. Lighting is dramatic, with the cyan bloom providing the primary light source in an otherwise dark, atmospheric void." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBHOhpzHkyLg4XiZdI0QXi-SKl7hepC3fnfgrnN6femNH3A5_C1iWi0hcOSzqAtTRHGtnLpUfqsM43AZpDlKswdYHl6i4cUS28cFHHN_m-Dfcxas6IquBaVxVGSFqwIvk2zhB14dGq2r-zTNpetkZzwSg7ZZRF5AFPx_DXBG3IfurAiHFP4t5iyL4GiCtKTHzCDFfaBF2Wp0c7YO-DBhNOz4Vg-_Ibd771hKHCli1eOVD3hBgtOCGLQ1Z7_mWxaCSJdNern8URfg20"/>
+</div>
+<!-- Center Modal -->
+<main class="relative z-10 w-full max-w-md px-margin-mobile md:px-0">
+<div class="neo-glass rounded-xl p-8 flex flex-col items-center text-center shadow-2xl transition-all duration-300 hover:border-primary/50">
+<!-- Icon -->
+<div class="mb-6 relative">
+<div class="absolute inset-0 bg-primary/20 rounded-full blur-xl"></div>
+<span class="material-symbols-outlined text-6xl text-primary neon-text-bloom relative z-10" style="font-variation-settings: 'FILL' 0;">
+                    verified_user
+                </span>
+</div>
+<!-- Content -->
+<h1 class="font-headline-md md:font-headline-md-mobile text-headline-md md:text-headline-md-mobile text-on-surface mb-4">
+                Enable Camera Access
+            </h1>
+<p class="font-body-md text-body-md text-on-surface-variant mb-8 px-2 leading-relaxed">
+                PoseWeave uses on-device AI to detect body movements in real-time. No data leaves your device.
+            </p>
+<!-- Actions -->
+<div class="w-full flex flex-col gap-4">
+<button class="w-full bg-primary hover:bg-primary-fixed-dim text-on-primary font-metric-sm text-metric-sm py-4 rounded-full transition-all duration-200 neon-bloom flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm">camera</span>
+                    Grant Access
+                </button>
+<button class="w-full neo-glass hover:bg-surface-variant/30 text-primary font-metric-sm text-metric-sm py-4 rounded-full transition-all duration-200 border border-outline-variant hover:border-primary/50">
+                    Use Demo Mode
+                </button>
+</div>
+</div>
+</main>
+</body></html>

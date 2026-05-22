@@ -1,0 +1,8 @@
+# Ensure nested model lists (e.g. PoseModel.landmarks) are serialized via their
+# own toJson() — required for the JSON export to encode correctly.
+targets:
+  $default:
+    builders:
+      json_serializable:
+        options:
+          explicit_to_json: true

@@ -1,0 +1,33 @@
+# Strict analysis for PoseWeave. Enforces the architecture rules in CLAUDE.md.
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  errors:
+    # Promote the most architecture-relevant lints to errors.
+    avoid_print: error
+    always_use_package_imports: error
+    unused_import: error
+    unawaited_futures: error
+  language:
+    strict-casts: true
+    strict-raw-types: true
+  exclude:
+    # Generated code — never lint these.
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+    - "**/*.config.dart"
+
+linter:
+  rules:
+    - prefer_const_constructors
+    - prefer_const_constructors_in_immutables
+    - prefer_const_declarations
+    - prefer_final_locals
+    - prefer_final_in_for_each
+    - avoid_dynamic_calls
+    - prefer_single_quotes
+    - require_trailing_commas
+    - unnecessary_late
+    - use_super_parameters
+    - sort_constructors_first
+    - directives_ordering

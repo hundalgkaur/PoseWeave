@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PoseWeave - Forgot Password</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        /* Dark Neo-Glassmorphism Utilities */
+        .glass-panel {
+            background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 100%), var(--tw-gradient-stops);
+            backdrop-filter: blur(12px);
+        }
+        
+        .neon-glow {
+            box-shadow: 0 0 15px rgba(0, 229, 255, 0.4);
+        }
+        
+        .bg-noise {
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-variant": "#2e3638",
+                      "on-primary": "#00363d",
+                      "error-container": "#93000a",
+                      "on-primary-fixed": "#001f24",
+                      "on-error-container": "#ffdad6",
+                      "on-tertiary": "#3e2e00",
+                      "surface-container-low": "#151d1e",
+                      "on-secondary-fixed": "#1a1c1c",
+                      "tertiary-container": "#fec931",
+                      "tertiary-fixed-dim": "#f3bf26",
+                      "primary": "#c3f5ff",
+                      "on-surface-variant": "#bac9cc",
+                      "secondary-fixed": "#e3e2e2",
+                      "inverse-on-surface": "#2a3233",
+                      "surface-container-lowest": "#080f11",
+                      "surface": "#0d1516",
+                      "error": "#ffb4ab",
+                      "surface-container-high": "#242b2d",
+                      "on-tertiary-container": "#6f5500",
+                      "surface-tint": "#00daf3",
+                      "tertiary-fixed": "#ffdf96",
+                      "outline": "#849396",
+                      "on-primary-fixed-variant": "#004f58",
+                      "on-secondary-fixed-variant": "#464747",
+                      "inverse-primary": "#006875",
+                      "inverse-surface": "#dce4e5",
+                      "on-secondary": "#2f3131",
+                      "on-error": "#690005",
+                      "on-tertiary-fixed-variant": "#594400",
+                      "primary-fixed-dim": "#00daf3",
+                      "on-surface": "#dce4e5",
+                      "background": "#0d1516",
+                      "tertiary": "#ffeac0",
+                      "on-primary-container": "#00626e",
+                      "outline-variant": "#3b494c",
+                      "on-background": "#dce4e5",
+                      "surface-container": "#192122",
+                      "secondary-container": "#484949",
+                      "surface-bright": "#333a3c",
+                      "on-secondary-container": "#b8b8b8",
+                      "secondary": "#c7c6c6",
+                      "primary-container": "#00e5ff",
+                      "surface-dim": "#0d1516",
+                      "secondary-fixed-dim": "#c7c6c6",
+                      "on-tertiary-fixed": "#251a00",
+                      "primary-fixed": "#9cf0ff",
+                      "surface-container-highest": "#2e3638"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "margin-desktop": "40px",
+                      "unit": "4px",
+                      "margin-mobile": "20px",
+                      "container-max": "1200px",
+                      "gutter": "16px"
+              },
+              "fontFamily": {
+                      "metric-sm": ["JetBrains Mono"],
+                      "display-lg": ["Inter"],
+                      "headline-md-mobile": ["Inter"],
+                      "metric-xl": ["JetBrains Mono"],
+                      "body-md": ["Inter"],
+                      "headline-md": ["Inter"],
+                      "label-caps": ["JetBrains Mono"]
+              },
+              "fontSize": {
+                      "metric-sm": ["14px", {"lineHeight": "1.0", "fontWeight": "500"}],
+                      "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                      "headline-md-mobile": ["20px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                      "metric-xl": ["32px", {"lineHeight": "1.0", "letterSpacing": "-0.05em", "fontWeight": "500"}],
+                      "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                      "headline-md": ["24px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                      "label-caps": ["12px", {"lineHeight": "1.0", "letterSpacing": "0.1em", "fontWeight": "700"}]
+              }
+            }
+          }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen flex flex-col font-body-md text-body-md antialiased relative overflow-hidden bg-noise">
+<!-- TopAppBar adapted for Transactional Flow (No Shell/Menu) -->
+<header class="flex justify-between items-center px-margin-mobile py-4 w-full bg-surface/10 backdrop-blur-md border-b border-outline-variant/30 z-10 sticky top-0">
+<div class="flex items-center">
+<button class="p-2 -ml-2 text-on-surface-variant hover:text-primary transition-colors focus:outline-none focus:text-primary">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<h1 class="ml-2 font-headline-md text-headline-md font-bold text-primary tracking-tight">Reset Password</h1>
+</div>
+<!-- Intentionally omitting trailing elements for focused flow -->
+</header>
+<!-- Main Canvas -->
+<main class="flex-1 flex flex-col items-center justify-center px-margin-mobile py-8 w-full max-w-[400px] mx-auto z-10">
+<!-- Instruction -->
+<p class="text-on-surface-variant text-center mb-8 font-body-md text-body-md">Enter the OTP sent to your email</p>
+<!-- OTP Inputs -->
+<div class="flex gap-4 mb-12 justify-center w-full">
+<!-- Active Input -->
+<div class="w-14 h-14 rounded-full border-[1.5px] border-primary-fixed-dim bg-surface/30 glass-panel neon-glow flex items-center justify-center font-metric-xl text-metric-xl text-primary transition-all duration-200">
+<span>3</span>
+</div>
+<!-- Filled Input -->
+<div class="w-14 h-14 rounded-full border border-outline-variant/50 bg-surface/10 glass-panel flex items-center justify-center font-metric-xl text-metric-xl text-on-surface transition-all duration-200">
+<span>8</span>
+</div>
+<!-- Empty Input (Next) -->
+<div class="w-14 h-14 rounded-full border border-outline-variant/30 bg-surface/5 flex items-center justify-center font-metric-xl text-metric-xl text-on-surface-variant/30 transition-all duration-200 relative">
+<!-- Caret blink simulation -->
+<div class="w-[2px] h-6 bg-primary-fixed-dim absolute animate-pulse"></div>
+</div>
+<!-- Empty Input -->
+<div class="w-14 h-14 rounded-full border border-outline-variant/30 bg-surface/5 flex items-center justify-center font-metric-xl text-metric-xl text-on-surface-variant/30 transition-all duration-200">
+</div>
+</div>
+<!-- Custom Numpad -->
+<div class="grid grid-cols-3 gap-3 mb-10 w-full max-w-[280px]">
+<!-- Row 1 -->
+<button class="h-16 rounded-lg glass-panel bg-surface-container-low/40 border border-outline-variant/20 flex items-center justify-center font-metric-xl text-metric-xl text-on-surface hover:bg-surface-variant/50 hover:border-primary-fixed-dim/50 transition-all active:scale-95 focus:outline-none focus:border-primary-fixed-dim">1</button>
+<button class="h-16 rounded-lg glass-panel bg-surface-container-low/40 border border-outline-variant/20 flex items-center justify-center font-metric-xl text-metric-xl text-on-surface hover:bg-surface-variant/50 hover:border-primary-fixed-dim/50 transition-all active:scale-95 focus:outline-none focus:border-primary-fixed-dim">2</button>
+<button class="h-16 rounded-lg glass-panel bg-surface-container-low/40 border border-outline-variant/20 flex items-center justify-center font-metric-xl text-metric-xl text-on-surface hover:bg-surface-variant/50 hover:border-primary-fixed-dim/50 transition-all active:scale-95 focus:outline-none focus:border-primary-fixed-dim">3</button>
+<!-- Row 2 -->
+<button class="h-16 rounded-lg glass-panel bg-surface-container-low/40 border border-outline-variant/20 flex items-center justify-center font-metric-xl text-metric-xl text-on-surface hover:bg-surface-variant/50 hover:border-primary-fixed-dim/50 transition-all active:scale-95 focus:outline-none focus:border-primary-fixed-dim">4</button>
+<button class="h-16 rounded-lg glass-panel bg-surface-container-low/40 border border-outline-variant/20 flex items-center justify-center font-metric-xl text-metric-xl text-on-surface hover:bg-surface-variant/50 hover:border-primary-fixed-dim/50 transition-all active:scale-95 focus:outline-none focus:border-primary-fixed-dim">5</button>
+<button class="h-16 rounded-lg glass-panel bg-surface-container-low/40 border border-outline-variant/20 flex items-center justify-center font-metric-xl text-metric-xl text-on-surface hover:bg-surface-variant/50 hover:border-primary-fixed-dim/50 transition-all active:scale-95 focus:outline-none focus:border-primary-fixed-dim">6</button>
+<!-- Row 3 -->
+<button class="h-16 rounded-lg glass-panel bg-surface-container-low/40 border border-outline-variant/20 flex items-center justify-center font-metric-xl text-metric-xl text-on-surface hover:bg-surface-variant/50 hover:border-primary-fixed-dim/50 transition-all active:scale-95 focus:outline-none focus:border-primary-fixed-dim">7</button>
+<button class="h-16 rounded-lg glass-panel bg-surface-container-low/40 border border-outline-variant/20 flex items-center justify-center font-metric-xl text-metric-xl text-on-surface hover:bg-surface-variant/50 hover:border-primary-fixed-dim/50 transition-all active:scale-95 focus:outline-none focus:border-primary-fixed-dim">8</button>
+<button class="h-16 rounded-lg glass-panel bg-surface-container-low/40 border border-outline-variant/20 flex items-center justify-center font-metric-xl text-metric-xl text-on-surface hover:bg-surface-variant/50 hover:border-primary-fixed-dim/50 transition-all active:scale-95 focus:outline-none focus:border-primary-fixed-dim">9</button>
+<!-- Row 4 -->
+<div class="h-16"></div> <!-- Empty spacer -->
+<button class="h-16 rounded-lg glass-panel bg-surface-container-low/40 border border-outline-variant/20 flex items-center justify-center font-metric-xl text-metric-xl text-on-surface hover:bg-surface-variant/50 hover:border-primary-fixed-dim/50 transition-all active:scale-95 focus:outline-none focus:border-primary-fixed-dim">0</button>
+<button class="h-16 rounded-lg flex items-center justify-center text-on-surface-variant hover:text-primary transition-colors active:scale-95 focus:outline-none">
+<span class="material-symbols-outlined text-3xl">backspace</span>
+</button>
+</div>
+<!-- Action Button -->
+<button class="w-full py-4 rounded-lg bg-primary text-on-primary font-headline-md-mobile text-headline-md-mobile font-bold neon-glow hover:brightness-110 active:scale-95 transition-all mt-auto md:mt-0">
+            Verify &amp; Continue
+        </button>
+</main>
+</body></html>

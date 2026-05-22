@@ -1,0 +1,69 @@
+name: poseweave
+description: "Real-time on-device pose detection and 2D skeleton visualization."
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.7.2
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+
+  # State management (bloc 8 API, as the architecture assumes)
+  flutter_bloc: ^8.1.6
+  equatable: ^2.0.5
+
+  # Camera + on-device ML pose detection
+  camera: ^0.11.0+2
+  google_mlkit_pose_detection: ^0.14.0
+
+  # Video input
+  image_picker: ^1.1.2
+  video_player: ^2.9.2
+  video_thumbnail: ^0.5.3 # extract JPEG frames at timestamps for detection
+
+  # Permissions
+  permission_handler: ^11.3.1
+
+  # Dependency injection
+  get_it: ^8.0.3
+  injectable: ^2.5.0
+
+  # Immutable models / unions + JSON
+  freezed_annotation: ^2.4.4
+  json_annotation: ^4.9.0
+
+  # Functional error handling (repository returns Either<Failure, T>)
+  dartz: ^0.10.1
+
+  # 3D math (Matrix4/Vector3) for the skeleton projection
+  vector_math: ^2.1.4
+
+  # File system (temp dir for video frame processing) + sharing exports
+  path_provider: ^2.1.5
+  share_plus: ^10.1.4
+
+  # Fonts: Inter (UI) + JetBrains Mono (data), per the Cyber-Kinetic design
+  google_fonts: ^6.2.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+  # Code generation
+  build_runner: ^2.4.13
+  freezed: ^2.5.7
+  json_serializable: ^6.8.0
+  injectable_generator: ^2.6.2
+
+  # Testing
+  bloc_test: ^9.1.7
+  mocktail: ^1.0.4
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/

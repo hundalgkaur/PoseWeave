@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PoseWeave - Video Analysis</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-variant": "#2e3638",
+                        "on-primary": "#00363d",
+                        "error-container": "#93000a",
+                        "on-primary-fixed": "#001f24",
+                        "on-error-container": "#ffdad6",
+                        "on-tertiary": "#3e2e00",
+                        "surface-container-low": "#151d1e",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "tertiary-container": "#fec931",
+                        "tertiary-fixed-dim": "#f3bf26",
+                        "primary": "#c3f5ff",
+                        "on-surface-variant": "#bac9cc",
+                        "secondary-fixed": "#e3e2e2",
+                        "inverse-on-surface": "#2a3233",
+                        "surface-container-lowest": "#080f11",
+                        "surface": "#0d1516",
+                        "error": "#ffb4ab",
+                        "surface-container-high": "#242b2d",
+                        "on-tertiary-container": "#6f5500",
+                        "surface-tint": "#00daf3",
+                        "tertiary-fixed": "#ffdf96",
+                        "outline": "#849396",
+                        "on-primary-fixed-variant": "#004f58",
+                        "on-secondary-fixed-variant": "#464747",
+                        "inverse-primary": "#006875",
+                        "inverse-surface": "#dce4e5",
+                        "on-secondary": "#2f3131",
+                        "on-error": "#690005",
+                        "on-tertiary-fixed-variant": "#594400",
+                        "primary-fixed-dim": "#00daf3",
+                        "on-surface": "#dce4e5",
+                        "background": "#0d1516",
+                        "tertiary": "#ffeac0",
+                        "on-primary-container": "#00626e",
+                        "outline-variant": "#3b494c",
+                        "on-background": "#dce4e5",
+                        "surface-container": "#192122",
+                        "secondary-container": "#484949",
+                        "surface-bright": "#333a3c",
+                        "on-secondary-container": "#b8b8b8",
+                        "secondary": "#c7c6c6",
+                        "primary-container": "#00e5ff",
+                        "surface-dim": "#0d1516",
+                        "secondary-fixed-dim": "#c7c6c6",
+                        "on-tertiary-fixed": "#251a00",
+                        "primary-fixed": "#9cf0ff",
+                        "surface-container-highest": "#2e3638"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-desktop": "40px",
+                        "unit": "4px",
+                        "margin-mobile": "20px",
+                        "container-max": "1200px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "metric-sm": ["JetBrains Mono"],
+                        "display-lg": ["Inter"],
+                        "headline-md-mobile": ["Inter"],
+                        "metric-xl": ["JetBrains Mono"],
+                        "body-md": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "label-caps": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "metric-sm": ["14px", { "lineHeight": "1.0", "fontWeight": "500" }],
+                        "display-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "headline-md-mobile": ["20px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "metric-xl": ["32px", { "lineHeight": "1.0", "letterSpacing": "-0.05em", "fontWeight": "500" }],
+                        "body-md": ["16px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "label-caps": ["12px", { "lineHeight": "1.0", "letterSpacing": "0.1em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .glass-panel {
+            background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 100%);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid #1E1E1E;
+        }
+        .neon-glow {
+            box-shadow: 0 0 15px rgba(0, 229, 255, 0.4);
+        }
+        .text-glow {
+            text-shadow: 0 0 8px rgba(0, 229, 255, 0.6);
+        }
+        body {
+            background-color: #0A0A0A;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface antialiased min-h-screen flex flex-col overflow-x-hidden selection:bg-primary/30 selection:text-primary">
+<!-- TopAppBar (Transactional - Nav hidden, specific rules apply) -->
+<header class="fixed top-0 w-full z-50 bg-surface/10 dark:bg-surface/10 backdrop-blur-md flex justify-between items-center px-margin-mobile py-4 border-b border-outline-variant/30">
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:text-primary transition-colors hover:scale-95 duration-150 flex items-center justify-center">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">arrow_back</span>
+</button>
+<h1 class="font-headline-md text-headline-md font-bold text-primary tracking-tight md:font-headline-md md:text-headline-md font-headline-md-mobile text-headline-md-mobile">Video Analysis</h1>
+</div>
+<div class="flex items-center">
+<button class="text-primary hover:bg-surface-variant/20 transition-colors p-2 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">more_vert</span>
+</button>
+</div>
+</header>
+<main class="flex-grow pt-[80px] pb-margin-mobile px-margin-mobile md:px-margin-desktop container max-w-container-max mx-auto flex flex-col gap-6 md:gap-8 h-[calc(100vh-80px)]">
+<!-- Upload State (Hidden initially for demo, simulating Processing/Results) -->
+<div class="hidden flex-col items-center justify-center flex-grow border-2 border-dashed border-outline-variant/50 rounded-xl glass-panel hover:border-primary/50 transition-colors cursor-pointer group" id="upload-zone">
+<div class="bg-surface-variant/30 p-6 rounded-full mb-4 group-hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined text-4xl text-on-surface-variant group-hover:text-primary transition-colors text-glow" style="font-variation-settings: 'FILL' 0;">movie</span>
+</div>
+<p class="font-headline-md-mobile text-headline-md-mobile text-on-surface font-semibold mb-2 group-hover:text-primary transition-colors">Tap to select video</p>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-md text-center">Upload MP4 or MOV. Max 60fps recommended for optimal biometric tracking.</p>
+</div>
+<!-- Processing State (Visible for demonstration) -->
+<div class="hidden flex-col items-center justify-center flex-grow glass-panel rounded-xl p-8" id="processing-state">
+<div class="bg-surface-variant/30 p-6 rounded-full mb-8 relative animate-pulse">
+<span class="material-symbols-outlined text-4xl text-primary text-glow" style="font-variation-settings: 'FILL' 1;">movie</span>
+<div class="absolute inset-0 border-2 border-primary rounded-full animate-ping opacity-20"></div>
+</div>
+<div class="w-full max-w-md">
+<div class="h-2 bg-surface-variant rounded-full overflow-hidden mb-4 border border-outline-variant/30">
+<div class="h-full bg-primary neon-glow" style="width: 39%;"></div>
+</div>
+<div class="flex justify-between items-center w-full">
+<p class="font-metric-sm text-metric-sm text-primary">Processing frame <span class="font-bold">142/360</span></p>
+<p class="font-metric-sm text-metric-sm text-on-surface-variant">39%</p>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant text-center mt-6">Extracting 3D spatial coordinates...</p>
+</div>
+</div>
+<!-- Results View (Active for this prompt) -->
+<div class="flex flex-col h-full gap-6" id="results-view">
+<!-- Video Player / Skeleton Canvas Area -->
+<div class="relative w-full h-[45%] md:h-[55%] glass-panel rounded-xl overflow-hidden group">
+<!-- Video Placeholder Background -->
+<div class="absolute inset-0 bg-surface-container-lowest flex items-center justify-center overflow-hidden">
+<div class="w-full h-full bg-cover bg-center opacity-40 mix-blend-luminosity grayscale" data-alt="A professional athlete performing a high-intensity dynamic sprint on an indoor track. The scene is illuminated by harsh, directional studio lighting creating stark contrasts and a dramatic mood. Shot with a sharp focus, emphasizing biomechanical movement. The overall aesthetic is dark neo-glassmorphism, relying on deep blacks and subtle cyan highlights to fit a futuristic sports science laboratory UI." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCHGDmnh9K0lX9FWZdz1YFacXfN2rsAJGYE-FhfmEQGePE1ByMsyGjfXuFTp_kRPCpqJiEjG5Q1_q8KU8RRrR-fUsD_yTxN8RTmWlCfC7kDwpeQJDbAV09RzfgT_zeh3uuOb-G2cX3FR-76d1Q36SLa9lqiu5mhCc8YeqCnxPNIrPGvZ3EU9Ec-3GnRQYAIN8zKAqyYB-DFQH6k88rHECVNGX4WwE9d2WQrq5-K6quMXh_nIIBT_iUVIV0bCqFKBIh1eSMAVn0mBGI')"></div>
+</div>
+<!-- HUD Overlays -->
+<div class="absolute top-4 left-4 w-6 h-6 border-t-[1.5px] border-l-[1.5px] border-primary text-glow"></div>
+<div class="absolute top-4 right-4 w-6 h-6 border-t-[1.5px] border-r-[1.5px] border-primary text-glow"></div>
+<div class="absolute bottom-4 left-4 w-6 h-6 border-b-[1.5px] border-l-[1.5px] border-primary text-glow"></div>
+<div class="absolute bottom-4 right-4 w-6 h-6 border-b-[1.5px] border-r-[1.5px] border-primary text-glow"></div>
+<!-- Skeleton Overlay (Simulated with SVG lines) -->
+<svg class="absolute inset-0 w-full h-full pointer-events-none" preserveaspectratio="xMidYMid slice" viewbox="0 0 100 100">
+<!-- Lines -->
+<line stroke="#00e5ff" stroke-opacity="0.8" stroke-width="0.5" x1="50" x2="45" y1="20" y2="35"></line>
+<line stroke="#00e5ff" stroke-opacity="0.8" stroke-width="0.5" x1="50" x2="55" y1="20" y2="35"></line>
+<line stroke="#00e5ff" stroke-opacity="0.8" stroke-width="0.5" x1="45" x2="40" y1="35" y2="55"></line>
+<line stroke="#00e5ff" stroke-opacity="0.8" stroke-width="0.5" x1="55" x2="60" y1="35" y2="50"></line>
+<line stroke="#00e5ff" stroke-opacity="0.8" stroke-width="0.5" x1="40" x2="35" y1="55" y2="70"></line>
+<line stroke="#00e5ff" stroke-opacity="0.8" stroke-width="0.5" x1="60" x2="65" y1="50" y2="75"></line>
+<line stroke="#00e5ff" stroke-opacity="0.8" stroke-width="0.5" x1="45" x2="55" y1="35" y2="35"></line>
+<!-- Nodes -->
+<circle cx="50" cy="20" fill="#c3f5ff" r="1.5"></circle>
+<circle cx="45" cy="35" fill="#c3f5ff" r="1"></circle>
+<circle cx="55" cy="35" fill="#c3f5ff" r="1"></circle>
+<circle cx="40" cy="55" fill="#c3f5ff" r="1"></circle>
+<circle cx="60" cy="50" fill="#c3f5ff" r="1"></circle>
+<circle cx="35" cy="70" fill="#c3f5ff" r="1"></circle>
+<circle cx="65" cy="75" fill="#c3f5ff" r="1"></circle>
+</svg>
+<!-- Live Frame Data Overlay -->
+<div class="absolute top-4 right-8 bg-surface-container-highest/80 backdrop-blur-md px-3 py-1 rounded border border-outline-variant/50">
+<span class="font-metric-sm text-metric-sm text-primary tracking-widest">FRM:142</span>
+</div>
+<!-- Video Controls Overlay -->
+<div class="absolute bottom-0 w-full bg-gradient-to-t from-black/80 to-transparent p-4 flex items-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+<button class="text-on-surface hover:text-primary transition-colors">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+<div class="flex-grow h-1 bg-surface-variant/50 rounded-full cursor-pointer relative">
+<div class="absolute top-0 left-0 h-full bg-primary rounded-full" style="width: 39%;"></div>
+<div class="absolute top-1/2 -translate-y-1/2 w-3 h-3 bg-primary rounded-full shadow-[0_0_8px_rgba(0,229,255,0.8)]" style="left: 39%;"></div>
+</div>
+<span class="font-metric-sm text-metric-sm text-on-surface-variant">0:02 / 0:06</span>
+</div>
+</div>
+<!-- Scrollable Data List (Landmarks) -->
+<div class="flex-grow flex flex-col glass-panel rounded-xl overflow-hidden">
+<!-- Data Header -->
+<div class="bg-surface-variant/20 px-4 py-3 border-b border-outline-variant/30 flex justify-between items-center sticky top-0 z-10 backdrop-blur-md">
+<h2 class="font-label-caps text-label-caps text-on-surface-variant">3D Landmark Coordinates</h2>
+<div class="flex gap-2">
+<button class="bg-surface-container-high hover:bg-surface-bright text-on-surface p-1 rounded border border-outline-variant/50 transition-colors">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 0;">download</span>
+</button>
+</div>
+</div>
+<!-- Data List -->
+<div class="flex-grow overflow-y-auto px-4 py-2 space-y-2">
+<!-- Data Row Item -->
+<div class="grid grid-cols-12 gap-2 items-center py-2 border-b border-outline-variant/20 hover:bg-surface-variant/10 transition-colors rounded px-2">
+<div class="col-span-4 md:col-span-3 flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary shadow-[0_0_5px_rgba(0,229,255,0.6)]"></span>
+<span class="font-body-md text-body-md text-on-surface text-sm">Right Shoulder</span>
+</div>
+<div class="col-span-8 md:col-span-9 grid grid-cols-3 gap-2 font-metric-sm text-metric-sm text-on-surface-variant text-right">
+<div class="flex flex-col"><span class="text-[10px] text-outline">X</span><span>0.4521</span></div>
+<div class="flex flex-col"><span class="text-[10px] text-outline">Y</span><span>0.2845</span></div>
+<div class="flex flex-col"><span class="text-[10px] text-outline">Z</span><span class="text-primary">-0.1042</span></div>
+</div>
+</div>
+<!-- Data Row Item -->
+<div class="grid grid-cols-12 gap-2 items-center py-2 border-b border-outline-variant/20 hover:bg-surface-variant/10 transition-colors rounded px-2">
+<div class="col-span-4 md:col-span-3 flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary/50"></span>
+<span class="font-body-md text-body-md text-on-surface text-sm">Left Shoulder</span>
+</div>
+<div class="col-span-8 md:col-span-9 grid grid-cols-3 gap-2 font-metric-sm text-metric-sm text-on-surface-variant text-right">
+<div class="flex flex-col"><span class="text-[10px] text-outline">X</span><span>0.5521</span></div>
+<div class="flex flex-col"><span class="text-[10px] text-outline">Y</span><span>0.2850</span></div>
+<div class="flex flex-col"><span class="text-[10px] text-outline">Z</span><span>0.0542</span></div>
+</div>
+</div>
+<!-- Data Row Item -->
+<div class="grid grid-cols-12 gap-2 items-center py-2 border-b border-outline-variant/20 hover:bg-surface-variant/10 transition-colors rounded px-2 bg-primary/5 border border-primary/20">
+<div class="col-span-4 md:col-span-3 flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-error shadow-[0_0_5px_rgba(255,180,171,0.6)]"></span>
+<span class="font-body-md text-body-md text-on-surface text-sm">Right Elbow</span>
+</div>
+<div class="col-span-8 md:col-span-9 grid grid-cols-3 gap-2 font-metric-sm text-metric-sm text-on-surface-variant text-right">
+<div class="flex flex-col"><span class="text-[10px] text-outline">X</span><span>0.4120</span></div>
+<div class="flex flex-col"><span class="text-[10px] text-outline">Y</span><span>0.5545</span></div>
+<div class="flex flex-col"><span class="text-[10px] text-error">Z</span><span class="text-error">-0.3042</span></div>
+</div>
+</div>
+<!-- Data Row Item -->
+<div class="grid grid-cols-12 gap-2 items-center py-2 border-b border-outline-variant/20 hover:bg-surface-variant/10 transition-colors rounded px-2">
+<div class="col-span-4 md:col-span-3 flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary/50"></span>
+<span class="font-body-md text-body-md text-on-surface text-sm">Right Wrist</span>
+</div>
+<div class="col-span-8 md:col-span-9 grid grid-cols-3 gap-2 font-metric-sm text-metric-sm text-on-surface-variant text-right">
+<div class="flex flex-col"><span class="text-[10px] text-outline">X</span><span>0.3801</span></div>
+<div class="flex flex-col"><span class="text-[10px] text-outline">Y</span><span>0.7012</span></div>
+<div class="flex flex-col"><span class="text-[10px] text-outline">Z</span><span class="text-primary">-0.4501</span></div>
+</div>
+</div>
+<!-- Data Row Item -->
+<div class="grid grid-cols-12 gap-2 items-center py-2 border-b border-outline-variant/20 hover:bg-surface-variant/10 transition-colors rounded px-2">
+<div class="col-span-4 md:col-span-3 flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary/50"></span>
+<span class="font-body-md text-body-md text-on-surface text-sm">Left Hip</span>
+</div>
+<div class="col-span-8 md:col-span-9 grid grid-cols-3 gap-2 font-metric-sm text-metric-sm text-on-surface-variant text-right">
+<div class="flex flex-col"><span class="text-[10px] text-outline">X</span><span>0.5200</span></div>
+<div class="flex flex-col"><span class="text-[10px] text-outline">Y</span><span>0.8500</span></div>
+<div class="flex flex-col"><span class="text-[10px] text-outline">Z</span><span>0.0100</span></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Navigation Suppressed: Transactional/Task-Focused Intent -->
+<!-- BottomNavBar and NavigationDrawer are excluded as per semantic shell mandate -->
+</body></html>
