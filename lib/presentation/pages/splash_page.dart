@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:poseweave/core/constants/app_colors.dart';
 import 'package:poseweave/core/constants/app_routes.dart';
 import 'package:poseweave/core/constants/app_theme.dart';
+import 'package:poseweave/presentation/pages/onboarding_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 /// Brief branded launch screen: a glowing cyan figure on obsidian that fades
-/// in, then hands off to the home screen.
+/// in, then routes to onboarding (first launch) or login.
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
 
@@ -26,11 +28,16 @@ class _SplashPageState extends State<SplashPage>
   @override
   void initState() {
     super.initState();
-    _navTimer = Timer(const Duration(milliseconds: 1600), () {
-      if (mounted) {
-        Navigator.of(context).pushReplacementNamed(AppRoutes.login);
-      }
-    });
+    _navTimer = Timer(const Duration(milliseconds: 1600), _go);
+  }
+
+  Future<void> _go() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final bool seen = prefs.getBool(kOnboardingSeenKey) ?? false;
+    if (!mounted) return;
+    Navigator.of(
+      context,
+    ).pushReplacementNamed(seen ? AppRoutes.login : AppRoutes.onboarding);
   }
 
   @override

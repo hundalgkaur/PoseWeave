@@ -21,9 +21,12 @@ Key reference docs:
 - **Gated login** (`login_page.dart`, `forgot_password_page.dart`, `core/constants/auth_constants.dart`): splash → **login** → home; hardcoded demo account `test@poseweave.app` / `test1234` (shown on screen), no guest skip; logout on the Home top-right. UI-only, no backend.
 - **Shared widgets** extracted for reuse: `JointAnglesPanel`, `LandmarkTable`; `kVideoSampleInterval` in `core/constants/analysis_constants.dart`.
 
-**Routes:** splash `/` → login `/login` → home `/home`; plus `/camera` `/gallery` `/skeleton3d` `/gait` `/image` `/forgot-password`.
+- **Onboarding** (`onboarding_page.dart`): 3-slide intro on first launch only — `shared_preferences` persists `kOnboardingSeenKey`; splash routes to onboarding (unseen) or login (seen).
+- **Sampling:** `kVideoSampleInterval` is 100 ms (~10 fps) for smoother playback + cleaner gait step detection (results playback timer uses the same constant).
 
-**Still out of scope:** synchronized live overlay *while* recording (OS/plugin limit), an onboarding screen, and a real auth backend.
+**Routes:** splash `/` → onboarding `/onboarding` (first launch) → login `/login` → home `/home`; plus `/camera` `/gallery` `/skeleton3d` `/gait` `/image` `/forgot-password`.
+
+**Still out of scope:** synchronized live overlay *while* recording (OS/plugin limit) and a real auth backend.
 
 **Decisions that diverge from the PRD's pubspec:** repositories return `dartz` `Either<Failure, T>` (added `dartz`); fonts via `google_fonts` (Inter + JetBrains Mono) instead of bundled `.ttf`s; added `share_plus`, `video_thumbnail`, `vector_math`. Dependency versions track current pub releases, not the PRD's 2023 pins, but the bloc-8 / freezed-2 APIs are retained.
 

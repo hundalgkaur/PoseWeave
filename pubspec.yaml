@@ -45,6 +45,9 @@ dependencies:
   path_provider: ^2.1.5
   share_plus: ^10.1.4
 
+  # Persist the "onboarding seen" flag
+  shared_preferences: ^2.3.3
+
   # Fonts: Inter (UI) + JetBrains Mono (data), per the Cyber-Kinetic design
   google_fonts: ^6.2.1
 

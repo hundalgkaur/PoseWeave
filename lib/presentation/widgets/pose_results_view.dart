@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:dartz/dartz.dart' hide State;
 import 'package:flutter/material.dart';
+import 'package:poseweave/core/constants/analysis_constants.dart';
 import 'package:poseweave/core/constants/app_colors.dart';
 import 'package:poseweave/core/constants/app_theme.dart';
 import 'package:poseweave/core/errors/failures.dart';
@@ -64,7 +65,7 @@ class _PoseResultsViewState extends State<PoseResultsView> {
       return;
     }
     setState(() {
-      _player = Timer.periodic(const Duration(milliseconds: 200), (_) {
+      _player = Timer.periodic(kVideoSampleInterval, (_) {
         setState(() => _index = (_index + 1) % widget.poses.length);
       });
     });

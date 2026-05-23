@@ -11,6 +11,7 @@ import 'package:poseweave/presentation/pages/gallery_pose_page.dart';
 import 'package:poseweave/presentation/pages/home_page.dart';
 import 'package:poseweave/presentation/pages/image_analysis_page.dart';
 import 'package:poseweave/presentation/pages/login_page.dart';
+import 'package:poseweave/presentation/pages/onboarding_page.dart';
 import 'package:poseweave/presentation/pages/skeleton_3d_page.dart';
 import 'package:poseweave/presentation/pages/splash_page.dart';
 
@@ -28,6 +29,7 @@ class PoseWeaveApp extends StatelessWidget {
       initialRoute: AppRoutes.splash,
       routes: <String, WidgetBuilder>{
         AppRoutes.splash: (_) => const SplashPage(),
+        AppRoutes.onboarding: (_) => const OnboardingPage(),
         AppRoutes.login: (_) => const LoginPage(),
         AppRoutes.forgotPassword: (_) => const ForgotPasswordPage(),
         AppRoutes.home: (_) => const HomePage(),
