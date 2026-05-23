@@ -48,47 +48,6 @@ class _HomePageState extends State<HomePage> {
       body: SafeArea(
         child: Stack(
           children: <Widget>[
-            Align(
-              alignment: Alignment.topLeft,
-              child: Row(
-                children: <Widget>[
-                  IconButton(
-                    tooltip: 'Settings',
-                    icon: const Icon(
-                      Icons.settings_outlined,
-                      color: AppColors.onSurfaceVariant,
-                    ),
-                    onPressed:
-                        () =>
-                            Navigator.of(context).pushNamed(AppRoutes.settings),
-                  ),
-                  IconButton(
-                    tooltip: 'Profile',
-                    icon: const Icon(
-                      Icons.person_outline,
-                      color: AppColors.onSurfaceVariant,
-                    ),
-                    onPressed:
-                        () =>
-                            Navigator.of(context).pushNamed(AppRoutes.profile),
-                  ),
-                ],
-              ),
-            ),
-            Align(
-              alignment: Alignment.topRight,
-              child: IconButton(
-                tooltip: 'Sign out',
-                icon: const Icon(
-                  Icons.logout,
-                  color: AppColors.onSurfaceVariant,
-                ),
-                onPressed:
-                    () => Navigator.of(
-                      context,
-                    ).pushNamedAndRemoveUntil(AppRoutes.login, (_) => false),
-              ),
-            ),
             Center(
               child: SingleChildScrollView(
                 padding: const EdgeInsets.symmetric(
@@ -190,6 +149,50 @@ class _HomePageState extends State<HomePage> {
                     ],
                   ),
                 ),
+              ),
+            ),
+            // Top-bar actions go last so they sit above the scroll view and
+            // actually receive taps.
+            Align(
+              alignment: Alignment.topLeft,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  IconButton(
+                    tooltip: 'Settings',
+                    icon: const Icon(
+                      Icons.settings_outlined,
+                      color: AppColors.onSurfaceVariant,
+                    ),
+                    onPressed:
+                        () =>
+                            Navigator.of(context).pushNamed(AppRoutes.settings),
+                  ),
+                  IconButton(
+                    tooltip: 'Profile',
+                    icon: const Icon(
+                      Icons.person_outline,
+                      color: AppColors.onSurfaceVariant,
+                    ),
+                    onPressed:
+                        () =>
+                            Navigator.of(context).pushNamed(AppRoutes.profile),
+                  ),
+                ],
+              ),
+            ),
+            Align(
+              alignment: Alignment.topRight,
+              child: IconButton(
+                tooltip: 'Sign out',
+                icon: const Icon(
+                  Icons.logout,
+                  color: AppColors.onSurfaceVariant,
+                ),
+                onPressed:
+                    () => Navigator.of(
+                      context,
+                    ).pushNamedAndRemoveUntil(AppRoutes.login, (_) => false),
               ),
             ),
           ],
