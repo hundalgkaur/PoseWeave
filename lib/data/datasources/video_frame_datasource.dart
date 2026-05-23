@@ -7,6 +7,7 @@ import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart'
 import 'package:image_picker/image_picker.dart';
 import 'package:injectable/injectable.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:poseweave/core/constants/analysis_constants.dart';
 import 'package:poseweave/core/errors/exceptions.dart';
 import 'package:poseweave/data/models/pose_model.dart';
 import 'package:poseweave/domain/entities/pose_entity.dart';
@@ -41,12 +42,13 @@ abstract class VideoFrameDataSource {
 
   /// Emits progress (and the pose for each sampled frame) until complete.
   Stream<VideoProcessingProgress> processVideo(String filePath);
-}
 
-/// Samples one frame every [_kSampleInterval] (~5 FPS) — enough to show motion
-/// in the timeline without the per-frame thumbnail extraction making a short
-/// clip take too long.
-const Duration _kSampleInterval = Duration(milliseconds: 200);
+  /// Opens the gallery image picker; returns the chosen image path or null.
+  Future<String?> pickImage();
+
+  /// Runs single-shot pose detection on an image file. Null if no pose found.
+  Future<PoseModel?> analyzeImage(String filePath);
+}
 
 /// Cap so a long clip can't spawn thousands of extractions in the demo.
 const int _kMaxFrames = 150;
@@ -66,21 +68,52 @@ class VideoFrameDataSourceImpl implements VideoFrameDataSource {
   }
 
   @override
+  Future<String?> pickImage() async {
+    try {
+      final XFile? file = await _picker.pickImage(source: ImageSource.gallery);
+      return file?.path;
+    } catch (e) {
+      throw VideoException('Failed to pick image: $e');
+    }
+  }
+
+  @override
+  Future<PoseModel?> analyzeImage(String filePath) async {
+    final PoseDetector detector = PoseDetector(options: PoseDetectorOptions());
+    try {
+      final ui.Size size = await _decodeSize(
+        await File(filePath).readAsBytes(),
+      );
+      final List<Pose> poses = await detector.processImage(
+        InputImage.fromFilePath(filePath),
+      );
+      if (poses.isEmpty) return null;
+      return PoseModel.fromMLKitPose(
+        poses.first,
+        imageSize: size,
+        source: PoseSource.videoFile,
+      );
+    } catch (e) {
+      throw VideoException('Failed to analyze image: $e');
+    } finally {
+      await detector.close();
+    }
+  }
+
+  @override
   Stream<VideoProcessingProgress> processVideo(String filePath) async* {
-    final PoseDetector detector = PoseDetector(
-      options: PoseDetectorOptions(),
-    );
+    final PoseDetector detector = PoseDetector(options: PoseDetectorOptions());
     Directory? tempDir;
     try {
       final Duration duration = await _videoDuration(filePath);
       tempDir = await getTemporaryDirectory();
 
       final int totalFrames = (duration.inMilliseconds ~/
-              _kSampleInterval.inMilliseconds)
+              kVideoSampleInterval.inMilliseconds)
           .clamp(1, _kMaxFrames);
 
       for (int i = 0; i < totalFrames; i++) {
-        final int timeMs = i * _kSampleInterval.inMilliseconds;
+        final int timeMs = i * kVideoSampleInterval.inMilliseconds;
         final ({PoseModel? pose, String? framePath}) frame =
             await _detectAtTime(detector, filePath, timeMs, tempDir.path, i);
         yield VideoProcessingProgress(
@@ -98,8 +131,9 @@ class VideoFrameDataSourceImpl implements VideoFrameDataSource {
   }
 
   Future<Duration> _videoDuration(String filePath) async {
-    final VideoPlayerController controller =
-        VideoPlayerController.file(File(filePath));
+    final VideoPlayerController controller = VideoPlayerController.file(
+      File(filePath),
+    );
     try {
       await controller.initialize();
       return controller.value.duration;
@@ -130,8 +164,9 @@ class VideoFrameDataSourceImpl implements VideoFrameDataSource {
 
     final File frameFile = File(framePath);
     final ui.Size size = await _decodeSize(await frameFile.readAsBytes());
-    final List<Pose> poses =
-        await detector.processImage(InputImage.fromFilePath(framePath));
+    final List<Pose> poses = await detector.processImage(
+      InputImage.fromFilePath(framePath),
+    );
     if (poses.isEmpty) return (pose: null, framePath: framePath);
 
     return (

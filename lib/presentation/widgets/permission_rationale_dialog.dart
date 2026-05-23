@@ -29,11 +29,7 @@ class PermissionRationaleDialog extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            const Icon(
-              Icons.videocam_off,
-              color: AppColors.primary,
-              size: 32,
-            ),
+            const Icon(Icons.videocam_off, color: AppColors.primary, size: 32),
             const SizedBox(height: 16),
             Text(
               'Camera access needed',
@@ -44,8 +40,9 @@ class PermissionRationaleDialog extends StatelessWidget {
               'PoseWeave detects body poses entirely on-device from the camera '
               'feed. Nothing is uploaded. Grant camera access to start live '
               'detection.',
-              style:
-                  text.bodyMedium?.copyWith(color: AppColors.onSurfaceVariant),
+              style: text.bodyMedium?.copyWith(
+                color: AppColors.onSurfaceVariant,
+              ),
             ),
             const SizedBox(height: 24),
             Row(

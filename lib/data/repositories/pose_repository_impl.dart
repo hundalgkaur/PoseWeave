@@ -35,7 +35,8 @@ class PoseRepositoryImpl implements PoseRepository {
   CameraLensDirection get lensDirection => _cameraDataSource.lensDirection;
 
   @override
-  List<PoseEntity> get recentPoses => List<PoseEntity>.unmodifiable(_recentPoses);
+  List<PoseEntity> get recentPoses =>
+      List<PoseEntity>.unmodifiable(_recentPoses);
 
   @override
   Future<Either<Failure, Unit>> initializeCamera({
@@ -56,13 +57,13 @@ class PoseRepositoryImpl implements PoseRepository {
   @override
   Either<Failure, Stream<PoseEntity>> getPoseStream() {
     try {
-      final Stream<PoseEntity> stream = _cameraDataSource.poseStream.map(
-        (PoseModel model) {
-          final PoseEntity entity = model.toEntity();
-          _cache(entity);
-          return entity;
-        },
-      );
+      final Stream<PoseEntity> stream = _cameraDataSource.poseStream.map((
+        PoseModel model,
+      ) {
+        final PoseEntity entity = model.toEntity();
+        _cache(entity);
+        return entity;
+      });
       return Right<Failure, Stream<PoseEntity>>(stream);
     } catch (e) {
       return Left<Failure, Stream<PoseEntity>>(MLFailure('$e'));
@@ -148,19 +149,44 @@ class PoseRepositoryImpl implements PoseRepository {
   }
 
   @override
+  Future<Either<Failure, String?>> pickImage() async {
+    try {
+      return Right<Failure, String?>(await _videoDataSource.pickImage());
+    } on VideoException catch (e) {
+      return Left<Failure, String?>(VideoFailure(e.message));
+    } catch (e) {
+      return Left<Failure, String?>(VideoFailure('$e'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, PoseEntity?>> analyzeImage(String filePath) async {
+    try {
+      final PoseModel? model = await _videoDataSource.analyzeImage(filePath);
+      final PoseEntity? entity = model?.toEntity();
+      if (entity != null) _cache(entity);
+      return Right<Failure, PoseEntity?>(entity);
+    } on VideoException catch (e) {
+      return Left<Failure, PoseEntity?>(VideoFailure(e.message));
+    } catch (e) {
+      return Left<Failure, PoseEntity?>(VideoFailure('$e'));
+    }
+  }
+
+  @override
   Stream<VideoAnalysisProgress> analyzeVideo(String filePath) {
-    return _videoDataSource.processVideo(filePath).map(
-      (VideoProcessingProgress p) {
-        final PoseEntity? entity = p.pose?.toEntity();
-        if (entity != null) _cache(entity);
-        return VideoAnalysisProgress(
-          currentFrame: p.currentFrame,
-          totalFrames: p.totalFrames,
-          pose: entity,
-          framePath: p.framePath,
-        );
-      },
-    );
+    return _videoDataSource.processVideo(filePath).map((
+      VideoProcessingProgress p,
+    ) {
+      final PoseEntity? entity = p.pose?.toEntity();
+      if (entity != null) _cache(entity);
+      return VideoAnalysisProgress(
+        currentFrame: p.currentFrame,
+        totalFrames: p.totalFrames,
+        pose: entity,
+        framePath: p.framePath,
+      );
+    });
   }
 
   @override
@@ -173,9 +199,10 @@ class PoseRepositoryImpl implements PoseRepository {
         'version': '1.0.0',
         'exportedAt': DateTime.now().toIso8601String(),
         'poseCount': poses.length,
-        'poses': poses
-            .map((PoseEntity p) => PoseModel.fromEntity(p).toJson())
-            .toList(),
+        'poses':
+            poses
+                .map((PoseEntity p) => PoseModel.fromEntity(p).toJson())
+                .toList(),
       };
       final Directory dir = await getTemporaryDirectory();
       final File file = File(

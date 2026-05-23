@@ -65,7 +65,8 @@ class _CameraView extends StatelessWidget {
 
           final bool detecting = state is PoseActive;
           final bool recording = state is PoseRecordingVideo;
-          final bool canRecord = !bloc.isMockMode &&
+          final bool canRecord =
+              !bloc.isMockMode &&
               (state is PoseStreaming || detecting || recording);
 
           return Stack(
@@ -128,14 +129,15 @@ class _Background extends StatelessWidget {
     }
     return ColoredBox(
       color: AppColors.surfaceContainerLowest,
-      child: bloc.isMockMode
-          ? Center(
-              child: Text(
-                'MOCK MODE',
-                style: AppTheme.labelCaps(color: AppColors.outline),
-              ),
-            )
-          : null,
+      child:
+          bloc.isMockMode
+              ? Center(
+                child: Text(
+                  'MOCK MODE',
+                  style: AppTheme.labelCaps(color: AppColors.outline),
+                ),
+              )
+              : null,
     );
   }
 }
@@ -211,23 +213,23 @@ class _Controls extends StatelessWidget {
               backgroundColor: detecting ? AppColors.error : AppColors.primary,
               foregroundColor:
                   detecting ? AppColors.onError : AppColors.onPrimary,
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 32, vertical: 14),
+              padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 14),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(999),
               ),
             ),
             // Detection is disabled while recording (mutually exclusive).
-            onPressed: recording
-                ? null
-                : () {
-                    HapticFeedback.mediumImpact();
-                    bloc.add(
-                      detecting
-                          ? const PoseEvent.stopDetection()
-                          : const PoseEvent.startDetection(),
-                    );
-                  },
+            onPressed:
+                recording
+                    ? null
+                    : () {
+                      HapticFeedback.mediumImpact();
+                      bloc.add(
+                        detecting
+                            ? const PoseEvent.stopDetection()
+                            : const PoseEvent.startDetection(),
+                      );
+                    },
             icon: Icon(detecting ? Icons.stop : Icons.play_arrow),
             label: Text(
               detecting ? 'STOP DETECTION' : 'START DETECTION',
@@ -243,25 +245,26 @@ class _Controls extends StatelessWidget {
               _DockButton(
                 icon: Icons.cameraswitch,
                 label: 'FLIP',
-                onTap: recording
-                    ? null
-                    : () => bloc.add(const PoseEvent.switchCamera()),
+                onTap:
+                    recording
+                        ? null
+                        : () => bloc.add(const PoseEvent.switchCamera()),
               ),
               _DockButton(
-                icon:
-                    recording ? Icons.stop_circle : Icons.fiber_manual_record,
+                icon: recording ? Icons.stop_circle : Icons.fiber_manual_record,
                 label: recording ? 'STOP REC' : 'RECORD',
                 color: recording ? AppColors.error : null,
-                onTap: canRecord
-                    ? () {
-                        HapticFeedback.mediumImpact();
-                        bloc.add(
-                          recording
-                              ? const PoseEvent.stopVideoRecording()
-                              : const PoseEvent.startVideoRecording(),
-                        );
-                      }
-                    : null,
+                onTap:
+                    canRecord
+                        ? () {
+                          HapticFeedback.mediumImpact();
+                          bloc.add(
+                            recording
+                                ? const PoseEvent.stopVideoRecording()
+                                : const PoseEvent.startVideoRecording(),
+                          );
+                        }
+                        : null,
               ),
             ],
           ),
@@ -315,7 +318,10 @@ class _RecBadgeState extends State<_RecBadge>
             ),
           ),
           const SizedBox(width: 8),
-          Text('REC', style: AppTheme.mono(fontSize: 12, color: AppColors.error)),
+          Text(
+            'REC',
+            style: AppTheme.mono(fontSize: 12, color: AppColors.error),
+          ),
         ],
       ),
     );
@@ -338,9 +344,10 @@ class _DockButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color tint = onTap == null
-        ? AppColors.onSurfaceVariant.withValues(alpha: 0.35)
-        : (color ?? AppColors.onSurfaceVariant);
+    final Color tint =
+        onTap == null
+            ? AppColors.onSurfaceVariant.withValues(alpha: 0.35)
+            : (color ?? AppColors.onSurfaceVariant);
     return TextButton(
       onPressed: onTap,
       child: Column(
@@ -429,8 +436,10 @@ class _RecordingResults extends StatelessWidget {
                 videoPath: state.videoPath,
                 framePaths: state.framePaths,
                 restartLabel: 'Back to live camera',
-                onRestart: () =>
-                    context.read<PoseBloc>().add(const PoseEvent.startDetection()),
+                onRestart:
+                    () => context.read<PoseBloc>().add(
+                      const PoseEvent.startDetection(),
+                    ),
               ),
             ),
           ],
@@ -451,10 +460,22 @@ class _HudCorners extends StatelessWidget {
         padding: EdgeInsets.all(16),
         child: Stack(
           children: <Widget>[
-            Align(alignment: Alignment.topLeft, child: _Corner(top: true, left: true)),
-            Align(alignment: Alignment.topRight, child: _Corner(top: true, left: false)),
-            Align(alignment: Alignment.bottomLeft, child: _Corner(top: false, left: true)),
-            Align(alignment: Alignment.bottomRight, child: _Corner(top: false, left: false)),
+            Align(
+              alignment: Alignment.topLeft,
+              child: _Corner(top: true, left: true),
+            ),
+            Align(
+              alignment: Alignment.topRight,
+              child: _Corner(top: true, left: false),
+            ),
+            Align(
+              alignment: Alignment.bottomLeft,
+              child: _Corner(top: false, left: true),
+            ),
+            Align(
+              alignment: Alignment.bottomRight,
+              child: _Corner(top: false, left: false),
+            ),
           ],
         ),
       ),

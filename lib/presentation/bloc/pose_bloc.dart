@@ -33,6 +33,7 @@ class PoseBloc extends Bloc<PoseEvent, PoseState> {
     on<PoseReceived>(_onPoseReceived);
     on<PickAndAnalyzeVideo>(_onPickAndAnalyzeVideo);
     on<AnalyzeVideoFile>(_onAnalyzeVideoFile);
+    on<PickAndAnalyzeImage>(_onPickAndAnalyzeImage);
   }
 
   final PoseRepository _repository;
@@ -77,26 +78,26 @@ class PoseBloc extends Bloc<PoseEvent, PoseState> {
   ) async {
     final Either<Failure, Stream<PoseEntity>> streamResult =
         _repository.getPoseStream();
-    final Stream<PoseEntity>? stream = streamResult.fold(
-      (Failure f) {
-        emit(PoseState.error(message: f.message, isRecoverable: f.isRecoverable));
-        return null;
-      },
-      (Stream<PoseEntity> s) => s,
-    );
+    final Stream<PoseEntity>? stream = streamResult.fold((Failure f) {
+      emit(PoseState.error(message: f.message, isRecoverable: f.isRecoverable));
+      return null;
+    }, (Stream<PoseEntity> s) => s);
     if (stream == null) return;
 
     await _poseSubscription?.cancel();
     _poseSubscription = stream.listen(
       (PoseEntity pose) => add(PoseEvent.poseReceived(pose)),
-      onError: (Object e) =>
-          add(const PoseEvent.stopDetection()), // bad stream -> stop cleanly
+      onError:
+          (Object e) => add(
+            const PoseEvent.stopDetection(),
+          ), // bad stream -> stop cleanly
     );
 
     final Either<Failure, Unit> started = await _repository.startDetection();
     started.fold(
-      (Failure f) =>
-          emit(PoseState.error(message: f.message, isRecoverable: f.isRecoverable)),
+      (Failure f) => emit(
+        PoseState.error(message: f.message, isRecoverable: f.isRecoverable),
+      ),
       (_) => emit(const PoseState.streaming()),
     );
   }
@@ -118,8 +119,9 @@ class PoseBloc extends Bloc<PoseEvent, PoseState> {
   ) async {
     final Either<Failure, Unit> result = await _repository.switchCamera();
     result.fold(
-      (Failure f) =>
-          emit(PoseState.error(message: f.message, isRecoverable: f.isRecoverable)),
+      (Failure f) => emit(
+        PoseState.error(message: f.message, isRecoverable: f.isRecoverable),
+      ),
       (_) {},
     );
   }
@@ -140,10 +142,12 @@ class PoseBloc extends Bloc<PoseEvent, PoseState> {
     // the ML Kit image stream — cancel detection first.
     await _poseSubscription?.cancel();
     _poseSubscription = null;
-    final Either<Failure, Unit> result = await _repository.startVideoRecording();
+    final Either<Failure, Unit> result =
+        await _repository.startVideoRecording();
     result.fold(
-      (Failure f) =>
-          emit(PoseState.error(message: f.message, isRecoverable: f.isRecoverable)),
+      (Failure f) => emit(
+        PoseState.error(message: f.message, isRecoverable: f.isRecoverable),
+      ),
       (_) => emit(const PoseState.recordingVideo()),
     );
   }
@@ -182,13 +186,10 @@ class PoseBloc extends Bloc<PoseEvent, PoseState> {
     Emitter<PoseState> emit,
   ) async {
     final Either<Failure, String?> picked = await _repository.pickVideo();
-    final String? path = picked.fold(
-      (Failure f) {
-        emit(PoseState.error(message: f.message, isRecoverable: f.isRecoverable));
-        return null;
-      },
-      (String? p) => p,
-    );
+    final String? path = picked.fold((Failure f) {
+      emit(PoseState.error(message: f.message, isRecoverable: f.isRecoverable));
+      return null;
+    }, (String? p) => p);
     if (path == null) return; // cancelled or failed
     await _analyze(path, emit);
   }
@@ -196,16 +197,39 @@ class PoseBloc extends Bloc<PoseEvent, PoseState> {
   Future<void> _onAnalyzeVideoFile(
     AnalyzeVideoFile event,
     Emitter<PoseState> emit,
-  ) =>
-      _analyze(event.filePath, emit);
+  ) => _analyze(event.filePath, emit);
+
+  Future<void> _onPickAndAnalyzeImage(
+    PickAndAnalyzeImage event,
+    Emitter<PoseState> emit,
+  ) async {
+    final Either<Failure, String?> picked = await _repository.pickImage();
+    final String? path = picked.fold((Failure f) {
+      emit(PoseState.error(message: f.message, isRecoverable: f.isRecoverable));
+      return null;
+    }, (String? p) => p);
+    if (path == null) return; // cancelled or failed
+    emit(const PoseState.imageProcessing());
+    final Either<Failure, PoseEntity?> result = await _repository.analyzeImage(
+      path,
+    );
+    result.fold(
+      (Failure f) => emit(
+        PoseState.error(message: f.message, isRecoverable: f.isRecoverable),
+      ),
+      (PoseEntity? pose) =>
+          emit(PoseState.imageComplete(imagePath: path, pose: pose)),
+    );
+  }
 
   Future<void> _analyze(String path, Emitter<PoseState> emit) async {
     emit(const PoseState.videoProcessing(progress: 0, framesProcessed: 0));
     final List<PoseEntity> poses = <PoseEntity>[];
     final List<String> framePaths = <String>[];
     try {
-      await for (final VideoAnalysisProgress p
-          in _repository.analyzeVideo(path)) {
+      await for (final VideoAnalysisProgress p in _repository.analyzeVideo(
+        path,
+      )) {
         if (p.pose != null) {
           poses.add(p.pose!);
           framePaths.add(p.framePath ?? ''); // stays index-aligned with poses
@@ -227,7 +251,12 @@ class PoseBloc extends Bloc<PoseEvent, PoseState> {
         ),
       );
     } catch (e) {
-      emit(PoseState.error(message: 'Video analysis failed: $e', isRecoverable: true));
+      emit(
+        PoseState.error(
+          message: 'Video analysis failed: $e',
+          isRecoverable: true,
+        ),
+      );
     }
   }
 

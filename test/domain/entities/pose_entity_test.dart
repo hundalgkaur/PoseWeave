@@ -30,7 +30,10 @@ void main() {
     });
 
     test('averageConfidence is the mean across landmarks', () {
-      expect(buildTestPose(confidence: 0.8).averageConfidence, closeTo(0.8, 1e-9));
+      expect(
+        buildTestPose(confidence: 0.8).averageConfidence,
+        closeTo(0.8, 1e-9),
+      );
     });
 
     test('isVisible reflects the 0.5 threshold', () {

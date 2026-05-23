@@ -28,7 +28,7 @@ class _SplashPageState extends State<SplashPage>
     super.initState();
     _navTimer = Timer(const Duration(milliseconds: 1600), () {
       if (mounted) {
-        Navigator.of(context).pushReplacementNamed(AppRoutes.home);
+        Navigator.of(context).pushReplacementNamed(AppRoutes.login);
       }
     });
   }
@@ -42,8 +42,10 @@ class _SplashPageState extends State<SplashPage>
 
   @override
   Widget build(BuildContext context) {
-    final CurvedAnimation curve =
-        CurvedAnimation(parent: _controller, curve: Curves.easeOut);
+    final CurvedAnimation curve = CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeOut,
+    );
     return Scaffold(
       backgroundColor: AppColors.background,
       body: Center(
@@ -63,7 +65,9 @@ class _SplashPageState extends State<SplashPage>
                     border: Border.all(color: AppColors.glassBorder),
                     boxShadow: <BoxShadow>[
                       BoxShadow(
-                        color: AppColors.primaryContainer.withValues(alpha: 0.35),
+                        color: AppColors.primaryContainer.withValues(
+                          alpha: 0.35,
+                        ),
                         blurRadius: 32,
                       ),
                     ],
@@ -77,13 +81,10 @@ class _SplashPageState extends State<SplashPage>
                 const SizedBox(height: 20),
                 Text(
                   'PoseWeave',
-                  style: Theme.of(context)
-                      .textTheme
-                      .headlineMedium
-                      ?.copyWith(
-                        color: AppColors.primary,
-                        fontWeight: FontWeight.w600,
-                      ),
+                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                    color: AppColors.primary,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
                 const SizedBox(height: 6),
                 Text(

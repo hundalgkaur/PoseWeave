@@ -24,18 +24,21 @@ class PoseOverlayPainter extends CustomPainter {
 
   // Pre-created paints reused every frame (no per-paint allocation). The bone
   // paint's color is set per-bone inside [paint].
-  static final Paint _bonePaint = Paint()
-    ..strokeWidth = 3
-    ..strokeCap = StrokeCap.round
-    ..style = PaintingStyle.stroke
-    ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 3);
-  static final Paint _dotFill = Paint()
-    ..color = Colors.white
-    ..style = PaintingStyle.fill;
-  static final Paint _dotStroke = Paint()
-    ..color = Colors.black.withValues(alpha: 0.6)
-    ..strokeWidth = 1.5
-    ..style = PaintingStyle.stroke;
+  static final Paint _bonePaint =
+      Paint()
+        ..strokeWidth = 3
+        ..strokeCap = StrokeCap.round
+        ..style = PaintingStyle.stroke
+        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 3);
+  static final Paint _dotFill =
+      Paint()
+        ..color = Colors.white
+        ..style = PaintingStyle.fill;
+  static final Paint _dotStroke =
+      Paint()
+        ..color = Colors.black.withValues(alpha: 0.6)
+        ..strokeWidth = 1.5
+        ..style = PaintingStyle.stroke;
 
   @override
   void paint(Canvas canvas, Size size) {

@@ -39,11 +39,11 @@ class MLKitCameraDataSourceImpl implements MLKitCameraDataSource {
   /// Android device-orientation -> degrees, for rotation compensation.
   static const Map<DeviceOrientation, int> _orientations =
       <DeviceOrientation, int>{
-    DeviceOrientation.portraitUp: 0,
-    DeviceOrientation.landscapeLeft: 90,
-    DeviceOrientation.portraitDown: 180,
-    DeviceOrientation.landscapeRight: 270,
-  };
+        DeviceOrientation.portraitUp: 0,
+        DeviceOrientation.landscapeLeft: 90,
+        DeviceOrientation.portraitDown: 180,
+        DeviceOrientation.landscapeRight: 270,
+      };
 
   @override
   CameraController? get controller => _controller;
@@ -89,7 +89,9 @@ class MLKitCameraDataSourceImpl implements MLKitCameraDataSource {
       ResolutionPreset.medium,
       enableAudio: false,
       imageFormatGroup:
-          Platform.isAndroid ? ImageFormatGroup.nv21 : ImageFormatGroup.bgra8888,
+          Platform.isAndroid
+              ? ImageFormatGroup.nv21
+              : ImageFormatGroup.bgra8888,
     );
     await controller.initialize();
     _controller = controller;
@@ -128,9 +130,10 @@ class MLKitCameraDataSourceImpl implements MLKitCameraDataSource {
     if (_mockMode || _cameras.length < 2) return;
     final bool wasDetecting = _detecting;
     await stopDetection();
-    _lensDirection = _lensDirection == CameraLensDirection.back
-        ? CameraLensDirection.front
-        : CameraLensDirection.back;
+    _lensDirection =
+        _lensDirection == CameraLensDirection.back
+            ? CameraLensDirection.front
+            : CameraLensDirection.back;
     await _controller?.dispose();
     _controller = null;
     await _startController(_pickCamera(_lensDirection));
@@ -226,7 +229,8 @@ class MLKitCameraDataSourceImpl implements MLKitCameraDataSource {
     if (Platform.isIOS) {
       rotation = InputImageRotationValue.fromRawValue(sensorOrientation);
     } else {
-      final int? compensation = _orientations[controller.value.deviceOrientation];
+      final int? compensation =
+          _orientations[controller.value.deviceOrientation];
       if (compensation == null) return null;
       final int rotationCompensation =
           camera.lensDirection == CameraLensDirection.front
@@ -236,8 +240,9 @@ class MLKitCameraDataSourceImpl implements MLKitCameraDataSource {
     }
     if (rotation == null) return null;
 
-    final InputImageFormat? format =
-        InputImageFormatValue.fromRawValue(image.format.raw as int);
+    final InputImageFormat? format = InputImageFormatValue.fromRawValue(
+      image.format.raw as int,
+    );
     if (format == null ||
         (Platform.isAndroid && format != InputImageFormat.nv21) ||
         (Platform.isIOS && format != InputImageFormat.bgra8888)) {
@@ -264,8 +269,7 @@ class MLKitCameraDataSourceImpl implements MLKitCameraDataSource {
     final DateTime start = DateTime.now();
     _mockTimer = Timer.periodic(_kFrameInterval, (_) {
       if (_poseController.isClosed) return;
-      final double t =
-          DateTime.now().difference(start).inMilliseconds / 1000.0;
+      final double t = DateTime.now().difference(start).inMilliseconds / 1000.0;
       _poseController.add(_mockPose(t));
     });
   }
@@ -276,29 +280,51 @@ class MLKitCameraDataSourceImpl implements MLKitCameraDataSource {
   PoseModel _mockPose(double t) {
     final double swing = math.sin(t * 2) * 0.06;
     final Map<int, List<double>> base = <int, List<double>>{
-      0: <double>[0.50, 0.12], 1: <double>[0.52, 0.10],
-      2: <double>[0.53, 0.10], 3: <double>[0.54, 0.10],
-      4: <double>[0.48, 0.10], 5: <double>[0.47, 0.10],
-      6: <double>[0.46, 0.10], 7: <double>[0.55, 0.11],
-      8: <double>[0.45, 0.11], 9: <double>[0.52, 0.14],
-      10: <double>[0.48, 0.14], 11: <double>[0.60, 0.25],
-      12: <double>[0.40, 0.25], 13: <double>[0.65, 0.38 + swing],
-      14: <double>[0.35, 0.38 - swing], 15: <double>[0.68, 0.50 + swing],
-      16: <double>[0.32, 0.50 - swing], 17: <double>[0.69, 0.53 + swing],
-      18: <double>[0.31, 0.53 - swing], 19: <double>[0.70, 0.53 + swing],
-      20: <double>[0.30, 0.53 - swing], 21: <double>[0.67, 0.52 + swing],
-      22: <double>[0.33, 0.52 - swing], 23: <double>[0.56, 0.55],
-      24: <double>[0.44, 0.55], 25: <double>[0.57, 0.72],
-      26: <double>[0.43, 0.72], 27: <double>[0.58, 0.90],
-      28: <double>[0.42, 0.90], 29: <double>[0.57, 0.92],
-      30: <double>[0.43, 0.92], 31: <double>[0.60, 0.93],
+      0: <double>[0.50, 0.12],
+      1: <double>[0.52, 0.10],
+      2: <double>[0.53, 0.10],
+      3: <double>[0.54, 0.10],
+      4: <double>[0.48, 0.10],
+      5: <double>[0.47, 0.10],
+      6: <double>[0.46, 0.10],
+      7: <double>[0.55, 0.11],
+      8: <double>[0.45, 0.11],
+      9: <double>[0.52, 0.14],
+      10: <double>[0.48, 0.14],
+      11: <double>[0.60, 0.25],
+      12: <double>[0.40, 0.25],
+      13: <double>[0.65, 0.38 + swing],
+      14: <double>[0.35, 0.38 - swing],
+      15: <double>[0.68, 0.50 + swing],
+      16: <double>[0.32, 0.50 - swing],
+      17: <double>[0.69, 0.53 + swing],
+      18: <double>[0.31, 0.53 - swing],
+      19: <double>[0.70, 0.53 + swing],
+      20: <double>[0.30, 0.53 - swing],
+      21: <double>[0.67, 0.52 + swing],
+      22: <double>[0.33, 0.52 - swing],
+      23: <double>[0.56, 0.55],
+      24: <double>[0.44, 0.55],
+      25: <double>[0.57, 0.72],
+      26: <double>[0.43, 0.72],
+      27: <double>[0.58, 0.90],
+      28: <double>[0.42, 0.90],
+      29: <double>[0.57, 0.92],
+      30: <double>[0.43, 0.92],
+      31: <double>[0.60, 0.93],
       32: <double>[0.40, 0.93],
     };
     final List<LandmarkModel> landmarks =
         PoseLandmarkType.values.map((PoseLandmarkType type) {
-      final List<double> p = base[type.index]!;
-      return LandmarkModel(type: type, x: p[0], y: p[1], confidence: 0.92, z: 0);
-    }).toList();
+          final List<double> p = base[type.index]!;
+          return LandmarkModel(
+            type: type,
+            x: p[0],
+            y: p[1],
+            confidence: 0.92,
+            z: 0,
+          );
+        }).toList();
 
     return PoseModel(
       landmarks: landmarks,

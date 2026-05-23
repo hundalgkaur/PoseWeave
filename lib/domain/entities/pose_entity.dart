@@ -19,9 +19,9 @@ class PoseEntity extends Equatable {
     required this.source,
     this.imageSize,
   }) : assert(
-          landmarks.length == 33,
-          'A PoseEntity must contain exactly 33 landmarks, got ${landmarks.length}.',
-        );
+         landmarks.length == 33,
+         'A PoseEntity must contain exactly 33 landmarks, got ${landmarks.length}.',
+       );
 
   /// All 33 landmarks, indexed positionally by [PoseLandmarkType] ordinal.
   final List<LandmarkEntity> landmarks;
@@ -56,6 +56,5 @@ class PoseEntity extends Equatable {
   }
 
   @override
-  List<Object?> get props =>
-      <Object?>[landmarks, timestamp, source, imageSize];
+  List<Object?> get props => <Object?>[landmarks, timestamp, source, imageSize];
 }

@@ -4,7 +4,9 @@ import 'package:poseweave/core/constants/app_theme.dart';
 import 'package:poseweave/presentation/pages/home_page.dart';
 
 void main() {
-  testWidgets('home page shows the three mode cards', (WidgetTester tester) async {
+  testWidgets('home page shows the three mode cards', (
+    WidgetTester tester,
+  ) async {
     await tester.pumpWidget(
       MaterialApp(theme: AppTheme.dark, home: const HomePage()),
     );

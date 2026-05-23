@@ -74,7 +74,11 @@ void main() {
     });
 
     test('90° Y rotation collapses the x of a point on the x-axis', () {
-      final vm.Vector3 r = PoseMath.rotate3D(vm.Vector3(1, 0, 0), math.pi / 2, 0);
+      final vm.Vector3 r = PoseMath.rotate3D(
+        vm.Vector3(1, 0, 0),
+        math.pi / 2,
+        0,
+      );
       expect(r.x, closeTo(0, 1e-6));
     });
   });

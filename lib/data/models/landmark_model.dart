@@ -25,18 +25,13 @@ class LandmarkModel with _$LandmarkModel {
       _$LandmarkModelFromJson(json);
 
   factory LandmarkModel.fromEntity(LandmarkEntity entity) => LandmarkModel(
-        type: entity.type,
-        x: entity.x,
-        y: entity.y,
-        confidence: entity.confidence,
-        z: entity.z,
-      );
+    type: entity.type,
+    x: entity.x,
+    y: entity.y,
+    confidence: entity.confidence,
+    z: entity.z,
+  );
 
-  LandmarkEntity toEntity() => LandmarkEntity(
-        type: type,
-        x: x,
-        y: y,
-        confidence: confidence,
-        z: z,
-      );
+  LandmarkEntity toEntity() =>
+      LandmarkEntity(type: type, x: x, y: y, confidence: confidence, z: z);
 }

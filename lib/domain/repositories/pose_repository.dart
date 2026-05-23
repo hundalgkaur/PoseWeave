@@ -57,6 +57,12 @@ abstract class PoseRepository {
   /// Analyze a video file frame-by-frame, emitting progress + poses.
   Stream<VideoAnalysisProgress> analyzeVideo(String filePath);
 
+  /// Open the image picker; returns the chosen path or null.
+  Future<Either<Failure, String?>> pickImage();
+
+  /// Detect a single pose in an image file (null if none found).
+  Future<Either<Failure, PoseEntity?>> analyzeImage(String filePath);
+
   /// Serialize poses to a JSON file; returns the written file path.
   Future<Either<Failure, String>> exportPosesToJson(List<PoseEntity> poses);
 }

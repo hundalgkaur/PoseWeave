@@ -34,8 +34,9 @@ void main() {
         imageHeight: 1,
       );
       // entity -> model -> json -> model
-      final PoseModel rebuilt =
-          PoseModel.fromJson(PoseModel.fromEntity(model.toEntity()).toJson());
+      final PoseModel rebuilt = PoseModel.fromJson(
+        PoseModel.fromEntity(model.toEntity()).toJson(),
+      );
       expect(rebuilt.landmarks.length, 33);
       expect(rebuilt.source, PoseSource.mock);
       expect(rebuilt.landmarks.first.type, PoseLandmarkType.nose);

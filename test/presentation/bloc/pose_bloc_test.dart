@@ -21,8 +21,9 @@ void main() {
 
   setUp(() {
     repo = MockPoseRepository();
-    when(() => repo.setMockMode(enabled: any(named: 'enabled')))
-        .thenReturn(null);
+    when(
+      () => repo.setMockMode(enabled: any(named: 'enabled')),
+    ).thenReturn(null);
     when(() => repo.disposeCamera()).thenAnswer((_) async {});
   });
 
@@ -30,8 +31,9 @@ void main() {
     blocTest<PoseBloc, PoseState>(
       'StopDetection emits streaming',
       setUp: () {
-        when(() => repo.stopDetection())
-            .thenAnswer((_) async => const Right<Failure, Unit>(unit));
+        when(
+          () => repo.stopDetection(),
+        ).thenAnswer((_) async => const Right<Failure, Unit>(unit));
       },
       build: () => PoseBloc(repo),
       act: (PoseBloc bloc) => bloc.add(const PoseEvent.stopDetection()),
@@ -55,10 +57,12 @@ void main() {
       'StartDetection then a received pose emits streaming then active',
       setUp: () {
         stream = StreamController<PoseEntity>.broadcast();
-        when(() => repo.getPoseStream())
-            .thenReturn(Right<Failure, Stream<PoseEntity>>(stream.stream));
-        when(() => repo.startDetection())
-            .thenAnswer((_) async => const Right<Failure, Unit>(unit));
+        when(
+          () => repo.getPoseStream(),
+        ).thenReturn(Right<Failure, Stream<PoseEntity>>(stream.stream));
+        when(
+          () => repo.startDetection(),
+        ).thenAnswer((_) async => const Right<Failure, Unit>(unit));
       },
       build: () => PoseBloc(repo),
       act: (PoseBloc bloc) async {
@@ -74,8 +78,9 @@ void main() {
     blocTest<PoseBloc, PoseState>(
       'StartVideoRecording emits recordingVideo',
       setUp: () {
-        when(() => repo.startVideoRecording())
-            .thenAnswer((_) async => const Right<Failure, Unit>(unit));
+        when(
+          () => repo.startVideoRecording(),
+        ).thenAnswer((_) async => const Right<Failure, Unit>(unit));
       },
       build: () => PoseBloc(repo),
       act: (PoseBloc bloc) => bloc.add(const PoseEvent.startVideoRecording()),
@@ -85,8 +90,9 @@ void main() {
     blocTest<PoseBloc, PoseState>(
       'StopVideoRecording analyzes the clip through to videoComplete',
       setUp: () {
-        when(() => repo.stopVideoRecording())
-            .thenAnswer((_) async => const Right<Failure, String>('/tmp/clip.mp4'));
+        when(() => repo.stopVideoRecording()).thenAnswer(
+          (_) async => const Right<Failure, String>('/tmp/clip.mp4'),
+        );
         when(() => repo.analyzeVideo('/tmp/clip.mp4')).thenAnswer(
           (_) => Stream<VideoAnalysisProgress>.fromIterable(
             <VideoAnalysisProgress>[
@@ -101,11 +107,31 @@ void main() {
       },
       build: () => PoseBloc(repo),
       act: (PoseBloc bloc) => bloc.add(const PoseEvent.stopVideoRecording()),
-      expect: () => <Matcher>[
-        isA<PoseVideoProcessing>(), // initial 0%
-        isA<PoseVideoProcessing>(), // per-frame
-        isA<PoseVideoComplete>(),
-      ],
+      expect:
+          () => <Matcher>[
+            isA<PoseVideoProcessing>(), // initial 0%
+            isA<PoseVideoProcessing>(), // per-frame
+            isA<PoseVideoComplete>(),
+          ],
+    );
+
+    blocTest<PoseBloc, PoseState>(
+      'PickAndAnalyzeImage emits imageProcessing then imageComplete',
+      setUp: () {
+        when(
+          () => repo.pickImage(),
+        ).thenAnswer((_) async => const Right<Failure, String?>('/img.jpg'));
+        when(() => repo.analyzeImage('/img.jpg')).thenAnswer(
+          (_) async => Right<Failure, PoseEntity?>(buildTestPose()),
+        );
+      },
+      build: () => PoseBloc(repo),
+      act: (PoseBloc bloc) => bloc.add(const PoseEvent.pickAndAnalyzeImage()),
+      expect:
+          () => <Matcher>[
+            isA<PoseImageProcessing>(),
+            isA<PoseImageComplete>(),
+          ],
     );
   });
 }

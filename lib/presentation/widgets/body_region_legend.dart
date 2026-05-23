@@ -23,25 +23,29 @@ class BodyRegionLegend extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
       child: Column(
         mainAxisSize: MainAxisSize.min,
-        children: PoseBones.regionColors.entries.map((MapEntry<String, Color> e) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 6),
-            child: Tooltip(
-              message: _labels[e.key] ?? e.key,
-              child: Container(
-                width: 12,
-                height: 12,
-                decoration: BoxDecoration(
-                  color: e.value,
-                  shape: BoxShape.circle,
-                  boxShadow: <BoxShadow>[
-                    BoxShadow(color: e.value.withValues(alpha: 0.6), blurRadius: 6),
-                  ],
+        children:
+            PoseBones.regionColors.entries.map((MapEntry<String, Color> e) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 6),
+                child: Tooltip(
+                  message: _labels[e.key] ?? e.key,
+                  child: Container(
+                    width: 12,
+                    height: 12,
+                    decoration: BoxDecoration(
+                      color: e.value,
+                      shape: BoxShape.circle,
+                      boxShadow: <BoxShadow>[
+                        BoxShadow(
+                          color: e.value.withValues(alpha: 0.6),
+                          blurRadius: 6,
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-              ),
-            ),
-          );
-        }).toList(),
+              );
+            }).toList(),
       ),
     );
   }

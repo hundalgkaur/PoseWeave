@@ -34,4 +34,7 @@ class PoseEvent with _$PoseEvent {
 
   /// Analyze a specific video file path.
   const factory PoseEvent.analyzeVideoFile(String filePath) = AnalyzeVideoFile;
+
+  /// Open the image picker, then detect a pose in the chosen image.
+  const factory PoseEvent.pickAndAnalyzeImage() = PickAndAnalyzeImage;
 }

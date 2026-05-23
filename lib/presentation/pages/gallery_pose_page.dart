@@ -51,9 +51,10 @@ class _GalleryView extends StatelessWidget {
                   videoPath: state.videoPath,
                   framePaths: state.framePaths,
                   restartLabel: 'Pick another video',
-                  onRestart: () => context
-                      .read<PoseBloc>()
-                      .add(const PoseEvent.pickAndAnalyzeVideo()),
+                  onRestart:
+                      () => context.read<PoseBloc>().add(
+                        const PoseEvent.pickAndAnalyzeVideo(),
+                      ),
                 );
               }
               if (state is PoseError) {
@@ -75,8 +76,10 @@ class _UploadZone extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: GestureDetector(
-        onTap: () =>
-            context.read<PoseBloc>().add(const PoseEvent.pickAndAnalyzeVideo()),
+        onTap:
+            () => context.read<PoseBloc>().add(
+              const PoseEvent.pickAndAnalyzeVideo(),
+            ),
         child: GlassPanel(
           padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 48),
           child: Column(
@@ -168,9 +171,10 @@ class _ErrorView extends StatelessWidget {
               backgroundColor: AppColors.primary,
               foregroundColor: AppColors.onPrimary,
             ),
-            onPressed: () => context
-                .read<PoseBloc>()
-                .add(const PoseEvent.pickAndAnalyzeVideo()),
+            onPressed:
+                () => context.read<PoseBloc>().add(
+                  const PoseEvent.pickAndAnalyzeVideo(),
+                ),
             child: const Text('Try again'),
           ),
         ],

@@ -26,6 +26,10 @@ class VideoAnalysisProgress extends Equatable {
   bool get isComplete => currentFrame >= totalFrames;
 
   @override
-  List<Object?> get props =>
-      <Object?>[currentFrame, totalFrames, pose, framePath];
+  List<Object?> get props => <Object?>[
+    currentFrame,
+    totalFrames,
+    pose,
+    framePath,
+  ];
 }

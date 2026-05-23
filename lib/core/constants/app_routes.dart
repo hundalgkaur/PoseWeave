@@ -8,4 +8,8 @@ class AppRoutes {
   static const String camera = '/camera';
   static const String gallery = '/gallery';
   static const String skeleton3d = '/skeleton3d';
+  static const String gait = '/gait';
+  static const String image = '/image';
+  static const String login = '/login';
+  static const String forgotPassword = '/forgot-password';
 }

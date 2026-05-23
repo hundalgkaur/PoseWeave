@@ -44,6 +44,15 @@ class PoseState with _$PoseState {
     @Default(<String>[]) List<String> framePaths,
   }) = PoseVideoComplete;
 
+  /// An image is being analyzed.
+  const factory PoseState.imageProcessing() = PoseImageProcessing;
+
+  /// Image analysis finished; [pose] is null when no person was detected.
+  const factory PoseState.imageComplete({
+    required String imagePath,
+    PoseEntity? pose,
+  }) = PoseImageComplete;
+
   /// Something failed. [isRecoverable] gates whether the UI offers a retry.
   const factory PoseState.error({
     required String message,

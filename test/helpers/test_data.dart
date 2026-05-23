@@ -16,9 +16,5 @@ PoseEntity buildTestPose({double confidence = 0.9}) {
   );
 }
 
-LandmarkEntity landmarkAt(double x, double y) => LandmarkEntity(
-      type: PoseLandmarkType.nose,
-      x: x,
-      y: y,
-      confidence: 1,
-    );
+LandmarkEntity landmarkAt(double x, double y) =>
+    LandmarkEntity(type: PoseLandmarkType.nose, x: x, y: y, confidence: 1);

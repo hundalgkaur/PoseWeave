@@ -7,12 +7,11 @@ import 'package:poseweave/core/constants/app_colors.dart';
 import 'package:poseweave/core/constants/app_theme.dart';
 import 'package:poseweave/core/errors/failures.dart';
 import 'package:poseweave/core/sample_pose.dart';
-import 'package:poseweave/core/utils/pose_math.dart';
-import 'package:poseweave/domain/entities/landmark_entity.dart';
 import 'package:poseweave/domain/entities/pose_entity.dart';
 import 'package:poseweave/domain/repositories/pose_repository.dart';
 import 'package:poseweave/injection.dart';
 import 'package:poseweave/presentation/widgets/glass_panel.dart';
+import 'package:poseweave/presentation/widgets/joint_angles_panel.dart';
 import 'package:poseweave/presentation/widgets/skeleton_3d_painter.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -72,17 +71,16 @@ class _Skeleton3DPageState extends State<Skeleton3DPage>
   }
 
   Future<void> _export() async {
-    final Either<Failure, String> result =
-        await getIt<PoseRepository>().exportPosesToJson(<PoseEntity>[_pose]);
+    final Either<Failure, String> result = await getIt<PoseRepository>()
+        .exportPosesToJson(<PoseEntity>[_pose]);
     if (!mounted) return;
     result.fold(
       (Failure f) => ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(f.message), backgroundColor: AppColors.error),
       ),
-      (String path) => Share.shareXFiles(
-        <XFile>[XFile(path)],
-        subject: 'PoseWeave pose export',
-      ),
+      (String path) => Share.shareXFiles(<XFile>[
+        XFile(path),
+      ], subject: 'PoseWeave pose export'),
     );
   }
 
@@ -91,8 +89,10 @@ class _Skeleton3DPageState extends State<Skeleton3DPage>
   void _onScaleUpdate(ScaleUpdateDetails d) {
     setState(() {
       _rotationY += d.focalPointDelta.dx * 0.01;
-      _rotationX = (_rotationX + d.focalPointDelta.dy * 0.01)
-          .clamp(-math.pi / 4, math.pi / 4);
+      _rotationX = (_rotationX + d.focalPointDelta.dy * 0.01).clamp(
+        -math.pi / 4,
+        math.pi / 4,
+      );
       if (d.scale != 1.0) {
         _zoom = (_zoomAtGestureStart * d.scale).clamp(0.5, 2.0);
       }
@@ -135,7 +135,7 @@ class _Skeleton3DPageState extends State<Skeleton3DPage>
               alignment: Alignment.centerLeft,
               child: Padding(
                 padding: const EdgeInsets.only(left: 16),
-                child: _AnglesPanel(pose: _pose),
+                child: JointAnglesPanel(pose: _pose),
               ),
             ),
             const Align(
@@ -164,91 +164,6 @@ class _Skeleton3DPageState extends State<Skeleton3DPage>
   }
 }
 
-/// Knee / elbow / hip angles, recomputed from the pose each rotation.
-class _AnglesPanel extends StatelessWidget {
-  const _AnglesPanel({required this.pose});
-  final PoseEntity pose;
-
-  double? _angle(
-    PoseLandmarkType a,
-    PoseLandmarkType b,
-    PoseLandmarkType c,
-  ) {
-    final LandmarkEntity? la = pose.getLandmark(a);
-    final LandmarkEntity? lb = pose.getLandmark(b);
-    final LandmarkEntity? lc = pose.getLandmark(c);
-    if (la == null || lb == null || lc == null) return null;
-    return PoseMath.calculateAngle3Points(la, lb, lc);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final double? knee = _angle(
-      PoseLandmarkType.leftHip,
-      PoseLandmarkType.leftKnee,
-      PoseLandmarkType.leftAnkle,
-    );
-    final double? elbow = _angle(
-      PoseLandmarkType.leftShoulder,
-      PoseLandmarkType.leftElbow,
-      PoseLandmarkType.leftWrist,
-    );
-    final double? hip = _angle(
-      PoseLandmarkType.leftShoulder,
-      PoseLandmarkType.leftHip,
-      PoseLandmarkType.leftKnee,
-    );
-
-    return GlassPanel(
-      padding: const EdgeInsets.all(14),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text('LIVE ANGLES', style: AppTheme.labelCaps()),
-          const SizedBox(height: 12),
-          _AngleRow(label: 'Knee', angle: knee),
-          _AngleRow(label: 'Elbow', angle: elbow),
-          _AngleRow(label: 'Hip', angle: hip),
-        ],
-      ),
-    );
-  }
-}
-
-class _AngleRow extends StatelessWidget {
-  const _AngleRow({required this.label, required this.angle});
-  final String label;
-  final double? angle;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          SizedBox(
-            width: 56,
-            child: Text(
-              label,
-              style: AppTheme.mono(fontSize: 13, color: AppColors.onSurface),
-            ),
-          ),
-          Text(
-            angle == null ? '--' : '${angle!.round()}°',
-            style: AppTheme.mono(
-              fontSize: 13,
-              color: AppColors.primary,
-              weight: FontWeight.w700,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
 class _GestureHint extends StatelessWidget {
   const _GestureHint();
 
@@ -264,7 +179,10 @@ class _GestureHint extends StatelessWidget {
           const SizedBox(width: 8),
           Text(
             'Drag to rotate • pinch to zoom',
-            style: AppTheme.mono(fontSize: 12, color: AppColors.onSurfaceVariant),
+            style: AppTheme.mono(
+              fontSize: 12,
+              color: AppColors.onSurfaceVariant,
+            ),
           ),
         ],
       ),
@@ -300,11 +218,7 @@ class _Dock extends StatelessWidget {
             active: autoRotate,
             onTap: onToggleAutoRotate,
           ),
-          _DockButton(
-            icon: Icons.download,
-            label: 'EXPORT',
-            onTap: onExport,
-          ),
+          _DockButton(icon: Icons.download, label: 'EXPORT', onTap: onExport),
         ],
       ),
     );
@@ -358,9 +272,10 @@ class _GridPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final Paint paint = Paint()
-      ..color = AppColors.primaryContainer.withValues(alpha: 0.08)
-      ..strokeWidth = 1;
+    final Paint paint =
+        Paint()
+          ..color = AppColors.primaryContainer.withValues(alpha: 0.08)
+          ..strokeWidth = 1;
     const int lines = 10;
     final double horizon = size.height * 0.55;
     for (int i = 1; i <= lines; i++) {

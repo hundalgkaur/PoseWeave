@@ -31,12 +31,12 @@ class PoseModel with _$PoseModel {
 
   /// Maps a domain entity back to a model (for JSON export).
   factory PoseModel.fromEntity(PoseEntity entity) => PoseModel(
-        landmarks: entity.landmarks.map(LandmarkModel.fromEntity).toList(),
-        timestamp: entity.timestamp,
-        source: entity.source,
-        imageWidth: entity.imageSize?.width,
-        imageHeight: entity.imageSize?.height,
-      );
+    landmarks: entity.landmarks.map(LandmarkModel.fromEntity).toList(),
+    timestamp: entity.timestamp,
+    source: entity.source,
+    imageWidth: entity.imageSize?.width,
+    imageHeight: entity.imageSize?.height,
+  );
 
   /// Maps an ML Kit [mlkit.Pose] into a normalized model.
   ///
@@ -56,19 +56,19 @@ class PoseModel with _$PoseModel {
 
     final List<LandmarkModel> landmarks =
         PoseLandmarkType.values.map((PoseLandmarkType type) {
-      final mlkit.PoseLandmark? ml =
-          pose.landmarks[mlkit.PoseLandmarkType.values[type.index]];
-      if (ml == null) {
-        return LandmarkModel(type: type, x: 0, y: 0, confidence: 0);
-      }
-      return LandmarkModel(
-        type: type,
-        x: (ml.x / w).clamp(0.0, 1.0),
-        y: (ml.y / h).clamp(0.0, 1.0),
-        z: ml.z,
-        confidence: ml.likelihood,
-      );
-    }).toList();
+          final mlkit.PoseLandmark? ml =
+              pose.landmarks[mlkit.PoseLandmarkType.values[type.index]];
+          if (ml == null) {
+            return LandmarkModel(type: type, x: 0, y: 0, confidence: 0);
+          }
+          return LandmarkModel(
+            type: type,
+            x: (ml.x / w).clamp(0.0, 1.0),
+            y: (ml.y / h).clamp(0.0, 1.0),
+            z: ml.z,
+            confidence: ml.likelihood,
+          );
+        }).toList();
 
     return PoseModel(
       landmarks: landmarks,
@@ -80,12 +80,12 @@ class PoseModel with _$PoseModel {
   }
 
   PoseEntity toEntity() => PoseEntity(
-        landmarks:
-            landmarks.map((LandmarkModel l) => l.toEntity()).toList(),
-        timestamp: timestamp,
-        source: source,
-        imageSize: (imageWidth != null && imageHeight != null)
+    landmarks: landmarks.map((LandmarkModel l) => l.toEntity()).toList(),
+    timestamp: timestamp,
+    source: source,
+    imageSize:
+        (imageWidth != null && imageHeight != null)
             ? Size(imageWidth!, imageHeight!)
             : null,
-      );
+  );
 }

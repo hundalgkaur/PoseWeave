@@ -29,10 +29,7 @@ class AppTheme {
 
     final TextTheme baseText = GoogleFonts.interTextTheme(
       ThemeData.dark().textTheme,
-    ).apply(
-      bodyColor: AppColors.onSurface,
-      displayColor: AppColors.onSurface,
-    );
+    ).apply(bodyColor: AppColors.onSurface, displayColor: AppColors.onSurface);
 
     return ThemeData(
       useMaterial3: true,

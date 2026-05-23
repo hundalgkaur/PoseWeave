@@ -32,17 +32,17 @@ class ModeSelectorCard extends StatelessWidget {
     return Opacity(
       opacity: enabled ? 1.0 : 0.5,
       child: GestureDetector(
-        onTap: enabled && onTap != null
-            ? () {
-                HapticFeedback.selectionClick();
-                onTap!.call();
-              }
-            : null,
+        onTap:
+            enabled && onTap != null
+                ? () {
+                  HapticFeedback.selectionClick();
+                  onTap!.call();
+                }
+                : null,
         child: GlassPanel(
           padding: const EdgeInsets.all(20),
-          borderColor: active
-              ? AppColors.primaryContainer.withValues(alpha: 0.5)
-              : null,
+          borderColor:
+              active ? AppColors.primaryContainer.withValues(alpha: 0.5) : null,
           child: Row(
             children: <Widget>[
               if (active)
@@ -55,7 +55,9 @@ class ModeSelectorCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(2),
                     boxShadow: <BoxShadow>[
                       BoxShadow(
-                        color: AppColors.primaryContainer.withValues(alpha: 0.8),
+                        color: AppColors.primaryContainer.withValues(
+                          alpha: 0.8,
+                        ),
                         blurRadius: 12,
                       ),
                     ],
@@ -65,19 +67,22 @@ class ModeSelectorCard extends StatelessWidget {
                 width: 48,
                 height: 48,
                 decoration: BoxDecoration(
-                  color: active
-                      ? AppColors.primaryContainer.withValues(alpha: 0.12)
-                      : AppColors.surfaceVariant.withValues(alpha: 0.5),
+                  color:
+                      active
+                          ? AppColors.primaryContainer.withValues(alpha: 0.12)
+                          : AppColors.surfaceVariant.withValues(alpha: 0.5),
                   borderRadius: BorderRadius.circular(10),
                   border: Border.all(
-                    color: active
-                        ? AppColors.primaryContainer.withValues(alpha: 0.3)
-                        : AppColors.glassBorder,
+                    color:
+                        active
+                            ? AppColors.primaryContainer.withValues(alpha: 0.3)
+                            : AppColors.glassBorder,
                   ),
                 ),
                 child: Icon(
                   icon,
-                  color: active ? AppColors.primary : AppColors.onSurfaceVariant,
+                  color:
+                      active ? AppColors.primary : AppColors.onSurfaceVariant,
                   size: 26,
                 ),
               ),
@@ -114,9 +119,10 @@ class ModeSelectorCard extends StatelessWidget {
               ),
               Icon(
                 Icons.arrow_forward,
-                color: active
-                    ? AppColors.primary
-                    : AppColors.onSurfaceVariant.withValues(alpha: 0.6),
+                color:
+                    active
+                        ? AppColors.primary
+                        : AppColors.onSurfaceVariant.withValues(alpha: 0.6),
               ),
             ],
           ),

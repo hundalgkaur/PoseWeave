@@ -22,33 +22,28 @@ class PoseBones {
     <int>[6, 8], // rightEyeOuter -> rightEar
     <int>[9, 10], // leftMouth -> rightMouth
     <int>[0, 9], // nose -> leftMouth (closes the face group at 10 bones)
-
     // Torso (indices 10-13)
     <int>[11, 12], // leftShoulder -> rightShoulder
     <int>[11, 23], // leftShoulder -> leftHip
     <int>[12, 24], // rightShoulder -> rightHip
     <int>[23, 24], // leftHip -> rightHip
-
     // Left arm (indices 14-18)
     <int>[11, 13], // leftShoulder -> leftElbow
     <int>[13, 15], // leftElbow -> leftWrist
     <int>[15, 17], // leftWrist -> leftPinky
     <int>[15, 19], // leftWrist -> leftIndex
     <int>[15, 21], // leftWrist -> leftThumb
-
     // Right arm (indices 19-23)
     <int>[12, 14], // rightShoulder -> rightElbow
     <int>[14, 16], // rightElbow -> rightWrist
     <int>[16, 18], // rightWrist -> rightPinky
     <int>[16, 20], // rightWrist -> rightIndex
     <int>[16, 22], // rightWrist -> rightThumb
-
     // Left leg (indices 24-27)
     <int>[23, 25], // leftHip -> leftKnee
     <int>[25, 27], // leftKnee -> leftAnkle
     <int>[27, 29], // leftAnkle -> leftHeel
     <int>[27, 31], // leftAnkle -> leftFootIndex
-
     // Right leg (indices 28-31)
     <int>[24, 26], // rightHip -> rightKnee
     <int>[26, 28], // rightKnee -> rightAnkle

@@ -44,7 +44,10 @@ class PoseMath {
     Size imageSize,
   ) {
     if (imageSize.width == 0 || imageSize.height == 0) {
-      return Offset(landmark.x * canvasSize.width, landmark.y * canvasSize.height);
+      return Offset(
+        landmark.x * canvasSize.width,
+        landmark.y * canvasSize.height,
+      );
     }
 
     final double scale = math.min(

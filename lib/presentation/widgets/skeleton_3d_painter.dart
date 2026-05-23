@@ -28,11 +28,12 @@ class Skeleton3DPainter extends CustomPainter {
 
   static const double _focalLength = 2;
 
-  static final Paint _bonePaint = Paint()
-    ..strokeWidth = 3
-    ..strokeCap = StrokeCap.round
-    ..style = PaintingStyle.stroke
-    ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 3);
+  static final Paint _bonePaint =
+      Paint()
+        ..strokeWidth = 3
+        ..strokeCap = StrokeCap.round
+        ..style = PaintingStyle.stroke
+        ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 3);
   static final Paint _dotPaint = Paint()..style = PaintingStyle.fill;
 
   @override
@@ -62,7 +63,12 @@ class Skeleton3DPainter extends CustomPainter {
         rotationY,
         rotationX,
       );
-      points[i] = PoseMath.perspectiveProject(rotated, size, _focalLength, scale);
+      points[i] = PoseMath.perspectiveProject(
+        rotated,
+        size,
+        _focalLength,
+        scale,
+      );
       depths[i] = rotated.z;
     }
 
@@ -74,10 +80,11 @@ class Skeleton3DPainter extends CustomPainter {
       if (a == null || c == null) continue;
       final double t =
           (_brightness(depths[connections[b][0]]) +
-                  _brightness(depths[connections[b][1]])) /
-              2;
-      _bonePaint.color =
-          PoseBones.colorForBone(b).withValues(alpha: 0.35 + 0.65 * t);
+              _brightness(depths[connections[b][1]])) /
+          2;
+      _bonePaint.color = PoseBones.colorForBone(
+        b,
+      ).withValues(alpha: 0.35 + 0.65 * t);
       canvas.drawLine(a, c, _bonePaint);
     }
 
@@ -87,8 +94,11 @@ class Skeleton3DPainter extends CustomPainter {
       if (o == null) continue;
       final double t = _brightness(depths[i]);
       final double radius = 3 + landmarks[i].confidence * 3 * (0.6 + 0.4 * t);
-      _dotPaint.color = Color.lerp(AppColors.primaryContainer, Colors.white, t)!
-          .withValues(alpha: 0.5 + 0.5 * t);
+      _dotPaint.color = Color.lerp(
+        AppColors.primaryContainer,
+        Colors.white,
+        t,
+      )!.withValues(alpha: 0.5 + 0.5 * t);
       canvas.drawCircle(o, radius, _dotPaint);
     }
   }

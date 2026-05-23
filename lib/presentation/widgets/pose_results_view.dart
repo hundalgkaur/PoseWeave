@@ -6,11 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:poseweave/core/constants/app_colors.dart';
 import 'package:poseweave/core/constants/app_theme.dart';
 import 'package:poseweave/core/errors/failures.dart';
-import 'package:poseweave/domain/entities/landmark_entity.dart';
+import 'package:poseweave/core/utils/gait_analyzer.dart';
 import 'package:poseweave/domain/entities/pose_entity.dart';
 import 'package:poseweave/domain/repositories/pose_repository.dart';
 import 'package:poseweave/injection.dart';
+import 'package:poseweave/presentation/pages/gait_report_page.dart';
 import 'package:poseweave/presentation/widgets/glass_panel.dart';
+import 'package:poseweave/presentation/widgets/landmark_table.dart';
 import 'package:poseweave/presentation/widgets/pose_overlay_painter.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -87,8 +89,8 @@ class _PoseResultsViewState extends State<PoseResultsView> {
 
   Future<void> _export() async {
     final ScaffoldMessengerState messenger = ScaffoldMessenger.of(context);
-    final Either<Failure, String> result =
-        await getIt<PoseRepository>().exportPosesToJson(widget.poses);
+    final Either<Failure, String> result = await getIt<PoseRepository>()
+        .exportPosesToJson(widget.poses);
     if (!mounted) return;
     result.fold(
       (Failure f) => messenger.showSnackBar(
@@ -187,13 +189,34 @@ class _PoseResultsViewState extends State<PoseResultsView> {
           children: <Widget>[
             Text('LANDMARK COORDINATES', style: AppTheme.labelCaps()),
             const Spacer(),
+            IconButton(
+              tooltip: 'Gait analysis',
+              icon: const Icon(
+                Icons.directions_walk,
+                color: AppColors.primary,
+                size: 20,
+              ),
+              onPressed:
+                  () => Navigator.of(context).push(
+                    MaterialPageRoute<void>(
+                      builder:
+                          (_) => GaitReportPage(
+                            params: GaitAnalyzer.analyze(widget.poses),
+                          ),
+                    ),
+                  ),
+            ),
             if (widget.videoPath != null)
               Text('+ VIDEO', style: AppTheme.labelCaps(fontSize: 10)),
             IconButton(
-              tooltip: 'Export ${widget.poses.length} poses as JSON'
+              tooltip:
+                  'Export ${widget.poses.length} poses as JSON'
                   '${widget.videoPath != null ? ' + video' : ''}',
-              icon:
-                  const Icon(Icons.download, color: AppColors.primary, size: 20),
+              icon: const Icon(
+                Icons.download,
+                color: AppColors.primary,
+                size: 20,
+              ),
               onPressed: _export,
             ),
           ],
@@ -202,11 +225,7 @@ class _PoseResultsViewState extends State<PoseResultsView> {
         Expanded(
           child: GlassPanel(
             padding: const EdgeInsets.symmetric(vertical: 4),
-            child: ListView.builder(
-              itemCount: pose.landmarks.length,
-              itemBuilder: (BuildContext context, int i) =>
-                  _LandmarkRow(landmark: pose.landmarks[i]),
-            ),
+            child: LandmarkTable(landmarks: pose.landmarks),
           ),
         ),
         if (widget.onRestart != null) ...<Widget>[
@@ -218,55 +237,11 @@ class _PoseResultsViewState extends State<PoseResultsView> {
   }
 
   Widget _restartButton() => FilledButton(
-        style: FilledButton.styleFrom(
-          backgroundColor: AppColors.primary,
-          foregroundColor: AppColors.onPrimary,
-        ),
-        onPressed: widget.onRestart,
-        child: Text(widget.restartLabel),
-      );
-}
-
-class _LandmarkRow extends StatelessWidget {
-  const _LandmarkRow({required this.landmark});
-  final LandmarkEntity landmark;
-
-  @override
-  Widget build(BuildContext context) {
-    final bool low = landmark.confidence < 0.5;
-    final Color dotColor = low ? AppColors.error : AppColors.primaryContainer;
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-      child: Row(
-        children: <Widget>[
-          Container(
-            width: 8,
-            height: 8,
-            decoration: BoxDecoration(color: dotColor, shape: BoxShape.circle),
-          ),
-          const SizedBox(width: 10),
-          Expanded(
-            flex: 4,
-            child: Text(
-              landmark.type.name,
-              style: AppTheme.mono(fontSize: 12, color: AppColors.onSurface),
-            ),
-          ),
-          Expanded(
-            flex: 6,
-            child: Text(
-              'X ${landmark.x.toStringAsFixed(3)}  '
-              'Y ${landmark.y.toStringAsFixed(3)}  '
-              'Z ${(landmark.z ?? 0).toStringAsFixed(3)}',
-              textAlign: TextAlign.right,
-              style: AppTheme.mono(
-                fontSize: 11,
-                color: low ? AppColors.error : AppColors.onSurfaceVariant,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+    style: FilledButton.styleFrom(
+      backgroundColor: AppColors.primary,
+      foregroundColor: AppColors.onPrimary,
+    ),
+    onPressed: widget.onRestart,
+    child: Text(widget.restartLabel),
+  );
 }
