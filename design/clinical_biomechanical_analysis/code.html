@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Clinical Biomechanical Analysis</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface": "#111316",
+                        "surface-dim": "#111316",
+                        "surface-bright": "#37393d",
+                        "surface-container-lowest": "#0c0e11",
+                        "surface-container-low": "#1a1c1f",
+                        "surface-container": "#1e2023",
+                        "surface-container-high": "#282a2d",
+                        "surface-container-highest": "#333538",
+                        "on-surface": "#e2e2e6",
+                        "on-surface-variant": "#c4c6d0",
+                        "outline": "#8e9099",
+                        "outline-variant": "#44474f",
+                        "inverse-surface": "#e2e2e6",
+                        "inverse-on-surface": "#2f3033",
+                        "surface-tint": "#a4c8ff",
+                        "primary": "#a4c8ff",
+                        "on-primary": "#00315e",
+                        "primary-container": "#004885",
+                        "on-primary-container": "#d3e4ff",
+                        "secondary": "#bdc7dc",
+                        "on-secondary": "#273141",
+                        "secondary-container": "#3d4758",
+                        "on-secondary-container": "#d9e3f9",
+                        "tertiary": "#debce0",
+                        "on-tertiary": "#402844",
+                        "tertiary-container": "#583e5c",
+                        "on-tertiary-container": "#fad8fd",
+                        "error": "#ffb4ab",
+                        "on-error": "#690005",
+                        "error-container": "#93000a",
+                        "on-error-container": "#ffdad6",
+                        "background": "#111316",
+                        "on-background": "#e2e2e6",
+                        "clinical-blue": "#00d2ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-desktop": "40px",
+                        "unit": "4px",
+                        "margin-mobile": "20px",
+                        "container-max": "1200px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "sans": ["Inter", "sans-serif"]
+                    },
+                    "fontSize": {
+                        "xs": ["12px", { "lineHeight": "1.5" }],
+                        "sm": ["14px", { "lineHeight": "1.5" }],
+                        "base": ["16px", { "lineHeight": "1.5" }],
+                        "lg": ["18px", { "lineHeight": "1.5" }],
+                        "xl": ["20px", { "lineHeight": "1.5" }],
+                        "2xl": ["24px", { "lineHeight": "1.5" }],
+                        "3xl": ["30px", { "lineHeight": "1.2" }],
+                        "4xl": ["36px", { "lineHeight": "1.2" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface antialiased min-h-screen flex flex-col overflow-x-hidden selection:bg-clinical-blue/30 selection:text-clinical-blue font-sans">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-md flex justify-between items-center px-margin-mobile py-4 border-b border-outline-variant/50">
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:text-clinical-blue transition-colors hover:scale-95 duration-150 flex items-center justify-center">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">arrow_back</span>
+</button>
+<div>
+<h1 class="text-lg font-semibold text-clinical-blue tracking-tight">Biomechanical Analysis</h1>
+<p class="text-xs text-on-surface-variant font-medium">Patient ID: <span class="font-mono">PX-992-A</span></p>
+</div>
+</div>
+<div class="flex items-center">
+<button class="text-clinical-blue hover:bg-surface-variant/20 transition-colors p-2 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">more_vert</span>
+</button>
+</div>
+</header>
+<main class="flex-grow pt-[80px] pb-margin-mobile px-margin-mobile md:px-margin-desktop container max-w-container-max mx-auto flex flex-col gap-6 md:gap-8 h-[calc(100vh-80px)]">
+<!-- Results View -->
+<div class="flex flex-col h-full gap-6" id="results-view">
+<!-- Video Player Area -->
+<div class="relative w-full h-[45%] md:h-[55%] bg-surface-container-low border border-outline-variant/30 rounded-xl overflow-hidden group">
+<!-- Video Placeholder Background -->
+<div class="absolute inset-0 flex items-center justify-center overflow-hidden">
+<div class="w-full h-full bg-cover bg-center opacity-60 mix-blend-luminosity grayscale" data-alt="A professional athlete performing a high-intensity dynamic sprint on an indoor track. The scene is illuminated by harsh, directional studio lighting creating stark contrasts and a dramatic mood. Shot with a sharp focus, emphasizing biomechanical movement. The overall aesthetic is dark neo-glassmorphism, relying on deep blacks and subtle cyan highlights to fit a futuristic sports science laboratory UI." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCHGDmnh9K0lX9FWZdz1YFacXfN2rsAJGYE-FhfmEQGePE1ByMsyGjfXuFTp_kRPCpqJiEjG5Q1_q8KU8RRrR-fUsD_yTxN8RTmWlCfC7kDwpeQJDbAV09RzfgT_zeh3uuOb-G2cX3FR-76d1Q36SLa9lqiu5mhCc8YeqCnxPNIrPGvZ3EU9Ec-3GnRQYAIN8zKAqyYB-DFQH6k88rHECVNGX4WwE9d2WQrq5-K6quMXh_nIIBT_iUVIV0bCqFKBIh1eSMAVn0mBGI')"></div>
+</div>
+<!-- Diagnostic Quality Watermark -->
+<div class="absolute top-4 left-4 bg-surface/60 backdrop-blur-sm px-2 py-1 rounded text-[10px] font-mono text-clinical-blue border border-clinical-blue/30 uppercase tracking-wider">
+  Diagnostic Quality
+</div>
+<!-- Frame Data Overlay -->
+<div class="absolute top-4 right-4 bg-surface/60 backdrop-blur-sm px-3 py-1.5 rounded border border-outline-variant/50 text-right">
+<div class="font-mono text-xs text-on-surface">FRM: <span class="text-clinical-blue">142/360</span></div>
+<div class="font-mono text-[10px] text-on-surface-variant">T: 00:02.45</div>
+</div>
+<!-- Skeleton Overlay -->
+<svg class="absolute inset-0 w-full h-full pointer-events-none" preserveaspectratio="xMidYMid slice" viewbox="0 0 100 100">
+<!-- Lines -->
+<line stroke="#00d2ff" stroke-opacity="0.8" stroke-width="0.5" x1="50" x2="45" y1="20" y2="35"></line>
+<line stroke="#00d2ff" stroke-opacity="0.8" stroke-width="0.5" x1="50" x2="55" y1="20" y2="35"></line>
+<line stroke="#00d2ff" stroke-opacity="0.8" stroke-width="0.5" x1="45" x2="40" y1="35" y2="55"></line>
+<line stroke="#00d2ff" stroke-opacity="0.8" stroke-width="0.5" x1="55" x2="60" y1="35" y2="50"></line>
+<line stroke="#00d2ff" stroke-opacity="0.8" stroke-width="0.5" x1="40" x2="35" y1="55" y2="70"></line>
+<line stroke="#00d2ff" stroke-opacity="0.8" stroke-width="0.5" x1="60" x2="65" y1="50" y2="75"></line>
+<line stroke="#00d2ff" stroke-opacity="0.8" stroke-width="0.5" x1="45" x2="55" y1="35" y2="35"></line>
+<!-- Nodes -->
+<circle cx="50" cy="20" fill="#00d2ff" r="1.5"></circle>
+<circle cx="45" cy="35" fill="#00d2ff" r="1"></circle>
+<circle cx="55" cy="35" fill="#00d2ff" r="1"></circle>
+<circle cx="40" cy="55" fill="#00d2ff" r="1"></circle>
+<circle cx="60" cy="50" fill="#00d2ff" r="1"></circle>
+<circle cx="35" cy="70" fill="#00d2ff" r="1"></circle>
+<circle cx="65" cy="75" fill="#00d2ff" r="1"></circle>
+</svg>
+<!-- Video Controls Overlay -->
+<div class="absolute bottom-0 w-full bg-gradient-to-t from-black/80 to-transparent p-4 flex items-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+<button class="text-on-surface hover:text-clinical-blue transition-colors">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+<div class="flex-grow h-1 bg-surface-variant/50 rounded-full cursor-pointer relative">
+<div class="absolute top-0 left-0 h-full bg-clinical-blue rounded-full" style="width: 39%;"></div>
+<div class="absolute top-1/2 -translate-y-1/2 w-3 h-3 bg-clinical-blue rounded-full shadow-[0_0_8px_rgba(0,210,255,0.8)]" style="left: 39%;"></div>
+</div>
+<span class="font-mono text-xs text-on-surface-variant">0:02 / 0:06</span>
+</div>
+</div>
+<!-- Scrollable Data List (Landmarks) -->
+<div class="flex-grow flex flex-col bg-surface-container-low border border-outline-variant/30 rounded-xl overflow-hidden">
+<!-- Data Header -->
+<div class="bg-surface-container px-4 py-3 border-b border-outline-variant/30 flex justify-between items-center sticky top-0 z-10">
+<h2 class="text-sm font-semibold text-on-surface-variant uppercase tracking-wider">Detailed Biomechanical Landmarks</h2>
+<div class="flex gap-2">
+<button class="bg-surface hover:bg-surface-bright text-on-surface p-1.5 rounded border border-outline-variant/50 transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 0;">download</span>
+</button>
+</div>
+</div>
+<!-- Data List -->
+<div class="flex-grow overflow-y-auto px-4 py-2 space-y-3">
+<!-- Data Header Row -->
+<div class="grid grid-cols-12 gap-2 pb-2 border-b border-outline-variant/20 text-xs font-medium text-outline uppercase tracking-wider">
+<div class="col-span-4">Landmark</div>
+<div class="col-span-2 text-right">Value (mm)</div>
+<div class="col-span-3 text-right">Ref (mm)</div>
+<div class="col-span-3 text-right">Error (±)</div>
+</div>
+<!-- Data Row Item -->
+<div class="grid grid-cols-12 gap-2 items-center py-2 border-b border-outline-variant/10 hover:bg-surface-variant/10 transition-colors">
+<div class="col-span-4 flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-clinical-blue"></span>
+<span class="text-sm text-on-surface">Right Shoulder Z</span>
+</div>
+<div class="col-span-2 text-right font-mono text-sm text-clinical-blue">-104.2</div>
+<div class="col-span-3 text-right font-mono text-xs text-on-surface-variant">-100.0</div>
+<div class="col-span-3 text-right font-mono text-xs text-outline">0.4</div>
+</div>
+<!-- Data Row Item -->
+<div class="grid grid-cols-12 gap-2 items-center py-2 border-b border-outline-variant/10 hover:bg-surface-variant/10 transition-colors">
+<div class="col-span-4 flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-clinical-blue/50"></span>
+<span class="text-sm text-on-surface">Left Shoulder Z</span>
+</div>
+<div class="col-span-2 text-right font-mono text-sm text-on-surface">54.2</div>
+<div class="col-span-3 text-right font-mono text-xs text-on-surface-variant">50.0</div>
+<div class="col-span-3 text-right font-mono text-xs text-outline">0.3</div>
+</div>
+<!-- Data Row Item (Error state) -->
+<div class="grid grid-cols-12 gap-2 items-center py-2 border-b border-outline-variant/10 bg-error/5 rounded px-2 -mx-2">
+<div class="col-span-4 flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-error"></span>
+<span class="text-sm text-on-surface">Right Elbow Z</span>
+</div>
+<div class="col-span-2 text-right font-mono text-sm text-error">-304.2</div>
+<div class="col-span-3 text-right font-mono text-xs text-on-surface-variant">-250.0</div>
+<div class="col-span-3 text-right font-mono text-xs text-outline">0.8</div>
+</div>
+<!-- Data Row Item -->
+<div class="grid grid-cols-12 gap-2 items-center py-2 border-b border-outline-variant/10 hover:bg-surface-variant/10 transition-colors">
+<div class="col-span-4 flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-clinical-blue/50"></span>
+<span class="text-sm text-on-surface">Right Wrist Z</span>
+</div>
+<div class="col-span-2 text-right font-mono text-sm text-on-surface">-450.1</div>
+<div class="col-span-3 text-right font-mono text-xs text-on-surface-variant">-440.0</div>
+<div class="col-span-3 text-right font-mono text-xs text-outline">1.2</div>
+</div>
+<!-- Data Row Item -->
+<div class="grid grid-cols-12 gap-2 items-center py-2 border-b border-outline-variant/10 hover:bg-surface-variant/10 transition-colors">
+<div class="col-span-4 flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-clinical-blue/50"></span>
+<span class="text-sm text-on-surface">Left Hip Z</span>
+</div>
+<div class="col-span-2 text-right font-mono text-sm text-on-surface">10.0</div>
+<div class="col-span-3 text-right font-mono text-xs text-on-surface-variant">0.0</div>
+<div class="col-span-3 text-right font-mono text-xs text-outline">0.2</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Clinical Live Biometric Stream</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "background": "#111316",
+                        "surface-dim": "#111316",
+                        "surface-container-lowest": "#0c0e11",
+                        "on-surface": "#e2e2e6",
+                        "error": "#ffb4ab",
+                        "primary-fixed-dim": "#47d6ff",
+                        "primary-container": "#00d2ff",
+                        "outline-variant": "#3c494e",
+                        "tertiary-container": "#c0c1c1",
+                        "surface-container": "#1e2023",
+                        "on-secondary": "#1e333c",
+                        "surface-bright": "#37393d",
+                        "on-secondary-fixed": "#071e27",
+                        "on-tertiary": "#2f3131",
+                        "tertiary-fixed-dim": "#c6c6c7",
+                        "surface-variant": "#333538",
+                        "surface-container-high": "#282a2d",
+                        "surface": "#111316",
+                        "inverse-surface": "#e2e2e6",
+                        "on-surface-variant": "#bbc9cf",
+                        "inverse-on-surface": "#2f3034",
+                        "on-tertiary-container": "#4d4f4f",
+                        "on-primary-container": "#00566a",
+                        "primary-fixed": "#b6ebff",
+                        "secondary-fixed": "#cfe6f2",
+                        "tertiary-fixed": "#e2e2e2",
+                        "on-background": "#e2e2e6",
+                        "surface-tint": "#47d6ff",
+                        "surface-container-highest": "#333538",
+                        "inverse-primary": "#00677f",
+                        "primary": "#a5e7ff",
+                        "on-error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#b4cad6",
+                        "on-secondary-fixed-variant": "#354a53",
+                        "tertiary": "#dcdddd",
+                        "outline": "#859399",
+                        "on-primary-fixed": "#001f28",
+                        "on-primary-fixed-variant": "#004e60",
+                        "on-tertiary-fixed-variant": "#454747",
+                        "error-container": "#93000a",
+                        "surface-container-low": "#1a1c1f",
+                        "on-primary": "#003543",
+                        "on-error": "#690005",
+                        "secondary-container": "#374c56",
+                        "on-secondary-container": "#a6bcc7",
+                        "on-tertiary-fixed": "#1a1c1c",
+                        "secondary": "#b4cad6"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    spacing: {
+                        "margin": "24px",
+                        "gutter": "16px",
+                        "container-padding": "12px",
+                        "unit": "4px"
+                    },
+                    fontFamily: {
+                        "headline-lg": ["Inter"],
+                        "data-md": ["JetBrains Mono"],
+                        "body-sm": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "data-lg": ["JetBrains Mono"],
+                        "body-lg": ["Inter"],
+                        "label-caps": ["JetBrains Mono"]
+                    },
+                    fontSize: {
+                        "headline-lg": ["32px", { lineHeight: "1.2", letterSpacing: "-0.02em", fontWeight: "600" }],
+                        "data-md": ["14px", { lineHeight: "1.2", letterSpacing: "0.02em", fontWeight: "500" }],
+                        "body-sm": ["14px", { lineHeight: "1.5", fontWeight: "400" }],
+                        "headline-md": ["24px", { lineHeight: "1.3", fontWeight: "600" }],
+                        "data-lg": ["20px", { lineHeight: "1.2", fontWeight: "500" }],
+                        "body-lg": ["16px", { lineHeight: "1.5", fontWeight: "400" }],
+                        "label-caps": ["11px", { lineHeight: "1", letterSpacing: "0.08em", fontWeight: "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        /* Surgical clarity overrides */
+        body { background-color: #111316; }
+        .pod { border: 1px solid #455A64; }
+        .pod.active { border-color: #00D2FF; }
+        .streaming-bar { border-left: 2px solid #a5e7ff; }
+        
+        /* Skeleton Overlay Styles for realistic diagnostic look */
+        .skeleton-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background-image: 
+                radial-gradient(circle at 50% 30%, transparent 20%, rgba(17, 19, 22, 0.4) 80%);
+        }
+        
+        /* Grid overlay */
+        .clinical-grid {
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(60, 73, 78, 0.1) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(60, 73, 78, 0.1) 1px, transparent 1px);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface h-screen w-screen overflow-hidden flex flex-col font-body-sm select-none">
+<!-- TopAppBar Shared Component -->
+<header class="bg-background dark:bg-background text-primary-container dark:text-primary-container w-full top-0 border-b border-outline-variant flex justify-between items-center px-margin py-unit h-16 shrink-0 z-10">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">biotech</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest">GAIT-P204: J. DOE</span>
+</div>
+<div class="flex items-center">
+<span class="material-symbols-outlined hover:bg-surface-container-highest transition-colors active:opacity-80 p-1 cursor-pointer">emergency</span>
+</div>
+</header>
+<!-- Main Workspace -->
+<main class="flex-1 relative w-full h-full flex flex-col md:flex-row overflow-hidden">
+<!-- Live Stream Canvas (Center) -->
+<div class="flex-1 relative bg-surface-container-lowest clinical-grid flex justify-center items-center overflow-hidden">
+<!-- Video Placeholder Background -->
+<div class="absolute inset-0 z-0 bg-cover bg-center opacity-40 mix-blend-luminosity grayscale" data-alt="A clinical movement analysis lab, dimly lit with a single patient walking on a specialized treadmill. High-contrast medical aesthetic, crisp shadows, specialized diagnostic equipment in the background." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBcCIHu0kvJC2DNfaEWADTCQSFayFjJjw2XdofbZf8-LSOhakEp5k33VQ4Nv4ytkBqMUlpwa6LVJxqflHJB9JQhbjvyQRgAjWFWvyVSyVWDTfBHXK0JJtGciMmR8z3H5VPI-EbwPCvvGsaGP3dW6C07xX49OV507VG4brYFJAdj6zY-yCvxt8_zRVPvo2b5n-OWn4bKEQxZs-gaau9GzCK3teqy_fX5fsc2QeUdowv9z29uqj_oi0IbR8EpFtEP3SDi4ulAOJ26S2c');">
+</div>
+<!-- Skeleton Visualization Layer -->
+<div class="absolute inset-0 z-10 flex justify-center items-center pointer-events-none">
+<!-- Abstract Representation of Skeleton -->
+<svg class="opacity-90" height="600" viewbox="0 0 400 600" width="400">
+<!-- Lines (Bones) -->
+<line stroke="#e2e2e6" stroke-width="4" x1="200" x2="200" y1="100" y2="250"></line> <!-- Spine -->
+<line stroke="#e2e2e6" stroke-width="3" x1="200" x2="130" y1="120" y2="140"></line> <!-- L Shoulder -->
+<line stroke="#e2e2e6" stroke-width="3" x1="200" x2="270" y1="120" y2="140"></line> <!-- R Shoulder -->
+<line stroke="#e2e2e6" stroke-width="3" x1="130" x2="110" y1="140" y2="220"></line> <!-- L Upper Arm -->
+<line stroke="#e2e2e6" stroke-width="3" x1="270" x2="290" y1="140" y2="220"></line> <!-- R Upper Arm -->
+<line stroke="#e2e2e6" stroke-width="4" x1="200" x2="160" y1="250" y2="280"></line> <!-- L Pelvis -->
+<line stroke="#e2e2e6" stroke-width="4" x1="200" x2="240" y1="250" y2="280"></line> <!-- R Pelvis -->
+<line stroke="#e2e2e6" stroke-width="4" x1="160" x2="140" y1="280" y2="400"></line> <!-- L Femur -->
+<line stroke="#e2e2e6" stroke-width="4" x1="240" x2="260" y1="280" y2="400"></line> <!-- R Femur -->
+<line stroke="#e2e2e6" stroke-width="3" x1="140" x2="130" y1="400" y2="520"></line> <!-- L Tibia -->
+<line stroke="#e2e2e6" stroke-width="3" x1="260" x2="270" y1="400" y2="520"></line> <!-- R Tibia -->
+<!-- Joints (Clinical Blue) -->
+<circle cx="200" cy="80" fill="transparent" r="15" stroke="#00d2ff" stroke-width="2"></circle> <!-- Head -->
+<circle cx="200" cy="120" fill="#00d2ff" r="6"></circle> <!-- Neck -->
+<circle cx="130" cy="140" fill="#00d2ff" r="6"></circle> <!-- L Shoulder -->
+<circle cx="270" cy="140" fill="#00d2ff" r="6"></circle> <!-- R Shoulder -->
+<circle cx="110" cy="220" fill="#00d2ff" r="5"></circle> <!-- L Elbow -->
+<circle cx="290" cy="220" fill="#00d2ff" r="5"></circle> <!-- R Elbow -->
+<circle cx="200" cy="250" fill="#00d2ff" r="8"></circle> <!-- Root/Pelvis Center -->
+<circle cx="160" cy="280" fill="#00d2ff" r="7"></circle> <!-- L Hip -->
+<circle cx="240" cy="280" fill="#00d2ff" r="7"></circle> <!-- R Hip -->
+<circle cx="140" cy="400" fill="#00d2ff" r="6"></circle> <!-- L Knee -->
+<circle cx="260" cy="400" fill="#00d2ff" r="6"></circle> <!-- R Knee -->
+<circle cx="130" cy="520" fill="#00d2ff" r="5"></circle> <!-- L Ankle -->
+<circle cx="270" cy="520" fill="#00d2ff" r="5"></circle> <!-- R Ankle -->
+</svg>
+<!-- Dynamic Angle Readouts (Pinned visually) -->
+<div class="absolute" style="top: 25%; left: 35%;">
+<div class="bg-surface-container-high/80 border border-primary-container px-2 py-1 rounded backdrop-blur-sm">
+<span class="font-data-md text-data-md text-primary">SHL 84.2°</span>
+</div>
+</div>
+<div class="absolute" style="top: 45%; left: 38%;">
+<div class="bg-surface-container-high/80 border border-primary-container px-2 py-1 rounded backdrop-blur-sm">
+<span class="font-data-md text-data-md text-primary">HIP 162.1°</span>
+</div>
+</div>
+<div class="absolute" style="top: 65%; left: 36%;">
+<div class="bg-surface-container-high/80 border border-primary-container px-2 py-1 rounded backdrop-blur-sm">
+<span class="font-data-md text-data-md text-primary">KNE 171.5°</span>
+</div>
+</div>
+</div>
+<!-- HUD Overlays (Top Left) -->
+<div class="absolute top-margin left-margin z-20 flex flex-col gap-unit">
+<div class="bg-surface/90 border border-outline-variant p-container-padding rounded w-48 backdrop-blur-sm streaming-bar">
+<div class="font-label-caps text-label-caps text-on-surface-variant mb-2">LIVE METRICS</div>
+<div class="flex justify-between items-baseline mb-1">
+<span class="font-body-sm text-body-sm text-on-surface">FPS</span>
+<span class="font-data-md text-data-md text-primary-container">59.94</span>
+</div>
+<div class="flex justify-between items-baseline mb-1">
+<span class="font-body-sm text-body-sm text-on-surface">LATENCY</span>
+<span class="font-data-md text-data-md text-primary-container">12ms</span>
+</div>
+<div class="flex justify-between items-baseline">
+<span class="font-body-sm text-body-sm text-on-surface">CONFIDENCE</span>
+<span class="font-data-md text-data-md text-primary">99.2%</span>
+</div>
+</div>
+<div class="bg-surface/90 border border-outline-variant px-3 py-2 rounded backdrop-blur-sm flex items-center gap-2 w-max mt-2">
+<span class="w-2 h-2 rounded-full bg-primary-container animate-pulse"></span>
+<span class="font-label-caps text-label-caps text-primary-container tracking-wider">Device Calibrated - Diagnostic Grade</span>
+</div>
+</div>
+<!-- Bottom Control Strip (Overlay on canvas for cinematic feel) -->
+<div class="absolute bottom-margin left-1/2 transform -translate-x-1/2 z-20 flex gap-gutter">
+<button class="bg-primary-container text-on-primary-fixed border border-primary-container px-6 py-2 rounded font-label-caps text-label-caps uppercase tracking-wider hover:bg-primary transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">fiber_manual_record</span>
+                    Capture Sequence
+                </button>
+<button class="bg-surface/80 text-on-surface border border-outline-variant px-6 py-2 rounded font-label-caps text-label-caps uppercase tracking-wider hover:bg-surface-variant hover:border-outline transition-colors backdrop-blur-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">pause</span>
+                    Freeze Frame
+                </button>
+<button class="bg-surface/80 text-on-surface border border-outline-variant px-6 py-2 rounded font-label-caps text-label-caps uppercase tracking-wider hover:bg-surface-variant hover:border-outline transition-colors backdrop-blur-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+                    Toggle LANDMARKS
+                </button>
+<button class="bg-surface/80 text-on-surface border border-outline-variant px-4 py-2 rounded hover:bg-surface-variant hover:border-outline transition-colors backdrop-blur-sm flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">tune</span>
+</button>
+</div>
+</div>
+<!-- Right Side Panel (Diagnostic Pods) -->
+<aside class="w-full md:w-80 bg-surface border-l border-outline-variant flex flex-col h-full overflow-y-auto hidden md:flex shrink-0 z-10">
+<div class="p-margin flex flex-col gap-gutter">
+<!-- Joint Angle Pod -->
+<div class="pod rounded bg-surface-container p-container-padding">
+<h3 class="font-label-caps text-label-caps text-on-surface-variant mb-4 uppercase">Kinematic Data Stream</h3>
+<div class="space-y-4">
+<!-- Knee Data -->
+<div>
+<div class="flex justify-between items-end mb-1">
+<span class="font-body-sm text-body-sm text-on-surface">Sagittal Knee Angle</span>
+<span class="font-data-lg text-data-lg text-primary">171.5°</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1.5 rounded overflow-hidden">
+<div class="bg-primary-container h-full w-[85%]"></div>
+</div>
+</div>
+<!-- Hip Data -->
+<div>
+<div class="flex justify-between items-end mb-1">
+<span class="font-body-sm text-body-sm text-on-surface">Hip Flexion</span>
+<span class="font-data-lg text-data-lg text-primary">162.1°</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1.5 rounded overflow-hidden">
+<div class="bg-primary-container h-full w-[70%]"></div>
+</div>
+</div>
+<!-- Alert Metric -->
+<div class="pt-2 border-t border-outline-variant mt-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-error text-[16px]">warning</span>
+<span class="font-data-md text-data-md text-error">Ankle Dorsiflexion Asymmetry detected (L &gt; R)</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Sensor Status Pod -->
+<div class="pod rounded bg-surface-container p-container-padding">
+<h3 class="font-label-caps text-label-caps text-on-surface-variant mb-4 uppercase">Sensor Array Status</h3>
+<div class="grid grid-cols-2 gap-2">
+<div class="border border-outline-variant rounded p-2 flex flex-col items-center">
+<span class="material-symbols-outlined text-primary-container mb-1">videocam</span>
+<span class="font-label-caps text-label-caps text-on-surface">CAM-A</span>
+<span class="font-data-md text-[10px] text-primary">SYNC OK</span>
+</div>
+<div class="border border-outline-variant rounded p-2 flex flex-col items-center">
+<span class="material-symbols-outlined text-primary-container mb-1">videocam</span>
+<span class="font-label-caps text-label-caps text-on-surface">CAM-B</span>
+<span class="font-data-md text-[10px] text-primary">SYNC OK</span>
+</div>
+<div class="border border-outline-variant rounded p-2 flex flex-col items-center">
+<span class="material-symbols-outlined text-primary-container mb-1">sensors</span>
+<span class="font-label-caps text-label-caps text-on-surface">DEPTH-1</span>
+<span class="font-data-md text-[10px] text-primary">ACTIVE</span>
+</div>
+<div class="border border-outline-variant rounded p-2 flex flex-col items-center opacity-50">
+<span class="material-symbols-outlined text-on-surface-variant mb-1">sensors_off</span>
+<span class="font-label-caps text-label-caps text-on-surface">DEPTH-2</span>
+<span class="font-data-md text-[10px] text-on-surface-variant">IDLE</span>
+</div>
+</div>
+</div>
+</div>
+</aside>
+</main>
+<!-- BottomNavBar Shared Component (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center bg-surface-container h-16 border-t border-outline-variant z-50">
+<a class="flex flex-col items-center justify-center text-primary-container border-t-2 border-primary-container py-2 w-1/4 h-full" href="#">
+<span class="material-symbols-outlined mb-1">analytics</span>
+<span class="font-label-caps text-label-caps">Analysis</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant py-2 hover:text-on-surface transition-all active:scale-95 duration-75 w-1/4 h-full" href="#">
+<span class="material-symbols-outlined mb-1">folder_shared</span>
+<span class="font-label-caps text-label-caps">Records</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant py-2 hover:text-on-surface transition-all active:scale-95 duration-75 w-1/4 h-full" href="#">
+<span class="material-symbols-outlined mb-1">person</span>
+<span class="font-label-caps text-label-caps">Patient</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant py-2 hover:text-on-surface transition-all active:scale-95 duration-75 w-1/4 h-full" href="#">
+<span class="material-symbols-outlined mb-1">settings_applications</span>
+<span class="font-label-caps text-label-caps">Settings</span>
+</a>
+</nav>
+<script>
+        // Minimal interaction logic
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('mousedown', () => btn.classList.add('opacity-80'));
+            btn.addEventListener('mouseup', () => btn.classList.remove('opacity-80'));
+            btn.addEventListener('mouseleave', () => btn.classList.remove('opacity-80'));
+        });
+    </script>
+</body></html>

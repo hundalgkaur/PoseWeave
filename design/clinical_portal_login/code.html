@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Secure Diagnostic Portal - Login</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+                "secondary-container": "#484949",
+                "on-primary": "#00363d",
+                "surface-bright": "#333a3c",
+                "on-tertiary-fixed": "#251a00",
+                "on-surface-variant": "#bac9cc",
+                "on-secondary-container": "#b8b8b8",
+                "on-primary-fixed": "#001f24",
+                "secondary-fixed": "#e3e2e2",
+                "inverse-primary": "#006875",
+                "primary-fixed-dim": "#00daf3",
+                "on-error": "#690005",
+                "primary-fixed": "#9cf0ff",
+                "on-secondary-fixed-variant": "#464747",
+                "inverse-on-surface": "#2a3233",
+                "on-primary-container": "#00626e",
+                "primary-container": "#00e5ff",
+                "secondary": "#c7c6c6",
+                "on-tertiary-container": "#6f5500",
+                "error": "#ffb4ab",
+                "surface-container": "#192122",
+                "surface": "#0d1516",
+                "on-error-container": "#ffdad6",
+                "tertiary": "#ffeac0",
+                "on-secondary": "#2f3131",
+                "background": "#0d1516",
+                "tertiary-fixed-dim": "#f3bf26",
+                "on-primary-fixed-variant": "#004f58",
+                "surface-dim": "#0d1516",
+                "secondary-fixed-dim": "#c7c6c6",
+                "surface-variant": "#2e3638",
+                "on-tertiary-fixed-variant": "#594400",
+                "surface-tint": "#00daf3",
+                "surface-container-high": "#242b2d",
+                "surface-container-low": "#151d1e",
+                "outline-variant": "#3b494c",
+                "surface-container-highest": "#2e3638",
+                "tertiary-container": "#fec931",
+                "on-surface": "#dce4e5",
+                "tertiary-fixed": "#ffdf96",
+                "inverse-surface": "#dce4e5",
+                "primary": "#c3f5ff",
+                "on-background": "#dce4e5",
+                "on-secondary-fixed": "#1a1c1c",
+                "surface-container-lowest": "#080f11",
+                "outline": "#849396",
+                "error-container": "#93000a",
+                "on-tertiary": "#3e2e00"
+        },
+        "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+        },
+        "spacing": {
+                "margin-desktop": "40px",
+                "container-max": "1200px",
+                "gutter": "16px",
+                "unit": "4px",
+                "margin-mobile": "20px"
+        },
+        "fontFamily": {
+                "metric-xl": [
+                        "JetBrains Mono"
+                ],
+                "display-lg": [
+                        "Inter"
+                ],
+                "body-md": [
+                        "Inter"
+                ],
+                "metric-sm": [
+                        "JetBrains Mono"
+                ],
+                "label-caps": [
+                        "JetBrains Mono"
+                ],
+                "headline-md-mobile": [
+                        "Inter"
+                ],
+                "headline-md": [
+                        "Inter"
+                ]
+        },
+        "fontSize": {
+                "metric-xl": [
+                        "32px",
+                        {
+                                "lineHeight": "1.0",
+                                "letterSpacing": "-0.05em",
+                                "fontWeight": "500"
+                        }
+                ],
+                "display-lg": [
+                        "48px",
+                        {
+                                "lineHeight": "1.1",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "600"
+                        }
+                ],
+                "body-md": [
+                        "16px",
+                        {
+                                "lineHeight": "1.5",
+                                "fontWeight": "400"
+                        }
+                ],
+                "metric-sm": [
+                        "14px",
+                        {
+                                "lineHeight": "1.0",
+                                "fontWeight": "500"
+                        }
+                ],
+                "label-caps": [
+                        "12px",
+                        {
+                                "lineHeight": "1.0",
+                                "letterSpacing": "0.1em",
+                                "fontWeight": "700"
+                        }
+                ],
+                "headline-md-mobile": [
+                        "20px",
+                        {
+                                "lineHeight": "1.2",
+                                "fontWeight": "600"
+                        }
+                ],
+                "headline-md": [
+                        "24px",
+                        {
+                                "lineHeight": "1.2",
+                                "fontWeight": "600"
+                        }
+                ]
+        }
+},
+    },
+  }
+</script>
+<style>
+        body {
+            background-color: #0d1516;
+        }
+        .glass-panel {
+            background: rgba(21, 29, 30, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid #1E1E1E;
+            background-image: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 100%);
+        }
+        .glass-input {
+            background: rgba(13, 21, 22, 0.6);
+            border: 1px solid #1E1E1E;
+            transition: all 0.3s ease;
+        }
+        .glass-input:focus {
+            border-color: #00daf3;
+            box-shadow: inset 0 0 10px rgba(0, 218, 243, 0.1), 0 0 10px rgba(0, 218, 243, 0.2);
+            outline: none;
+        }
+        .btn-primary {
+            background-color: #00daf3;
+            color: #001f24;
+            box-shadow: 0 0 15px rgba(0, 229, 255, 0.4);
+            transition: all 0.2s ease;
+        }
+        .btn-primary:hover {
+            box-shadow: 0 0 25px rgba(0, 229, 255, 0.6);
+            transform: translateY(-1px);
+        }
+        .btn-social {
+            background: rgba(21, 29, 30, 0.6);
+            border: 1px solid #1E1E1E;
+            transition: all 0.2s ease;
+        }
+        .btn-social:hover {
+            background: rgba(46, 54, 56, 0.8);
+            border-color: #3b494c;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="text-on-background min-h-screen flex flex-col items-center justify-center p-margin-mobile md:p-margin-desktop overflow-hidden relative">
+<!-- Atmospheric Glow -->
+<div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-primary/10 rounded-full blur-[100px] pointer-events-none"></div>
+<main class="w-full max-w-md z-10 flex flex-col items-center">
+<!-- Logo Header -->
+<div class="mb-10 flex flex-col items-center">
+<div class="w-16 h-16 mb-4 relative flex items-center justify-center">
+<span class="material-symbols-outlined text-[48px] text-primary-fixed-dim absolute" style="font-variation-settings: 'FILL' 1;">
+                    biotech
+                </span>
+<!-- Subtle grid behind logo -->
+<div class="absolute inset-0 border border-primary/20 rounded-lg -rotate-45 opacity-50"></div>
+<div class="absolute inset-0 border border-primary/20 rounded-lg rotate-45 opacity-50"></div>
+</div>
+<h1 class="font-display-lg text-[36px] text-on-surface tracking-tight text-center">Diagnostic Portal</h1>
+<p class="font-metric-sm text-metric-sm text-primary mt-2 opacity-80 uppercase tracking-widest text-center">Secure Clinical Access</p>
+</div>
+<!-- Login Form Panel -->
+<div class="glass-panel w-full rounded-xl p-8 relative">
+<!-- HUD Corners -->
+<div class="absolute top-0 left-0 w-4 h-4 border-t border-l border-primary/50 rounded-tl-xl pointer-events-none"></div>
+<div class="absolute top-0 right-0 w-4 h-4 border-t border-r border-primary/50 rounded-tr-xl pointer-events-none"></div>
+<div class="absolute bottom-0 left-0 w-4 h-4 border-b border-l border-primary/50 rounded-bl-xl pointer-events-none"></div>
+<div class="absolute bottom-0 right-0 w-4 h-4 border-b border-r border-primary/50 rounded-br-xl pointer-events-none"></div>
+<form action="#" class="flex flex-col gap-6" method="POST">
+<!-- Email Field -->
+<div class="flex flex-col gap-2">
+<label class="font-label-caps text-label-caps text-on-surface-variant flex items-center gap-2" for="email">
+<span class="material-symbols-outlined text-[16px]">badge</span>
+                        Clinician ID
+                    </label>
+<input class="glass-input w-full rounded-lg px-4 py-3 font-body-md text-body-md text-on-surface placeholder-on-surface-variant/50" id="email" name="email" placeholder="user@clinic.org" required="" type="email"/>
+</div>
+<!-- Password Field -->
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-center">
+<label class="font-label-caps text-label-caps text-on-surface-variant flex items-center gap-2" for="password">
+<span class="material-symbols-outlined text-[16px]">vpn_key</span>
+                            Secure Access Token
+                        </label>
+<a class="font-label-caps text-label-caps text-primary hover:text-primary-fixed transition-colors" href="#">Forgot?</a>
+</div>
+<input class="glass-input w-full rounded-lg px-4 py-3 font-body-md text-body-md text-on-surface placeholder-on-surface-variant/50" id="password" name="password" placeholder="••••••••••••" required="" type="password"/>
+</div>
+<!-- Primary Action -->
+<button class="btn-primary w-full rounded-lg py-3 mt-2 font-headline-md-mobile text-headline-md-mobile flex items-center justify-center gap-2" type="submit">
+<span class="material-symbols-outlined">verified_user</span>
+                    Authorize Session
+                </button>
+</form>
+<div class="my-6 flex items-center gap-4">
+<div class="h-px bg-outline-variant/50 flex-1"></div>
+<span class="font-label-caps text-label-caps text-on-surface-variant">OR AUTHENTICATE VIA</span>
+<div class="h-px bg-outline-variant/50 flex-1"></div>
+</div>
+<!-- Social Logins -->
+<div class="flex flex-col gap-3">
+<button class="btn-social w-full rounded-lg py-3 px-4 flex items-center justify-center gap-3 font-body-md text-body-md text-on-surface">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">account_balance</span>
+                    Institution SSO
+                </button>
+<button class="btn-social w-full rounded-lg py-3 px-4 flex items-center justify-center gap-3 font-body-md text-body-md text-on-surface">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">smart_card</span>
+                    SmartCard Login
+                </button>
+</div>
+</div>
+<!-- Footer Links -->
+<div class="mt-8 text-center">
+<p class="font-body-md text-body-md text-on-surface-variant">
+                Need access? 
+                <a class="text-primary hover:text-primary-fixed font-medium transition-colors ml-1" href="#">Request Credentials</a>
+</p>
+</div>
+</main>
+</body></html>

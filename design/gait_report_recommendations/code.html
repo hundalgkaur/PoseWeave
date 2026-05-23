@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PoseWeave - Gait Analysis</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary": "#ffeac0",
+                        "on-secondary-container": "#b8b8b8",
+                        "primary-fixed": "#9cf0ff",
+                        "tertiary-container": "#fec931",
+                        "on-secondary-fixed-variant": "#464747",
+                        "secondary-fixed": "#e3e2e2",
+                        "on-tertiary-fixed": "#251a00",
+                        "surface-bright": "#333a3c",
+                        "primary-container": "#00e5ff",
+                        "background": "#0d1516",
+                        "on-primary-fixed": "#001f24",
+                        "on-surface-variant": "#bac9cc",
+                        "surface-container": "#192122",
+                        "error": "#ffb4ab",
+                        "surface-dim": "#0d1516",
+                        "on-primary-container": "#00626e",
+                        "surface-container-highest": "#2e3638",
+                        "on-tertiary": "#3e2e00",
+                        "on-error": "#690005",
+                        "surface-container-high": "#242b2d",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "on-primary": "#00363d",
+                        "on-surface": "#dce4e5",
+                        "error-container": "#93000a",
+                        "on-error-container": "#ffdad6",
+                        "on-secondary": "#2f3131",
+                        "on-background": "#dce4e5",
+                        "tertiary-fixed-dim": "#f3bf26",
+                        "on-tertiary-fixed-variant": "#594400",
+                        "surface-container-low": "#151d1e",
+                        "secondary": "#c7c6c6",
+                        "inverse-surface": "#dce4e5",
+                        "inverse-primary": "#006875",
+                        "inverse-on-surface": "#2a3233",
+                        "primary-fixed-dim": "#00daf3",
+                        "surface-tint": "#00daf3",
+                        "primary": "#c3f5ff",
+                        "outline-variant": "#3b494c",
+                        "tertiary-fixed": "#ffdf96",
+                        "on-primary-fixed-variant": "#004f58",
+                        "surface-variant": "#2e3638",
+                        "on-tertiary-container": "#6f5500",
+                        "secondary-fixed-dim": "#c7c6c6",
+                        "secondary-container": "#484949",
+                        "outline": "#849396",
+                        "surface-container-lowest": "#080f11",
+                        "surface": "#0d1516"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-mobile": "20px",
+                        "unit": "4px",
+                        "margin-desktop": "40px",
+                        "container-max": "1200px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "metric-sm": ["JetBrains Mono"],
+                        "headline-md": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "label-caps": ["JetBrains Mono"],
+                        "metric-xl": ["JetBrains Mono"],
+                        "headline-md-mobile": ["Inter"]
+                    },
+                    "fontSize": {
+                        "metric-sm": ["14px", {"lineHeight": "1.0", "fontWeight": "500"}],
+                        "headline-md": ["24px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                        "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "label-caps": ["12px", {"lineHeight": "1.0", "letterSpacing": "0.1em", "fontWeight": "700"}],
+                        "metric-xl": ["32px", {"lineHeight": "1.0", "letterSpacing": "-0.05em", "fontWeight": "500"}],
+                        "headline-md-mobile": ["20px", {"lineHeight": "1.2", "fontWeight": "600"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .glass-panel {
+            background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 100%);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid #1E1E1E;
+        }
+        .neon-text {
+            text-shadow: 0 0 8px rgba(0, 229, 255, 0.4);
+        }
+        .hud-border {
+            position: relative;
+        }
+        .hud-border::before, .hud-border::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-color: #00e5ff;
+            border-style: solid;
+            opacity: 0.7;
+        }
+        .hud-border::before {
+            top: 0; left: 0;
+            border-width: 1px 0 0 1px;
+        }
+        .hud-border::after {
+            bottom: 0; right: 0;
+            border-width: 0 1px 1px 0;
+        }
+        
+        /* Noise Overlay */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)" opacity="0.05"/%3E%3C/svg%3E');
+            pointer-events: none;
+            z-index: -1;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-background antialiased min-h-screen flex flex-col items-center">
+<div class="w-full max-w-md mx-auto min-h-screen flex flex-col relative overflow-hidden">
+<!-- Header: TopAppBar (Simulated specific to sub-page) -->
+<header class="bg-surface/10 dark:bg-surface/10 backdrop-blur-md flex justify-between items-center px-margin-mobile py-4 w-full docked full-width top-0 border-b border-outline-variant/30 sticky z-40">
+<button class="text-primary-fixed-dim hover:text-primary transition-colors hover:scale-95 duration-150 flex items-center">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<h1 class="font-headline-md-mobile text-headline-md-mobile font-bold text-primary tracking-tight">Gait Analysis</h1>
+<div class="w-6"></div> <!-- Spacer for centering -->
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 flex flex-col gap-gutter px-margin-mobile py-6 overflow-y-auto">
+<!-- Profile Section -->
+<section class="glass-panel rounded-xl p-4 flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-primary-container/20 border border-primary/30 flex items-center justify-center text-primary font-headline-md-mobile font-bold uppercase">
+AW
+</div>
+<div class="flex flex-col flex-1">
+<h2 class="font-headline-md-mobile text-body-md font-bold text-on-surface">Alex Weaver</h2>
+<div class="flex items-center gap-3 text-on-surface-variant mt-1">
+<span class="font-metric-sm text-label-caps text-on-surface-variant">28 YRS</span>
+<span class="w-px h-3 bg-outline-variant/50"></span>
+<span class="font-metric-sm text-label-caps text-on-surface-variant">182 CM</span>
+<span class="w-px h-3 bg-outline-variant/50"></span>
+<span class="font-metric-sm text-label-caps text-on-surface-variant">76 KG</span>
+</div>
+</div>
+</section>
+<!-- Top Section: Key Metrics Summary -->
+<section class="glass-panel rounded-xl p-4 flex flex-col gap-4 hud-border">
+<h2 class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">Key Metrics</h2>
+<div class="grid grid-cols-3 gap-2">
+<div class="flex flex-col items-center justify-center p-2 bg-surface-container-low rounded-lg border border-outline-variant/20">
+<span class="font-label-caps text-label-caps text-on-surface-variant mb-1">Speed</span>
+<span class="font-metric-xl text-metric-xl text-primary neon-text">1.2</span>
+<span class="font-metric-sm text-metric-sm text-on-surface-variant">m/s</span>
+</div>
+<div class="flex flex-col items-center justify-center p-2 bg-surface-container-low rounded-lg border border-outline-variant/20">
+<span class="font-label-caps text-label-caps text-on-surface-variant mb-1">Cadence</span>
+<span class="font-metric-xl text-metric-xl text-primary neon-text">104</span>
+<span class="font-metric-sm text-metric-sm text-on-surface-variant">spm</span>
+</div>
+<div class="flex flex-col items-center justify-center p-2 bg-surface-container-low rounded-lg border border-outline-variant/20">
+<span class="font-label-caps text-label-caps text-on-surface-variant mb-1">Symmetry</span>
+<span class="font-metric-xl text-metric-xl text-primary neon-text">94<span class="text-metric-sm">%</span></span>
+</div>
+</div>
+</section>
+<!-- Middle Section: Upper Body Metrics -->
+<section class="glass-panel rounded-xl p-4 flex flex-col gap-4">
+<div class="flex justify-between items-center">
+<h2 class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">Upper Body Metrics</h2>
+<span class="material-symbols-outlined text-outline text-sm">info</span>
+</div>
+<div class="flex justify-around items-center pt-2">
+<!-- Left Arm Gauge -->
+<div class="flex flex-col items-center gap-2">
+<div class="relative w-16 h-16 flex items-center justify-center">
+<!-- Simulated Radial Gauge SVG -->
+<svg class="absolute inset-0 w-full h-full transform -rotate-90" viewbox="0 0 36 36">
+<path class="text-surface-container-highest" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="100, 100" stroke-width="3"></path>
+<path class="text-primary" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="24, 100" stroke-width="3"></path>
+</svg>
+<span class="font-metric-sm text-metric-sm text-primary z-10 neon-text">24°</span>
+</div>
+<span class="font-label-caps text-label-caps text-on-surface-variant">L Arm Swing</span>
+</div>
+<div class="w-px h-12 bg-outline-variant/30"></div>
+<!-- Right Arm Gauge -->
+<div class="flex flex-col items-center gap-2">
+<div class="relative w-16 h-16 flex items-center justify-center">
+<svg class="absolute inset-0 w-full h-full transform -rotate-90" viewbox="0 0 36 36">
+<path class="text-surface-container-highest" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="100, 100" stroke-width="3"></path>
+<path class="text-primary" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="22, 100" stroke-width="3"></path>
+</svg>
+<span class="font-metric-sm text-metric-sm text-primary z-10 neon-text">22°</span>
+</div>
+<span class="font-label-caps text-label-caps text-on-surface-variant">R Arm Swing</span>
+</div>
+</div>
+</section>
+<!-- Main Section: Lower Limb Biometrics -->
+<section class="glass-panel rounded-xl p-4 flex flex-col gap-4 hud-border">
+<div class="flex justify-between items-center border-b border-outline-variant/20 pb-2">
+<h2 class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">Lower Limb Biometrics</h2>
+</div>
+<!-- Leg Rotation -->
+<div class="flex flex-col gap-3">
+<h3 class="font-label-caps text-label-caps text-outline">Leg Rotation (In/Out)</h3>
+<!-- Left Leg Row -->
+<div class="flex justify-between items-center bg-surface-container-low p-2 rounded border border-outline-variant/10">
+<span class="font-body-md text-body-md text-on-surface">Left Leg</span>
+<div class="flex gap-4">
+<div class="flex flex-col items-end">
+<span class="font-label-caps text-label-caps text-on-surface-variant text-[10px]">IN</span>
+<span class="font-metric-sm text-metric-sm text-primary">4°</span>
+</div>
+<div class="flex flex-col items-end">
+<span class="font-label-caps text-label-caps text-on-surface-variant text-[10px]">OUT</span>
+<span class="font-metric-sm text-metric-sm text-primary">12°</span>
+</div>
+</div>
+</div>
+<!-- Right Leg Row -->
+<div class="flex justify-between items-center bg-surface-container-low p-2 rounded border border-outline-variant/10">
+<span class="font-body-md text-body-md text-on-surface">Right Leg</span>
+<div class="flex gap-4">
+<div class="flex flex-col items-end">
+<span class="font-label-caps text-label-caps text-on-surface-variant text-[10px]">IN</span>
+<span class="font-metric-sm text-metric-sm text-primary">5°</span>
+</div>
+<div class="flex flex-col items-end">
+<span class="font-label-caps text-label-caps text-on-surface-variant text-[10px]">OUT</span>
+<span class="font-metric-sm text-metric-sm text-primary">11°</span>
+</div>
+</div>
+</div>
+</div>
+<div class="w-full h-px bg-outline-variant/20 my-1"></div>
+<!-- Knee Flexion -->
+<div class="flex justify-between items-center">
+<h3 class="font-label-caps text-label-caps text-outline">Knee Flexion (Max)</h3>
+<span class="font-metric-xl text-metric-xl text-primary neon-text">65°</span>
+</div>
+</section>
+<!-- Bottom Section: Gait Cycle Timeline -->
+<section class="glass-panel rounded-xl p-4 flex flex-col gap-4">
+<h2 class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">Gait Cycle Timeline</h2>
+<div class="relative w-full h-8 bg-surface-container-highest rounded overflow-hidden flex">
+<!-- Stance Phase -->
+<div class="h-full bg-primary/20 border-r border-primary/50 flex items-center justify-center" style="width: 60%;">
+<span class="font-metric-sm text-metric-sm text-primary mix-blend-screen">STANCE (60%)</span>
+</div>
+<!-- Swing Phase -->
+<div class="h-full bg-transparent flex items-center justify-center" style="width: 40%;">
+<span class="font-metric-sm text-metric-sm text-on-surface-variant">SWING (40%)</span>
+</div>
+</div>
+</section>
+<!-- Download Button -->
+<button class="w-full py-4 glass-panel rounded-xl flex items-center justify-center gap-2 text-primary hover:bg-primary/10 transition-colors border-primary/30 group">
+<span class="material-symbols-outlined group-hover:-translate-y-1 transition-transform">download</span>
+<span class="font-label-caps text-label-caps tracking-wider uppercase">Download PDF Report</span>
+</button>
+<div class="h-24"></div> <!-- Bottom Spacer for NavBar -->
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="bg-surface-container-lowest/80 dark:bg-surface-container-lowest/80 backdrop-blur-xl border-t border-outline-variant/20 fixed bottom-0 max-w-md w-full z-50 rounded-t-xl shadow-lg flex justify-around items-center h-20 px-4">
+<button class="flex flex-col items-center justify-center text-on-surface-variant/70 hover:bg-surface-variant/20 rounded-lg p-2 transition-all duration-200">
+<span class="material-symbols-outlined text-2xl mb-1">videocam</span>
+<span class="font-label-caps text-[10px] tracking-wider uppercase">Live</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant/70 hover:bg-surface-variant/20 rounded-lg p-2 transition-all duration-200">
+<span class="material-symbols-outlined text-2xl mb-1">view_in_ar</span>
+<span class="font-label-caps text-[10px] tracking-wider uppercase">3D</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant/70 hover:bg-surface-variant/20 rounded-lg p-2 transition-all duration-200">
+<span class="material-symbols-outlined text-2xl mb-1">folder_open</span>
+<span class="font-label-caps text-[10px] tracking-wider uppercase">Vault</span>
+</button>
+<button class="flex flex-col items-center justify-center text-primary-fixed-dim bg-primary/10 rounded-xl px-4 py-1.5 transition-all duration-200 scale-90">
+<span class="material-symbols-outlined text-2xl mb-1">query_stats</span>
+<span class="font-label-caps text-[10px] tracking-wider uppercase">Stats</span>
+</button>
+</nav>
+</div>
+</body></html>

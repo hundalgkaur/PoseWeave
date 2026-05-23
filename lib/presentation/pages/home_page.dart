@@ -139,6 +139,17 @@ class _HomePageState extends State<HomePage> {
                               context,
                             ).pushNamed(AppRoutes.image),
                       ),
+                      const SizedBox(height: 16),
+                      ModeSelectorCard(
+                        icon: Icons.local_hospital_outlined,
+                        title: 'Diagnostic Mode',
+                        subtitle: 'Clinical suite: live, biomechanics, gait',
+                        badge: 'CLINICAL',
+                        onTap:
+                            () => Navigator.of(
+                              context,
+                            ).pushNamed(AppRoutes.clinicalLogin),
+                      ),
                       const SizedBox(height: 24),
                       Center(
                         child: Text(

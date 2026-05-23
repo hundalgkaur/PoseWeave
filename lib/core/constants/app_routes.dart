@@ -16,4 +16,13 @@ class AppRoutes {
   static const String forgotPassword = '/forgot-password';
   static const String settings = '/settings';
   static const String profile = '/profile';
+
+  // Clinical / Diagnostic Mode.
+  static const String clinicalLogin = '/clinical/login';
+  static const String clinicalConsent = '/clinical/consent';
+  static const String clinicalHome = '/clinical/home';
+  static const String clinicalLive = '/clinical/live';
+  static const String clinicalBiomechanical = '/clinical/biomechanical';
+  static const String clinical3d = '/clinical/3d';
+  static const String clinicalGait = '/clinical/gait';
 }
