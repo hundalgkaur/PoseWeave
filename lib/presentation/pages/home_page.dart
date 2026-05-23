@@ -49,6 +49,18 @@ class _HomePageState extends State<HomePage> {
         child: Stack(
           children: <Widget>[
             Align(
+              alignment: Alignment.topLeft,
+              child: IconButton(
+                tooltip: 'Settings',
+                icon: const Icon(
+                  Icons.settings_outlined,
+                  color: AppColors.onSurfaceVariant,
+                ),
+                onPressed:
+                    () => Navigator.of(context).pushNamed(AppRoutes.settings),
+              ),
+            ),
+            Align(
               alignment: Alignment.topRight,
               child: IconButton(
                 tooltip: 'Sign out',

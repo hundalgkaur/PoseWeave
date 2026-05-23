@@ -165,7 +165,10 @@ class PdfPageBuilders {
       children: <pw.Widget>[
         pw.SizedBox(
           width: 160,
-          child: pw.Text(k, style: const pw.TextStyle(color: _muted, fontSize: 12)),
+          child: pw.Text(
+            k,
+            style: const pw.TextStyle(color: _muted, fontSize: 12),
+          ),
         ),
         pw.Text(
           v,

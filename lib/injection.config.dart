@@ -18,9 +18,13 @@ import 'package:poseweave/data/datasources/mlkit_camera_datasource_impl.dart'
 import 'package:poseweave/data/datasources/video_frame_datasource.dart'
     as _i799;
 import 'package:poseweave/data/repositories/pose_repository_impl.dart' as _i298;
+import 'package:poseweave/data/services/api_key_service.dart' as _i297;
 import 'package:poseweave/data/services/pdf_report_service.dart' as _i962;
+import 'package:poseweave/data/services/recommendation_service.dart' as _i340;
 import 'package:poseweave/domain/repositories/pose_repository.dart' as _i154;
 import 'package:poseweave/presentation/bloc/pose_bloc.dart' as _i1064;
+import 'package:poseweave/presentation/bloc/recommendations_bloc.dart' as _i490;
+import 'package:poseweave/presentation/bloc/settings_bloc.dart' as _i790;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -29,12 +33,22 @@ extension GetItInjectableX on _i174.GetIt {
     _i526.EnvironmentFilter? environmentFilter,
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
+    gh.lazySingleton<_i297.ApiKeyService>(() => _i297.ApiKeyService());
     gh.lazySingleton<_i962.PdfReportService>(() => _i962.PdfReportService());
     gh.lazySingleton<_i799.VideoFrameDataSource>(
       () => _i799.VideoFrameDataSourceImpl(),
     );
+    gh.factory<_i790.SettingsBloc>(
+      () => _i790.SettingsBloc(gh<_i297.ApiKeyService>()),
+    );
     gh.lazySingleton<_i258.MLKitCameraDataSource>(
       () => _i733.MLKitCameraDataSourceImpl(),
+    );
+    gh.lazySingleton<_i340.RecommendationService>(
+      () => _i340.RecommendationService(gh<_i297.ApiKeyService>()),
+    );
+    gh.factory<_i490.RecommendationsBloc>(
+      () => _i490.RecommendationsBloc(gh<_i340.RecommendationService>()),
     );
     gh.lazySingleton<_i154.PoseRepository>(
       () => _i298.PoseRepositoryImpl(

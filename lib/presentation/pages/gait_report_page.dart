@@ -3,17 +3,21 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:poseweave/core/constants/app_colors.dart';
+import 'package:poseweave/core/constants/app_routes.dart';
 import 'package:poseweave/core/constants/app_theme.dart';
 import 'package:poseweave/core/utils/segment_aggregator.dart';
 import 'package:poseweave/data/models/report_data.dart';
 import 'package:poseweave/domain/entities/gait_parameters.dart';
 import 'package:poseweave/domain/entities/pose_entity.dart';
+import 'package:poseweave/domain/entities/recommendation_entity.dart';
 import 'package:poseweave/injection.dart';
 import 'package:poseweave/presentation/bloc/pose_bloc.dart';
 import 'package:poseweave/presentation/bloc/pose_event.dart';
 import 'package:poseweave/presentation/bloc/pose_state.dart';
+import 'package:poseweave/presentation/bloc/recommendations_bloc.dart';
 import 'package:poseweave/presentation/widgets/glass_panel.dart';
 import 'package:poseweave/presentation/widgets/radial_gauge.dart';
+import 'package:poseweave/presentation/widgets/recommendations_panel.dart';
 import 'package:printing/printing.dart';
 
 /// Gait Analysis report (design/gait_analysis_report). Renders gait parameters
@@ -35,8 +39,13 @@ class GaitReportPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<PoseBloc>(
-      create: (_) => getIt<PoseBloc>(),
+    return MultiBlocProvider(
+      providers: <BlocProvider<dynamic>>[
+        BlocProvider<PoseBloc>(create: (_) => getIt<PoseBloc>()),
+        BlocProvider<RecommendationsBloc>(
+          create: (_) => getIt<RecommendationsBloc>(),
+        ),
+      ],
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Gait Analysis'),
@@ -62,6 +71,8 @@ class GaitReportPage extends StatelessWidget {
                 '“~ EST” values are estimated from 2D video.',
                 style: AppTheme.labelCaps(fontSize: 9),
               ),
+              const SizedBox(height: 16),
+              _Recommendations(params: params, poses: poses),
               const SizedBox(height: 16),
               _ExportPdfButton(
                 params: params,
@@ -402,17 +413,28 @@ class _ExportPdfButton extends StatelessWidget {
           onPressed:
               generating
                   ? null
-                  : () => context.read<PoseBloc>().add(
-                    PoseEvent.generateReport(
-                      ReportData(
-                        generatedAt: DateTime.now(),
-                        exerciseType: 'Gait analysis',
-                        gait: params,
-                        segments: SegmentAggregator.summarize(poses),
-                        framePaths: framePaths,
+                  : () {
+                    final RecommendationsState rec =
+                        context.read<RecommendationsBloc>().state;
+                    final List<String> recLines =
+                        rec is RecommendationsLoaded
+                            ? rec.items
+                                .map((RecommendationEntity r) => r.asLine)
+                                .toList()
+                            : <String>[];
+                    context.read<PoseBloc>().add(
+                      PoseEvent.generateReport(
+                        ReportData(
+                          generatedAt: DateTime.now(),
+                          exerciseType: 'Gait analysis',
+                          gait: params,
+                          segments: SegmentAggregator.summarize(poses),
+                          framePaths: framePaths,
+                          recommendations: recLines,
+                        ),
                       ),
-                    ),
-                  ),
+                    );
+                  },
           icon:
               generating
                   ? const SizedBox(
@@ -425,6 +447,83 @@ class _ExportPdfButton extends StatelessWidget {
             generating ? 'Generating…' : 'EXPORT PDF',
             style: AppTheme.labelCaps(color: AppColors.onPrimary),
           ),
+        );
+      },
+    );
+  }
+}
+
+/// AI recommendations section: a button to fetch (BYOK), then the result list.
+class _Recommendations extends StatelessWidget {
+  const _Recommendations({required this.params, required this.poses});
+
+  final GaitParameters params;
+  final List<PoseEntity> poses;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<RecommendationsBloc, RecommendationsState>(
+      builder: (BuildContext context, RecommendationsState state) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                Text('AI RECOMMENDATIONS', style: AppTheme.labelCaps()),
+                const Spacer(),
+                const _EstTag(),
+              ],
+            ),
+            const SizedBox(height: 12),
+            if (state is RecommendationsInitial)
+              OutlinedButton.icon(
+                icon: const Icon(Icons.auto_awesome, color: AppColors.primary),
+                label: Text(
+                  'Generate AI recommendations',
+                  style: AppTheme.mono(color: AppColors.primary, fontSize: 13),
+                ),
+                onPressed:
+                    () => context.read<RecommendationsBloc>().add(
+                      RecommendationsEvent.fetch(
+                        gait: params,
+                        segments: SegmentAggregator.summarize(poses),
+                      ),
+                    ),
+              )
+            else if (state is RecommendationsLoading)
+              const Center(
+                child: Padding(
+                  padding: EdgeInsets.all(12),
+                  child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                      AppColors.primaryContainer,
+                    ),
+                  ),
+                ),
+              )
+            else if (state is RecommendationsLoaded)
+              RecommendationsPanel(items: state.items)
+            else if (state is RecommendationsError)
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    state.message,
+                    style: AppTheme.mono(color: AppColors.error, fontSize: 12),
+                  ),
+                  if (state.needsKey) ...<Widget>[
+                    const SizedBox(height: 8),
+                    OutlinedButton(
+                      onPressed:
+                          () => Navigator.of(
+                            context,
+                          ).pushNamed(AppRoutes.settings),
+                      child: const Text('Open Settings'),
+                    ),
+                  ],
+                ],
+              ),
+          ],
         );
       },
     );

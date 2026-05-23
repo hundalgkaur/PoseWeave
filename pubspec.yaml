@@ -52,6 +52,10 @@ dependencies:
   pdf: ^3.11.1
   printing: ^5.13.4
 
+  # BYOK: encrypted on-device storage for the user's Anthropic API key + HTTP
+  flutter_secure_storage: ^9.2.2
+  http: ^1.2.2
+
   # Fonts: Inter (UI) + JetBrains Mono (data), per the Cyber-Kinetic design
   google_fonts: ^6.2.1
 

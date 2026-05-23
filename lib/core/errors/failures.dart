@@ -45,3 +45,13 @@ class ExportFailure extends Failure {
 class PdfGenerationFailure extends Failure {
   const PdfGenerationFailure(super.message, {super.isRecoverable = true});
 }
+
+/// The AI (Claude) service call failed (network, 4xx/5xx, parse).
+class AiServiceFailure extends Failure {
+  const AiServiceFailure(super.message, {super.isRecoverable = true});
+}
+
+/// No Anthropic API key configured (BYOK) — direct the user to Settings.
+class NoApiKeyFailure extends Failure {
+  const NoApiKeyFailure(super.message, {super.isRecoverable = true});
+}
