@@ -121,17 +121,14 @@ void main() {
         when(
           () => repo.pickImage(),
         ).thenAnswer((_) async => const Right<Failure, String?>('/img.jpg'));
-        when(() => repo.analyzeImage('/img.jpg')).thenAnswer(
-          (_) async => Right<Failure, PoseEntity?>(buildTestPose()),
-        );
+        when(
+          () => repo.analyzeImage('/img.jpg'),
+        ).thenAnswer((_) async => Right<Failure, PoseEntity?>(buildTestPose()));
       },
       build: () => PoseBloc(repo),
       act: (PoseBloc bloc) => bloc.add(const PoseEvent.pickAndAnalyzeImage()),
       expect:
-          () => <Matcher>[
-            isA<PoseImageProcessing>(),
-            isA<PoseImageComplete>(),
-          ],
+          () => <Matcher>[isA<PoseImageProcessing>(), isA<PoseImageComplete>()],
     );
   });
 }

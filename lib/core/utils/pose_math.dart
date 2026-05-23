@@ -4,6 +4,36 @@ import 'dart:ui';
 import 'package:poseweave/domain/entities/landmark_entity.dart';
 import 'package:vector_math/vector_math_64.dart' as vm;
 
+/// Anatomical classification of a joint angle.
+enum AngleClassification {
+  neutral,
+  valgus, // knee collapsing inward (often hip weakness)
+  varus, // knee bowing outward
+  hyperflexed, // joint over-bent
+  flexed, // normal flexion
+  extended, // normal/full extension
+  hyperextended, // locked past straight (injury risk)
+}
+
+/// Result of analyzing a single joint: the measured angle, its classification,
+/// the limiting landmark confidence, and an optional risk flag.
+class AngleAnalysis {
+  const AngleAnalysis({
+    required this.degrees,
+    required this.classification,
+    required this.confidence,
+    this.riskFlag,
+  });
+
+  final double degrees;
+  final AngleClassification classification;
+  final double confidence;
+  final String? riskFlag;
+
+  /// True when this analysis carries a risk flag worth surfacing.
+  bool get isRisk => riskFlag != null;
+}
+
 /// Pure geometry helpers for pose work. No side effects, no Flutter widgets.
 class PoseMath {
   const PoseMath._();
@@ -105,6 +135,82 @@ class PoseMath {
       canvasSize,
       focalLength,
       1,
+    );
+  }
+
+  /// Knee deviation threshold (normalized x) past which it reads as valgus/varus.
+  static const double _kneeDeviation = 0.04;
+
+  /// Classifies a knee from hip/knee/ankle. Frontal-plane deviation of the knee
+  /// from the straight hip→ankle line marks valgus (inward collapse) or varus
+  /// (outward bow); otherwise it's hyperflexed (<90°) or neutral.
+  /// [isLeftSide] flips the inward direction so the sign means the same thing
+  /// for both legs.
+  static AngleAnalysis analyzeKnee({
+    required LandmarkEntity hip,
+    required LandmarkEntity knee,
+    required LandmarkEntity ankle,
+    required bool isLeftSide,
+  }) {
+    final double degrees = calculateAngle3Points(hip, knee, ankle);
+    final double confidence = math.min(
+      hip.confidence,
+      math.min(knee.confidence, ankle.confidence),
+    );
+
+    // Where the straight hip→ankle line sits at the knee's height.
+    final double dy = ankle.y - hip.y;
+    final double lineX =
+        dy.abs() < 1e-6
+            ? hip.x
+            : hip.x + (ankle.x - hip.x) * ((knee.y - hip.y) / dy);
+    // Positive = inward (toward midline) for either leg.
+    final double inward = (knee.x - lineX) * (isLeftSide ? 1 : -1);
+
+    AngleClassification classification;
+    String? risk;
+    if (inward > _kneeDeviation) {
+      classification = AngleClassification.valgus;
+      risk = 'knee_valgus';
+    } else if (inward < -_kneeDeviation) {
+      classification = AngleClassification.varus;
+      risk = 'knee_varus';
+    } else if (degrees < 90) {
+      classification = AngleClassification.hyperflexed;
+    } else {
+      classification = AngleClassification.neutral;
+    }
+
+    return AngleAnalysis(
+      degrees: degrees,
+      classification: classification,
+      confidence: confidence,
+      riskFlag: risk,
+    );
+  }
+
+  /// Classifies an elbow (or any 3-point limb) by flexion only:
+  /// <30° hyperflexed, 30–160° flexed, >160° extended.
+  static AngleAnalysis analyzeElbow({
+    required LandmarkEntity shoulder,
+    required LandmarkEntity elbow,
+    required LandmarkEntity wrist,
+  }) {
+    final double degrees = calculateAngle3Points(shoulder, elbow, wrist);
+    final double confidence = math.min(
+      shoulder.confidence,
+      math.min(elbow.confidence, wrist.confidence),
+    );
+    final AngleClassification classification =
+        degrees < 30
+            ? AngleClassification.hyperflexed
+            : (degrees > 160
+                ? AngleClassification.extended
+                : AngleClassification.flexed);
+    return AngleAnalysis(
+      degrees: degrees,
+      classification: classification,
+      confidence: confidence,
     );
   }
 }

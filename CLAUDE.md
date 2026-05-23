@@ -23,6 +23,7 @@ Key reference docs:
 
 - **Onboarding** (`onboarding_page.dart`): 3-slide intro on first launch only — `shared_preferences` persists `kOnboardingSeenKey`; splash routes to onboarding (unseen) or login (seen).
 - **Sampling:** `kVideoSampleInterval` is 100 ms (~10 fps) for smoother playback + cleaner gait step detection (results playback timer uses the same constant).
+- **Segment Analysis (Phase 3 F1)** (`segment_dashboard_page.dart`): live per-limb dashboard (L/R arm + leg cards) reading `PoseActive`. Angle engine in `PoseMath` (`AngleClassification`, `AngleAnalysis`, `analyzeKnee` valgus/varus/hyperflexed/neutral, `analyzeElbow`); widgets `SegmentDetailCard`, `AngleBadge`. Live skeleton now gets **EMA jitter smoothing** in the ML Kit datasource (`_smooth`, α=0.4, cleared on stop/switch/dispose). Route `/segments`, Home card. Z-depth confirmed wired (model maps `ml.z`, 3D painter normalizes it).
 
 **Routes:** splash `/` → onboarding `/onboarding` (first launch) → login `/login` → home `/home`; plus `/camera` `/gallery` `/skeleton3d` `/gait` `/image` `/forgot-password`.
 

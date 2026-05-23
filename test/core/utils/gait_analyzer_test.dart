@@ -12,24 +12,24 @@ PoseEntity _walkingPose(double t) {
   final double s = math.sin(t);
   final Map<PoseLandmarkType, List<double>> pos =
       <PoseLandmarkType, List<double>>{
-    for (final PoseLandmarkType type in PoseLandmarkType.values)
-      type: <double>[0.5, 0.5],
-    PoseLandmarkType.nose: <double>[0.5, 0.10],
-    PoseLandmarkType.leftShoulder: <double>[0.55, 0.30],
-    PoseLandmarkType.rightShoulder: <double>[0.45, 0.30],
-    PoseLandmarkType.leftElbow: <double>[0.60, 0.40 + 0.05 * s],
-    PoseLandmarkType.rightElbow: <double>[0.40, 0.40 - 0.05 * s],
-    PoseLandmarkType.leftWrist: <double>[0.62, 0.50 + 0.05 * s],
-    PoseLandmarkType.rightWrist: <double>[0.38, 0.50 - 0.05 * s],
-    PoseLandmarkType.leftHip: <double>[0.52, 0.55],
-    PoseLandmarkType.rightHip: <double>[0.48, 0.55],
-    PoseLandmarkType.leftKnee: <double>[0.52 + 0.06 * s, 0.70],
-    PoseLandmarkType.rightKnee: <double>[0.48 - 0.06 * s, 0.70],
-    PoseLandmarkType.leftAnkle: <double>[0.52 + 0.10 * s, 0.88],
-    PoseLandmarkType.rightAnkle: <double>[0.48 - 0.10 * s, 0.88],
-    PoseLandmarkType.leftFootIndex: <double>[0.54 + 0.10 * s, 0.90],
-    PoseLandmarkType.rightFootIndex: <double>[0.46 - 0.10 * s, 0.90],
-  };
+        for (final PoseLandmarkType type in PoseLandmarkType.values)
+          type: <double>[0.5, 0.5],
+        PoseLandmarkType.nose: <double>[0.5, 0.10],
+        PoseLandmarkType.leftShoulder: <double>[0.55, 0.30],
+        PoseLandmarkType.rightShoulder: <double>[0.45, 0.30],
+        PoseLandmarkType.leftElbow: <double>[0.60, 0.40 + 0.05 * s],
+        PoseLandmarkType.rightElbow: <double>[0.40, 0.40 - 0.05 * s],
+        PoseLandmarkType.leftWrist: <double>[0.62, 0.50 + 0.05 * s],
+        PoseLandmarkType.rightWrist: <double>[0.38, 0.50 - 0.05 * s],
+        PoseLandmarkType.leftHip: <double>[0.52, 0.55],
+        PoseLandmarkType.rightHip: <double>[0.48, 0.55],
+        PoseLandmarkType.leftKnee: <double>[0.52 + 0.06 * s, 0.70],
+        PoseLandmarkType.rightKnee: <double>[0.48 - 0.06 * s, 0.70],
+        PoseLandmarkType.leftAnkle: <double>[0.52 + 0.10 * s, 0.88],
+        PoseLandmarkType.rightAnkle: <double>[0.48 - 0.10 * s, 0.88],
+        PoseLandmarkType.leftFootIndex: <double>[0.54 + 0.10 * s, 0.90],
+        PoseLandmarkType.rightFootIndex: <double>[0.46 - 0.10 * s, 0.90],
+      };
   return PoseEntity(
     landmarks: <LandmarkEntity>[
       for (final PoseLandmarkType type in PoseLandmarkType.values)

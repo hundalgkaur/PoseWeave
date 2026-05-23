@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:poseweave/core/utils/pose_math.dart';
+import 'package:poseweave/domain/entities/landmark_entity.dart';
 import 'package:vector_math/vector_math_64.dart' as vm;
 
 import '../../helpers/test_data.dart';
@@ -80,6 +81,43 @@ void main() {
         0,
       );
       expect(r.x, closeTo(0, 1e-6));
+    });
+  });
+
+  group('PoseMath.analyzeKnee', () {
+    LandmarkEntity lm(PoseLandmarkType t, double x, double y) =>
+        LandmarkEntity(type: t, x: x, y: y, confidence: 0.9);
+
+    test('valgus when the knee deviates inward of the hip→ankle line', () {
+      final AngleAnalysis r = PoseMath.analyzeKnee(
+        hip: lm(PoseLandmarkType.leftHip, 0.4, 0.3),
+        knee: lm(PoseLandmarkType.leftKnee, 0.46, 0.5),
+        ankle: lm(PoseLandmarkType.leftAnkle, 0.35, 0.8),
+        isLeftSide: true,
+      );
+      expect(r.classification, AngleClassification.valgus);
+      expect(r.riskFlag, 'knee_valgus');
+    });
+
+    test('neutral for a roughly straight, aligned leg', () {
+      final AngleAnalysis r = PoseMath.analyzeKnee(
+        hip: lm(PoseLandmarkType.leftHip, 0.5, 0.3),
+        knee: lm(PoseLandmarkType.leftKnee, 0.5, 0.55),
+        ankle: lm(PoseLandmarkType.leftAnkle, 0.5, 0.8),
+        isLeftSide: true,
+      );
+      expect(r.classification, AngleClassification.neutral);
+      expect(r.riskFlag, isNull);
+    });
+
+    test('hyperflexed when the knee angle is under 90°', () {
+      final AngleAnalysis r = PoseMath.analyzeKnee(
+        hip: lm(PoseLandmarkType.leftHip, 0.5, 0.4),
+        knee: lm(PoseLandmarkType.leftKnee, 0.5, 0.6),
+        ankle: lm(PoseLandmarkType.leftAnkle, 0.5, 0.4),
+        isLeftSide: true,
+      );
+      expect(r.classification, AngleClassification.hyperflexed);
     });
   });
 }

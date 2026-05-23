@@ -36,6 +36,11 @@ class MLKitCameraDataSourceImpl implements MLKitCameraDataSource {
   DateTime _lastProcessed = DateTime.fromMillisecondsSinceEpoch(0);
   Timer? _mockTimer;
 
+  /// Exponential-moving-average state per landmark index, to smooth jitter.
+  /// Higher [_alpha] = more responsive, less smoothing.
+  final Map<int, _Smoothed> _ema = <int, _Smoothed>{};
+  static const double _alpha = 0.4;
+
   /// Android device-orientation -> degrees, for rotation compensation.
   static const Map<DeviceOrientation, int> _orientations =
       <DeviceOrientation, int>{
@@ -117,6 +122,7 @@ class MLKitCameraDataSourceImpl implements MLKitCameraDataSource {
   @override
   Future<void> stopDetection() async {
     _detecting = false;
+    _ema.clear();
     _mockTimer?.cancel();
     _mockTimer = null;
     final CameraController? controller = _controller;
@@ -181,9 +187,32 @@ class MLKitCameraDataSourceImpl implements MLKitCameraDataSource {
       await controller.dispose();
     }
     _controller = null;
+    _ema.clear();
     await _detector?.close();
     _detector = null;
     await _poseController.close();
+  }
+
+  /// Applies per-landmark EMA smoothing to reduce frame-to-frame jitter.
+  PoseModel _smooth(PoseModel model) {
+    final List<LandmarkModel> smoothed =
+        model.landmarks.map((LandmarkModel lm) {
+          final int i = lm.type.index;
+          final double z = lm.z ?? 0;
+          final _Smoothed? prev = _ema[i];
+          if (prev == null) {
+            _ema[i] = _Smoothed(lm.x, lm.y, z, lm.confidence);
+            return lm;
+          }
+          final double sx = _alpha * lm.x + (1 - _alpha) * prev.x;
+          final double sy = _alpha * lm.y + (1 - _alpha) * prev.y;
+          final double sz = _alpha * z + (1 - _alpha) * prev.z;
+          final double sc =
+              _alpha * lm.confidence + (1 - _alpha) * prev.confidence;
+          _ema[i] = _Smoothed(sx, sy, sz, sc);
+          return lm.copyWith(x: sx, y: sy, z: sz, confidence: sc);
+        }).toList();
+    return model.copyWith(landmarks: smoothed);
   }
 
   // --- Real detection -------------------------------------------------------
@@ -207,7 +236,7 @@ class MLKitCameraDataSourceImpl implements MLKitCameraDataSource {
         source: PoseSource.camera,
         timestamp: now,
       );
-      if (!_poseController.isClosed) _poseController.add(model);
+      if (!_poseController.isClosed) _poseController.add(_smooth(model));
     } catch (e) {
       // Never crash the stream on a bad frame — log and continue (PRD §7.3).
       debugPrint('Pose frame skipped: $e');
@@ -334,4 +363,13 @@ class MLKitCameraDataSourceImpl implements MLKitCameraDataSource {
       imageHeight: 1,
     );
   }
+}
+
+/// One landmark's smoothed EMA state.
+class _Smoothed {
+  const _Smoothed(this.x, this.y, this.z, this.confidence);
+  final double x;
+  final double y;
+  final double z;
+  final double confidence;
 }

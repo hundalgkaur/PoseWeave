@@ -135,6 +135,16 @@ class _HomePageState extends State<HomePage> {
                       ),
                       const SizedBox(height: 16),
                       ModeSelectorCard(
+                        icon: Icons.straighten,
+                        title: 'Segment Analysis',
+                        subtitle: 'Live per-limb angle classification',
+                        onTap:
+                            () => Navigator.of(
+                              context,
+                            ).pushNamed(AppRoutes.segments),
+                      ),
+                      const SizedBox(height: 16),
+                      ModeSelectorCard(
                         icon: Icons.image_search,
                         title: 'Image Analysis',
                         subtitle: 'Detect pose from a single image',
