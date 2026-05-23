@@ -18,6 +18,7 @@ import 'package:poseweave/data/datasources/mlkit_camera_datasource_impl.dart'
 import 'package:poseweave/data/datasources/video_frame_datasource.dart'
     as _i799;
 import 'package:poseweave/data/repositories/pose_repository_impl.dart' as _i298;
+import 'package:poseweave/data/services/pdf_report_service.dart' as _i962;
 import 'package:poseweave/domain/repositories/pose_repository.dart' as _i154;
 import 'package:poseweave/presentation/bloc/pose_bloc.dart' as _i1064;
 
@@ -28,6 +29,7 @@ extension GetItInjectableX on _i174.GetIt {
     _i526.EnvironmentFilter? environmentFilter,
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
+    gh.lazySingleton<_i962.PdfReportService>(() => _i962.PdfReportService());
     gh.lazySingleton<_i799.VideoFrameDataSource>(
       () => _i799.VideoFrameDataSourceImpl(),
     );
@@ -41,7 +43,10 @@ extension GetItInjectableX on _i174.GetIt {
       ),
     );
     gh.factory<_i1064.PoseBloc>(
-      () => _i1064.PoseBloc(gh<_i154.PoseRepository>()),
+      () => _i1064.PoseBloc(
+        gh<_i154.PoseRepository>(),
+        gh<_i962.PdfReportService>(),
+      ),
     );
     return this;
   }

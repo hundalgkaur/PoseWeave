@@ -203,6 +203,8 @@ class _PoseResultsViewState extends State<PoseResultsView> {
                       builder:
                           (_) => GaitReportPage(
                             params: GaitAnalyzer.analyze(widget.poses),
+                            poses: widget.poses,
+                            framePaths: widget.framePaths,
                           ),
                     ),
                   ),

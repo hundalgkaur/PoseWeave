@@ -48,6 +48,10 @@ dependencies:
   # Persist the "onboarding seen" flag
   shared_preferences: ^2.3.3
 
+  # PDF session report generation + native share/print
+  pdf: ^3.11.1
+  printing: ^5.13.4
+
   # Fonts: Inter (UI) + JetBrains Mono (data), per the Cyber-Kinetic design
   google_fonts: ^6.2.1
 

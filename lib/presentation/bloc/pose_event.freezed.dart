@@ -30,6 +30,7 @@ mixin _$PoseEvent {
     required TResult Function() pickAndAnalyzeVideo,
     required TResult Function(String filePath) analyzeVideoFile,
     required TResult Function() pickAndAnalyzeImage,
+    required TResult Function(ReportData data) generateReport,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
@@ -44,6 +45,7 @@ mixin _$PoseEvent {
     TResult? Function()? pickAndAnalyzeVideo,
     TResult? Function(String filePath)? analyzeVideoFile,
     TResult? Function()? pickAndAnalyzeImage,
+    TResult? Function(ReportData data)? generateReport,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
@@ -58,6 +60,7 @@ mixin _$PoseEvent {
     TResult Function()? pickAndAnalyzeVideo,
     TResult Function(String filePath)? analyzeVideoFile,
     TResult Function()? pickAndAnalyzeImage,
+    TResult Function(ReportData data)? generateReport,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -73,6 +76,7 @@ mixin _$PoseEvent {
     required TResult Function(PickAndAnalyzeVideo value) pickAndAnalyzeVideo,
     required TResult Function(AnalyzeVideoFile value) analyzeVideoFile,
     required TResult Function(PickAndAnalyzeImage value) pickAndAnalyzeImage,
+    required TResult Function(GenerateReport value) generateReport,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
@@ -87,6 +91,7 @@ mixin _$PoseEvent {
     TResult? Function(PickAndAnalyzeVideo value)? pickAndAnalyzeVideo,
     TResult? Function(AnalyzeVideoFile value)? analyzeVideoFile,
     TResult? Function(PickAndAnalyzeImage value)? pickAndAnalyzeImage,
+    TResult? Function(GenerateReport value)? generateReport,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
@@ -101,6 +106,7 @@ mixin _$PoseEvent {
     TResult Function(PickAndAnalyzeVideo value)? pickAndAnalyzeVideo,
     TResult Function(AnalyzeVideoFile value)? analyzeVideoFile,
     TResult Function(PickAndAnalyzeImage value)? pickAndAnalyzeImage,
+    TResult Function(GenerateReport value)? generateReport,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
 }
@@ -179,6 +185,7 @@ class _$InitializeCameraImpl implements InitializeCamera {
     required TResult Function() pickAndAnalyzeVideo,
     required TResult Function(String filePath) analyzeVideoFile,
     required TResult Function() pickAndAnalyzeImage,
+    required TResult Function(ReportData data) generateReport,
   }) {
     return initializeCamera();
   }
@@ -197,6 +204,7 @@ class _$InitializeCameraImpl implements InitializeCamera {
     TResult? Function()? pickAndAnalyzeVideo,
     TResult? Function(String filePath)? analyzeVideoFile,
     TResult? Function()? pickAndAnalyzeImage,
+    TResult? Function(ReportData data)? generateReport,
   }) {
     return initializeCamera?.call();
   }
@@ -215,6 +223,7 @@ class _$InitializeCameraImpl implements InitializeCamera {
     TResult Function()? pickAndAnalyzeVideo,
     TResult Function(String filePath)? analyzeVideoFile,
     TResult Function()? pickAndAnalyzeImage,
+    TResult Function(ReportData data)? generateReport,
     required TResult orElse(),
   }) {
     if (initializeCamera != null) {
@@ -237,6 +246,7 @@ class _$InitializeCameraImpl implements InitializeCamera {
     required TResult Function(PickAndAnalyzeVideo value) pickAndAnalyzeVideo,
     required TResult Function(AnalyzeVideoFile value) analyzeVideoFile,
     required TResult Function(PickAndAnalyzeImage value) pickAndAnalyzeImage,
+    required TResult Function(GenerateReport value) generateReport,
   }) {
     return initializeCamera(this);
   }
@@ -255,6 +265,7 @@ class _$InitializeCameraImpl implements InitializeCamera {
     TResult? Function(PickAndAnalyzeVideo value)? pickAndAnalyzeVideo,
     TResult? Function(AnalyzeVideoFile value)? analyzeVideoFile,
     TResult? Function(PickAndAnalyzeImage value)? pickAndAnalyzeImage,
+    TResult? Function(GenerateReport value)? generateReport,
   }) {
     return initializeCamera?.call(this);
   }
@@ -273,6 +284,7 @@ class _$InitializeCameraImpl implements InitializeCamera {
     TResult Function(PickAndAnalyzeVideo value)? pickAndAnalyzeVideo,
     TResult Function(AnalyzeVideoFile value)? analyzeVideoFile,
     TResult Function(PickAndAnalyzeImage value)? pickAndAnalyzeImage,
+    TResult Function(GenerateReport value)? generateReport,
     required TResult orElse(),
   }) {
     if (initializeCamera != null) {
@@ -340,6 +352,7 @@ class _$StartDetectionImpl implements StartDetection {
     required TResult Function() pickAndAnalyzeVideo,
     required TResult Function(String filePath) analyzeVideoFile,
     required TResult Function() pickAndAnalyzeImage,
+    required TResult Function(ReportData data) generateReport,
   }) {
     return startDetection();
   }
@@ -358,6 +371,7 @@ class _$StartDetectionImpl implements StartDetection {
     TResult? Function()? pickAndAnalyzeVideo,
     TResult? Function(String filePath)? analyzeVideoFile,
     TResult? Function()? pickAndAnalyzeImage,
+    TResult? Function(ReportData data)? generateReport,
   }) {
     return startDetection?.call();
   }
@@ -376,6 +390,7 @@ class _$StartDetectionImpl implements StartDetection {
     TResult Function()? pickAndAnalyzeVideo,
     TResult Function(String filePath)? analyzeVideoFile,
     TResult Function()? pickAndAnalyzeImage,
+    TResult Function(ReportData data)? generateReport,
     required TResult orElse(),
   }) {
     if (startDetection != null) {
@@ -398,6 +413,7 @@ class _$StartDetectionImpl implements StartDetection {
     required TResult Function(PickAndAnalyzeVideo value) pickAndAnalyzeVideo,
     required TResult Function(AnalyzeVideoFile value) analyzeVideoFile,
     required TResult Function(PickAndAnalyzeImage value) pickAndAnalyzeImage,
+    required TResult Function(GenerateReport value) generateReport,
   }) {
     return startDetection(this);
   }
@@ -416,6 +432,7 @@ class _$StartDetectionImpl implements StartDetection {
     TResult? Function(PickAndAnalyzeVideo value)? pickAndAnalyzeVideo,
     TResult? Function(AnalyzeVideoFile value)? analyzeVideoFile,
     TResult? Function(PickAndAnalyzeImage value)? pickAndAnalyzeImage,
+    TResult? Function(GenerateReport value)? generateReport,
   }) {
     return startDetection?.call(this);
   }
@@ -434,6 +451,7 @@ class _$StartDetectionImpl implements StartDetection {
     TResult Function(PickAndAnalyzeVideo value)? pickAndAnalyzeVideo,
     TResult Function(AnalyzeVideoFile value)? analyzeVideoFile,
     TResult Function(PickAndAnalyzeImage value)? pickAndAnalyzeImage,
+    TResult Function(GenerateReport value)? generateReport,
     required TResult orElse(),
   }) {
     if (startDetection != null) {
@@ -501,6 +519,7 @@ class _$StopDetectionImpl implements StopDetection {
     required TResult Function() pickAndAnalyzeVideo,
     required TResult Function(String filePath) analyzeVideoFile,
     required TResult Function() pickAndAnalyzeImage,
+    required TResult Function(ReportData data) generateReport,
   }) {
     return stopDetection();
   }
@@ -519,6 +538,7 @@ class _$StopDetectionImpl implements StopDetection {
     TResult? Function()? pickAndAnalyzeVideo,
     TResult? Function(String filePath)? analyzeVideoFile,
     TResult? Function()? pickAndAnalyzeImage,
+    TResult? Function(ReportData data)? generateReport,
   }) {
     return stopDetection?.call();
   }
@@ -537,6 +557,7 @@ class _$StopDetectionImpl implements StopDetection {
     TResult Function()? pickAndAnalyzeVideo,
     TResult Function(String filePath)? analyzeVideoFile,
     TResult Function()? pickAndAnalyzeImage,
+    TResult Function(ReportData data)? generateReport,
     required TResult orElse(),
   }) {
     if (stopDetection != null) {
@@ -559,6 +580,7 @@ class _$StopDetectionImpl implements StopDetection {
     required TResult Function(PickAndAnalyzeVideo value) pickAndAnalyzeVideo,
     required TResult Function(AnalyzeVideoFile value) analyzeVideoFile,
     required TResult Function(PickAndAnalyzeImage value) pickAndAnalyzeImage,
+    required TResult Function(GenerateReport value) generateReport,
   }) {
     return stopDetection(this);
   }
@@ -577,6 +599,7 @@ class _$StopDetectionImpl implements StopDetection {
     TResult? Function(PickAndAnalyzeVideo value)? pickAndAnalyzeVideo,
     TResult? Function(AnalyzeVideoFile value)? analyzeVideoFile,
     TResult? Function(PickAndAnalyzeImage value)? pickAndAnalyzeImage,
+    TResult? Function(GenerateReport value)? generateReport,
   }) {
     return stopDetection?.call(this);
   }
@@ -595,6 +618,7 @@ class _$StopDetectionImpl implements StopDetection {
     TResult Function(PickAndAnalyzeVideo value)? pickAndAnalyzeVideo,
     TResult Function(AnalyzeVideoFile value)? analyzeVideoFile,
     TResult Function(PickAndAnalyzeImage value)? pickAndAnalyzeImage,
+    TResult Function(GenerateReport value)? generateReport,
     required TResult orElse(),
   }) {
     if (stopDetection != null) {
@@ -662,6 +686,7 @@ class _$SwitchCameraImpl implements SwitchCamera {
     required TResult Function() pickAndAnalyzeVideo,
     required TResult Function(String filePath) analyzeVideoFile,
     required TResult Function() pickAndAnalyzeImage,
+    required TResult Function(ReportData data) generateReport,
   }) {
     return switchCamera();
   }
@@ -680,6 +705,7 @@ class _$SwitchCameraImpl implements SwitchCamera {
     TResult? Function()? pickAndAnalyzeVideo,
     TResult? Function(String filePath)? analyzeVideoFile,
     TResult? Function()? pickAndAnalyzeImage,
+    TResult? Function(ReportData data)? generateReport,
   }) {
     return switchCamera?.call();
   }
@@ -698,6 +724,7 @@ class _$SwitchCameraImpl implements SwitchCamera {
     TResult Function()? pickAndAnalyzeVideo,
     TResult Function(String filePath)? analyzeVideoFile,
     TResult Function()? pickAndAnalyzeImage,
+    TResult Function(ReportData data)? generateReport,
     required TResult orElse(),
   }) {
     if (switchCamera != null) {
@@ -720,6 +747,7 @@ class _$SwitchCameraImpl implements SwitchCamera {
     required TResult Function(PickAndAnalyzeVideo value) pickAndAnalyzeVideo,
     required TResult Function(AnalyzeVideoFile value) analyzeVideoFile,
     required TResult Function(PickAndAnalyzeImage value) pickAndAnalyzeImage,
+    required TResult Function(GenerateReport value) generateReport,
   }) {
     return switchCamera(this);
   }
@@ -738,6 +766,7 @@ class _$SwitchCameraImpl implements SwitchCamera {
     TResult? Function(PickAndAnalyzeVideo value)? pickAndAnalyzeVideo,
     TResult? Function(AnalyzeVideoFile value)? analyzeVideoFile,
     TResult? Function(PickAndAnalyzeImage value)? pickAndAnalyzeImage,
+    TResult? Function(GenerateReport value)? generateReport,
   }) {
     return switchCamera?.call(this);
   }
@@ -756,6 +785,7 @@ class _$SwitchCameraImpl implements SwitchCamera {
     TResult Function(PickAndAnalyzeVideo value)? pickAndAnalyzeVideo,
     TResult Function(AnalyzeVideoFile value)? analyzeVideoFile,
     TResult Function(PickAndAnalyzeImage value)? pickAndAnalyzeImage,
+    TResult Function(GenerateReport value)? generateReport,
     required TResult orElse(),
   }) {
     if (switchCamera != null) {
@@ -823,6 +853,7 @@ class _$ToggleMockModeImpl implements ToggleMockMode {
     required TResult Function() pickAndAnalyzeVideo,
     required TResult Function(String filePath) analyzeVideoFile,
     required TResult Function() pickAndAnalyzeImage,
+    required TResult Function(ReportData data) generateReport,
   }) {
     return toggleMockMode();
   }
@@ -841,6 +872,7 @@ class _$ToggleMockModeImpl implements ToggleMockMode {
     TResult? Function()? pickAndAnalyzeVideo,
     TResult? Function(String filePath)? analyzeVideoFile,
     TResult? Function()? pickAndAnalyzeImage,
+    TResult? Function(ReportData data)? generateReport,
   }) {
     return toggleMockMode?.call();
   }
@@ -859,6 +891,7 @@ class _$ToggleMockModeImpl implements ToggleMockMode {
     TResult Function()? pickAndAnalyzeVideo,
     TResult Function(String filePath)? analyzeVideoFile,
     TResult Function()? pickAndAnalyzeImage,
+    TResult Function(ReportData data)? generateReport,
     required TResult orElse(),
   }) {
     if (toggleMockMode != null) {
@@ -881,6 +914,7 @@ class _$ToggleMockModeImpl implements ToggleMockMode {
     required TResult Function(PickAndAnalyzeVideo value) pickAndAnalyzeVideo,
     required TResult Function(AnalyzeVideoFile value) analyzeVideoFile,
     required TResult Function(PickAndAnalyzeImage value) pickAndAnalyzeImage,
+    required TResult Function(GenerateReport value) generateReport,
   }) {
     return toggleMockMode(this);
   }
@@ -899,6 +933,7 @@ class _$ToggleMockModeImpl implements ToggleMockMode {
     TResult? Function(PickAndAnalyzeVideo value)? pickAndAnalyzeVideo,
     TResult? Function(AnalyzeVideoFile value)? analyzeVideoFile,
     TResult? Function(PickAndAnalyzeImage value)? pickAndAnalyzeImage,
+    TResult? Function(GenerateReport value)? generateReport,
   }) {
     return toggleMockMode?.call(this);
   }
@@ -917,6 +952,7 @@ class _$ToggleMockModeImpl implements ToggleMockMode {
     TResult Function(PickAndAnalyzeVideo value)? pickAndAnalyzeVideo,
     TResult Function(AnalyzeVideoFile value)? analyzeVideoFile,
     TResult Function(PickAndAnalyzeImage value)? pickAndAnalyzeImage,
+    TResult Function(GenerateReport value)? generateReport,
     required TResult orElse(),
   }) {
     if (toggleMockMode != null) {
@@ -985,6 +1021,7 @@ class _$StartVideoRecordingImpl implements StartVideoRecording {
     required TResult Function() pickAndAnalyzeVideo,
     required TResult Function(String filePath) analyzeVideoFile,
     required TResult Function() pickAndAnalyzeImage,
+    required TResult Function(ReportData data) generateReport,
   }) {
     return startVideoRecording();
   }
@@ -1003,6 +1040,7 @@ class _$StartVideoRecordingImpl implements StartVideoRecording {
     TResult? Function()? pickAndAnalyzeVideo,
     TResult? Function(String filePath)? analyzeVideoFile,
     TResult? Function()? pickAndAnalyzeImage,
+    TResult? Function(ReportData data)? generateReport,
   }) {
     return startVideoRecording?.call();
   }
@@ -1021,6 +1059,7 @@ class _$StartVideoRecordingImpl implements StartVideoRecording {
     TResult Function()? pickAndAnalyzeVideo,
     TResult Function(String filePath)? analyzeVideoFile,
     TResult Function()? pickAndAnalyzeImage,
+    TResult Function(ReportData data)? generateReport,
     required TResult orElse(),
   }) {
     if (startVideoRecording != null) {
@@ -1043,6 +1082,7 @@ class _$StartVideoRecordingImpl implements StartVideoRecording {
     required TResult Function(PickAndAnalyzeVideo value) pickAndAnalyzeVideo,
     required TResult Function(AnalyzeVideoFile value) analyzeVideoFile,
     required TResult Function(PickAndAnalyzeImage value) pickAndAnalyzeImage,
+    required TResult Function(GenerateReport value) generateReport,
   }) {
     return startVideoRecording(this);
   }
@@ -1061,6 +1101,7 @@ class _$StartVideoRecordingImpl implements StartVideoRecording {
     TResult? Function(PickAndAnalyzeVideo value)? pickAndAnalyzeVideo,
     TResult? Function(AnalyzeVideoFile value)? analyzeVideoFile,
     TResult? Function(PickAndAnalyzeImage value)? pickAndAnalyzeImage,
+    TResult? Function(GenerateReport value)? generateReport,
   }) {
     return startVideoRecording?.call(this);
   }
@@ -1079,6 +1120,7 @@ class _$StartVideoRecordingImpl implements StartVideoRecording {
     TResult Function(PickAndAnalyzeVideo value)? pickAndAnalyzeVideo,
     TResult Function(AnalyzeVideoFile value)? analyzeVideoFile,
     TResult Function(PickAndAnalyzeImage value)? pickAndAnalyzeImage,
+    TResult Function(GenerateReport value)? generateReport,
     required TResult orElse(),
   }) {
     if (startVideoRecording != null) {
@@ -1146,6 +1188,7 @@ class _$StopVideoRecordingImpl implements StopVideoRecording {
     required TResult Function() pickAndAnalyzeVideo,
     required TResult Function(String filePath) analyzeVideoFile,
     required TResult Function() pickAndAnalyzeImage,
+    required TResult Function(ReportData data) generateReport,
   }) {
     return stopVideoRecording();
   }
@@ -1164,6 +1207,7 @@ class _$StopVideoRecordingImpl implements StopVideoRecording {
     TResult? Function()? pickAndAnalyzeVideo,
     TResult? Function(String filePath)? analyzeVideoFile,
     TResult? Function()? pickAndAnalyzeImage,
+    TResult? Function(ReportData data)? generateReport,
   }) {
     return stopVideoRecording?.call();
   }
@@ -1182,6 +1226,7 @@ class _$StopVideoRecordingImpl implements StopVideoRecording {
     TResult Function()? pickAndAnalyzeVideo,
     TResult Function(String filePath)? analyzeVideoFile,
     TResult Function()? pickAndAnalyzeImage,
+    TResult Function(ReportData data)? generateReport,
     required TResult orElse(),
   }) {
     if (stopVideoRecording != null) {
@@ -1204,6 +1249,7 @@ class _$StopVideoRecordingImpl implements StopVideoRecording {
     required TResult Function(PickAndAnalyzeVideo value) pickAndAnalyzeVideo,
     required TResult Function(AnalyzeVideoFile value) analyzeVideoFile,
     required TResult Function(PickAndAnalyzeImage value) pickAndAnalyzeImage,
+    required TResult Function(GenerateReport value) generateReport,
   }) {
     return stopVideoRecording(this);
   }
@@ -1222,6 +1268,7 @@ class _$StopVideoRecordingImpl implements StopVideoRecording {
     TResult? Function(PickAndAnalyzeVideo value)? pickAndAnalyzeVideo,
     TResult? Function(AnalyzeVideoFile value)? analyzeVideoFile,
     TResult? Function(PickAndAnalyzeImage value)? pickAndAnalyzeImage,
+    TResult? Function(GenerateReport value)? generateReport,
   }) {
     return stopVideoRecording?.call(this);
   }
@@ -1240,6 +1287,7 @@ class _$StopVideoRecordingImpl implements StopVideoRecording {
     TResult Function(PickAndAnalyzeVideo value)? pickAndAnalyzeVideo,
     TResult Function(AnalyzeVideoFile value)? analyzeVideoFile,
     TResult Function(PickAndAnalyzeImage value)? pickAndAnalyzeImage,
+    TResult Function(GenerateReport value)? generateReport,
     required TResult orElse(),
   }) {
     if (stopVideoRecording != null) {
@@ -1334,6 +1382,7 @@ class _$PoseReceivedImpl implements PoseReceived {
     required TResult Function() pickAndAnalyzeVideo,
     required TResult Function(String filePath) analyzeVideoFile,
     required TResult Function() pickAndAnalyzeImage,
+    required TResult Function(ReportData data) generateReport,
   }) {
     return poseReceived(pose);
   }
@@ -1352,6 +1401,7 @@ class _$PoseReceivedImpl implements PoseReceived {
     TResult? Function()? pickAndAnalyzeVideo,
     TResult? Function(String filePath)? analyzeVideoFile,
     TResult? Function()? pickAndAnalyzeImage,
+    TResult? Function(ReportData data)? generateReport,
   }) {
     return poseReceived?.call(pose);
   }
@@ -1370,6 +1420,7 @@ class _$PoseReceivedImpl implements PoseReceived {
     TResult Function()? pickAndAnalyzeVideo,
     TResult Function(String filePath)? analyzeVideoFile,
     TResult Function()? pickAndAnalyzeImage,
+    TResult Function(ReportData data)? generateReport,
     required TResult orElse(),
   }) {
     if (poseReceived != null) {
@@ -1392,6 +1443,7 @@ class _$PoseReceivedImpl implements PoseReceived {
     required TResult Function(PickAndAnalyzeVideo value) pickAndAnalyzeVideo,
     required TResult Function(AnalyzeVideoFile value) analyzeVideoFile,
     required TResult Function(PickAndAnalyzeImage value) pickAndAnalyzeImage,
+    required TResult Function(GenerateReport value) generateReport,
   }) {
     return poseReceived(this);
   }
@@ -1410,6 +1462,7 @@ class _$PoseReceivedImpl implements PoseReceived {
     TResult? Function(PickAndAnalyzeVideo value)? pickAndAnalyzeVideo,
     TResult? Function(AnalyzeVideoFile value)? analyzeVideoFile,
     TResult? Function(PickAndAnalyzeImage value)? pickAndAnalyzeImage,
+    TResult? Function(GenerateReport value)? generateReport,
   }) {
     return poseReceived?.call(this);
   }
@@ -1428,6 +1481,7 @@ class _$PoseReceivedImpl implements PoseReceived {
     TResult Function(PickAndAnalyzeVideo value)? pickAndAnalyzeVideo,
     TResult Function(AnalyzeVideoFile value)? analyzeVideoFile,
     TResult Function(PickAndAnalyzeImage value)? pickAndAnalyzeImage,
+    TResult Function(GenerateReport value)? generateReport,
     required TResult orElse(),
   }) {
     if (poseReceived != null) {
@@ -1504,6 +1558,7 @@ class _$PickAndAnalyzeVideoImpl implements PickAndAnalyzeVideo {
     required TResult Function() pickAndAnalyzeVideo,
     required TResult Function(String filePath) analyzeVideoFile,
     required TResult Function() pickAndAnalyzeImage,
+    required TResult Function(ReportData data) generateReport,
   }) {
     return pickAndAnalyzeVideo();
   }
@@ -1522,6 +1577,7 @@ class _$PickAndAnalyzeVideoImpl implements PickAndAnalyzeVideo {
     TResult? Function()? pickAndAnalyzeVideo,
     TResult? Function(String filePath)? analyzeVideoFile,
     TResult? Function()? pickAndAnalyzeImage,
+    TResult? Function(ReportData data)? generateReport,
   }) {
     return pickAndAnalyzeVideo?.call();
   }
@@ -1540,6 +1596,7 @@ class _$PickAndAnalyzeVideoImpl implements PickAndAnalyzeVideo {
     TResult Function()? pickAndAnalyzeVideo,
     TResult Function(String filePath)? analyzeVideoFile,
     TResult Function()? pickAndAnalyzeImage,
+    TResult Function(ReportData data)? generateReport,
     required TResult orElse(),
   }) {
     if (pickAndAnalyzeVideo != null) {
@@ -1562,6 +1619,7 @@ class _$PickAndAnalyzeVideoImpl implements PickAndAnalyzeVideo {
     required TResult Function(PickAndAnalyzeVideo value) pickAndAnalyzeVideo,
     required TResult Function(AnalyzeVideoFile value) analyzeVideoFile,
     required TResult Function(PickAndAnalyzeImage value) pickAndAnalyzeImage,
+    required TResult Function(GenerateReport value) generateReport,
   }) {
     return pickAndAnalyzeVideo(this);
   }
@@ -1580,6 +1638,7 @@ class _$PickAndAnalyzeVideoImpl implements PickAndAnalyzeVideo {
     TResult? Function(PickAndAnalyzeVideo value)? pickAndAnalyzeVideo,
     TResult? Function(AnalyzeVideoFile value)? analyzeVideoFile,
     TResult? Function(PickAndAnalyzeImage value)? pickAndAnalyzeImage,
+    TResult? Function(GenerateReport value)? generateReport,
   }) {
     return pickAndAnalyzeVideo?.call(this);
   }
@@ -1598,6 +1657,7 @@ class _$PickAndAnalyzeVideoImpl implements PickAndAnalyzeVideo {
     TResult Function(PickAndAnalyzeVideo value)? pickAndAnalyzeVideo,
     TResult Function(AnalyzeVideoFile value)? analyzeVideoFile,
     TResult Function(PickAndAnalyzeImage value)? pickAndAnalyzeImage,
+    TResult Function(GenerateReport value)? generateReport,
     required TResult orElse(),
   }) {
     if (pickAndAnalyzeVideo != null) {
@@ -1696,6 +1756,7 @@ class _$AnalyzeVideoFileImpl implements AnalyzeVideoFile {
     required TResult Function() pickAndAnalyzeVideo,
     required TResult Function(String filePath) analyzeVideoFile,
     required TResult Function() pickAndAnalyzeImage,
+    required TResult Function(ReportData data) generateReport,
   }) {
     return analyzeVideoFile(filePath);
   }
@@ -1714,6 +1775,7 @@ class _$AnalyzeVideoFileImpl implements AnalyzeVideoFile {
     TResult? Function()? pickAndAnalyzeVideo,
     TResult? Function(String filePath)? analyzeVideoFile,
     TResult? Function()? pickAndAnalyzeImage,
+    TResult? Function(ReportData data)? generateReport,
   }) {
     return analyzeVideoFile?.call(filePath);
   }
@@ -1732,6 +1794,7 @@ class _$AnalyzeVideoFileImpl implements AnalyzeVideoFile {
     TResult Function()? pickAndAnalyzeVideo,
     TResult Function(String filePath)? analyzeVideoFile,
     TResult Function()? pickAndAnalyzeImage,
+    TResult Function(ReportData data)? generateReport,
     required TResult orElse(),
   }) {
     if (analyzeVideoFile != null) {
@@ -1754,6 +1817,7 @@ class _$AnalyzeVideoFileImpl implements AnalyzeVideoFile {
     required TResult Function(PickAndAnalyzeVideo value) pickAndAnalyzeVideo,
     required TResult Function(AnalyzeVideoFile value) analyzeVideoFile,
     required TResult Function(PickAndAnalyzeImage value) pickAndAnalyzeImage,
+    required TResult Function(GenerateReport value) generateReport,
   }) {
     return analyzeVideoFile(this);
   }
@@ -1772,6 +1836,7 @@ class _$AnalyzeVideoFileImpl implements AnalyzeVideoFile {
     TResult? Function(PickAndAnalyzeVideo value)? pickAndAnalyzeVideo,
     TResult? Function(AnalyzeVideoFile value)? analyzeVideoFile,
     TResult? Function(PickAndAnalyzeImage value)? pickAndAnalyzeImage,
+    TResult? Function(GenerateReport value)? generateReport,
   }) {
     return analyzeVideoFile?.call(this);
   }
@@ -1790,6 +1855,7 @@ class _$AnalyzeVideoFileImpl implements AnalyzeVideoFile {
     TResult Function(PickAndAnalyzeVideo value)? pickAndAnalyzeVideo,
     TResult Function(AnalyzeVideoFile value)? analyzeVideoFile,
     TResult Function(PickAndAnalyzeImage value)? pickAndAnalyzeImage,
+    TResult Function(GenerateReport value)? generateReport,
     required TResult orElse(),
   }) {
     if (analyzeVideoFile != null) {
@@ -1867,6 +1933,7 @@ class _$PickAndAnalyzeImageImpl implements PickAndAnalyzeImage {
     required TResult Function() pickAndAnalyzeVideo,
     required TResult Function(String filePath) analyzeVideoFile,
     required TResult Function() pickAndAnalyzeImage,
+    required TResult Function(ReportData data) generateReport,
   }) {
     return pickAndAnalyzeImage();
   }
@@ -1885,6 +1952,7 @@ class _$PickAndAnalyzeImageImpl implements PickAndAnalyzeImage {
     TResult? Function()? pickAndAnalyzeVideo,
     TResult? Function(String filePath)? analyzeVideoFile,
     TResult? Function()? pickAndAnalyzeImage,
+    TResult? Function(ReportData data)? generateReport,
   }) {
     return pickAndAnalyzeImage?.call();
   }
@@ -1903,6 +1971,7 @@ class _$PickAndAnalyzeImageImpl implements PickAndAnalyzeImage {
     TResult Function()? pickAndAnalyzeVideo,
     TResult Function(String filePath)? analyzeVideoFile,
     TResult Function()? pickAndAnalyzeImage,
+    TResult Function(ReportData data)? generateReport,
     required TResult orElse(),
   }) {
     if (pickAndAnalyzeImage != null) {
@@ -1925,6 +1994,7 @@ class _$PickAndAnalyzeImageImpl implements PickAndAnalyzeImage {
     required TResult Function(PickAndAnalyzeVideo value) pickAndAnalyzeVideo,
     required TResult Function(AnalyzeVideoFile value) analyzeVideoFile,
     required TResult Function(PickAndAnalyzeImage value) pickAndAnalyzeImage,
+    required TResult Function(GenerateReport value) generateReport,
   }) {
     return pickAndAnalyzeImage(this);
   }
@@ -1943,6 +2013,7 @@ class _$PickAndAnalyzeImageImpl implements PickAndAnalyzeImage {
     TResult? Function(PickAndAnalyzeVideo value)? pickAndAnalyzeVideo,
     TResult? Function(AnalyzeVideoFile value)? analyzeVideoFile,
     TResult? Function(PickAndAnalyzeImage value)? pickAndAnalyzeImage,
+    TResult? Function(GenerateReport value)? generateReport,
   }) {
     return pickAndAnalyzeImage?.call(this);
   }
@@ -1961,6 +2032,7 @@ class _$PickAndAnalyzeImageImpl implements PickAndAnalyzeImage {
     TResult Function(PickAndAnalyzeVideo value)? pickAndAnalyzeVideo,
     TResult Function(AnalyzeVideoFile value)? analyzeVideoFile,
     TResult Function(PickAndAnalyzeImage value)? pickAndAnalyzeImage,
+    TResult Function(GenerateReport value)? generateReport,
     required TResult orElse(),
   }) {
     if (pickAndAnalyzeImage != null) {
@@ -1972,4 +2044,209 @@ class _$PickAndAnalyzeImageImpl implements PickAndAnalyzeImage {
 
 abstract class PickAndAnalyzeImage implements PoseEvent {
   const factory PickAndAnalyzeImage() = _$PickAndAnalyzeImageImpl;
+}
+
+/// @nodoc
+abstract class _$$GenerateReportImplCopyWith<$Res> {
+  factory _$$GenerateReportImplCopyWith(
+    _$GenerateReportImpl value,
+    $Res Function(_$GenerateReportImpl) then,
+  ) = __$$GenerateReportImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({ReportData data});
+}
+
+/// @nodoc
+class __$$GenerateReportImplCopyWithImpl<$Res>
+    extends _$PoseEventCopyWithImpl<$Res, _$GenerateReportImpl>
+    implements _$$GenerateReportImplCopyWith<$Res> {
+  __$$GenerateReportImplCopyWithImpl(
+    _$GenerateReportImpl _value,
+    $Res Function(_$GenerateReportImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of PoseEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? data = null}) {
+    return _then(
+      _$GenerateReportImpl(
+        null == data
+            ? _value.data
+            : data // ignore: cast_nullable_to_non_nullable
+                as ReportData,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+
+class _$GenerateReportImpl implements GenerateReport {
+  const _$GenerateReportImpl(this.data);
+
+  @override
+  final ReportData data;
+
+  @override
+  String toString() {
+    return 'PoseEvent.generateReport(data: $data)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$GenerateReportImpl &&
+            (identical(other.data, data) || other.data == data));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, data);
+
+  /// Create a copy of PoseEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$GenerateReportImplCopyWith<_$GenerateReportImpl> get copyWith =>
+      __$$GenerateReportImplCopyWithImpl<_$GenerateReportImpl>(
+        this,
+        _$identity,
+      );
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initializeCamera,
+    required TResult Function() startDetection,
+    required TResult Function() stopDetection,
+    required TResult Function() switchCamera,
+    required TResult Function() toggleMockMode,
+    required TResult Function() startVideoRecording,
+    required TResult Function() stopVideoRecording,
+    required TResult Function(PoseEntity pose) poseReceived,
+    required TResult Function() pickAndAnalyzeVideo,
+    required TResult Function(String filePath) analyzeVideoFile,
+    required TResult Function() pickAndAnalyzeImage,
+    required TResult Function(ReportData data) generateReport,
+  }) {
+    return generateReport(data);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initializeCamera,
+    TResult? Function()? startDetection,
+    TResult? Function()? stopDetection,
+    TResult? Function()? switchCamera,
+    TResult? Function()? toggleMockMode,
+    TResult? Function()? startVideoRecording,
+    TResult? Function()? stopVideoRecording,
+    TResult? Function(PoseEntity pose)? poseReceived,
+    TResult? Function()? pickAndAnalyzeVideo,
+    TResult? Function(String filePath)? analyzeVideoFile,
+    TResult? Function()? pickAndAnalyzeImage,
+    TResult? Function(ReportData data)? generateReport,
+  }) {
+    return generateReport?.call(data);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initializeCamera,
+    TResult Function()? startDetection,
+    TResult Function()? stopDetection,
+    TResult Function()? switchCamera,
+    TResult Function()? toggleMockMode,
+    TResult Function()? startVideoRecording,
+    TResult Function()? stopVideoRecording,
+    TResult Function(PoseEntity pose)? poseReceived,
+    TResult Function()? pickAndAnalyzeVideo,
+    TResult Function(String filePath)? analyzeVideoFile,
+    TResult Function()? pickAndAnalyzeImage,
+    TResult Function(ReportData data)? generateReport,
+    required TResult orElse(),
+  }) {
+    if (generateReport != null) {
+      return generateReport(data);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(InitializeCamera value) initializeCamera,
+    required TResult Function(StartDetection value) startDetection,
+    required TResult Function(StopDetection value) stopDetection,
+    required TResult Function(SwitchCamera value) switchCamera,
+    required TResult Function(ToggleMockMode value) toggleMockMode,
+    required TResult Function(StartVideoRecording value) startVideoRecording,
+    required TResult Function(StopVideoRecording value) stopVideoRecording,
+    required TResult Function(PoseReceived value) poseReceived,
+    required TResult Function(PickAndAnalyzeVideo value) pickAndAnalyzeVideo,
+    required TResult Function(AnalyzeVideoFile value) analyzeVideoFile,
+    required TResult Function(PickAndAnalyzeImage value) pickAndAnalyzeImage,
+    required TResult Function(GenerateReport value) generateReport,
+  }) {
+    return generateReport(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(InitializeCamera value)? initializeCamera,
+    TResult? Function(StartDetection value)? startDetection,
+    TResult? Function(StopDetection value)? stopDetection,
+    TResult? Function(SwitchCamera value)? switchCamera,
+    TResult? Function(ToggleMockMode value)? toggleMockMode,
+    TResult? Function(StartVideoRecording value)? startVideoRecording,
+    TResult? Function(StopVideoRecording value)? stopVideoRecording,
+    TResult? Function(PoseReceived value)? poseReceived,
+    TResult? Function(PickAndAnalyzeVideo value)? pickAndAnalyzeVideo,
+    TResult? Function(AnalyzeVideoFile value)? analyzeVideoFile,
+    TResult? Function(PickAndAnalyzeImage value)? pickAndAnalyzeImage,
+    TResult? Function(GenerateReport value)? generateReport,
+  }) {
+    return generateReport?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(InitializeCamera value)? initializeCamera,
+    TResult Function(StartDetection value)? startDetection,
+    TResult Function(StopDetection value)? stopDetection,
+    TResult Function(SwitchCamera value)? switchCamera,
+    TResult Function(ToggleMockMode value)? toggleMockMode,
+    TResult Function(StartVideoRecording value)? startVideoRecording,
+    TResult Function(StopVideoRecording value)? stopVideoRecording,
+    TResult Function(PoseReceived value)? poseReceived,
+    TResult Function(PickAndAnalyzeVideo value)? pickAndAnalyzeVideo,
+    TResult Function(AnalyzeVideoFile value)? analyzeVideoFile,
+    TResult Function(PickAndAnalyzeImage value)? pickAndAnalyzeImage,
+    TResult Function(GenerateReport value)? generateReport,
+    required TResult orElse(),
+  }) {
+    if (generateReport != null) {
+      return generateReport(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class GenerateReport implements PoseEvent {
+  const factory GenerateReport(final ReportData data) = _$GenerateReportImpl;
+
+  ReportData get data;
+
+  /// Create a copy of PoseEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$GenerateReportImplCopyWith<_$GenerateReportImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }

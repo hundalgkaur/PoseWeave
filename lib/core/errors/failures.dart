@@ -40,3 +40,8 @@ class VideoFailure extends Failure {
 class ExportFailure extends Failure {
   const ExportFailure(super.message, {super.isRecoverable = true});
 }
+
+/// PDF report generation failed.
+class PdfGenerationFailure extends Failure {
+  const PdfGenerationFailure(super.message, {super.isRecoverable = true});
+}

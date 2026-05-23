@@ -49,6 +49,8 @@ class _GaitAnalysisView extends StatelessWidget {
                     builder:
                         (_) => GaitReportPage(
                           params: GaitAnalyzer.analyze(state.poses),
+                          poses: state.poses,
+                          framePaths: state.framePaths,
                         ),
                   ),
                 );

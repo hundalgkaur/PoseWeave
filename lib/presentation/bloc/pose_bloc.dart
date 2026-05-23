@@ -7,6 +7,7 @@ import 'package:injectable/injectable.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:poseweave/core/app_settings.dart';
 import 'package:poseweave/core/errors/failures.dart';
+import 'package:poseweave/data/services/pdf_report_service.dart';
 import 'package:poseweave/domain/entities/pose_entity.dart';
 import 'package:poseweave/domain/entities/video_analysis_progress.dart';
 import 'package:poseweave/domain/repositories/pose_repository.dart';
@@ -18,7 +19,8 @@ import 'package:poseweave/presentation/bloc/pose_state.dart';
 /// behind [PoseRepository].
 @injectable
 class PoseBloc extends Bloc<PoseEvent, PoseState> {
-  PoseBloc(this._repository) : super(const PoseState.initial()) {
+  PoseBloc(this._repository, this._pdfReportService)
+    : super(const PoseState.initial()) {
     // Honor the dev mock-mode setting chosen before this screen opened, so
     // initialization reads a stable flag (no event-ordering race).
     _mockMode = AppSettings.mockMode;
@@ -34,9 +36,11 @@ class PoseBloc extends Bloc<PoseEvent, PoseState> {
     on<PickAndAnalyzeVideo>(_onPickAndAnalyzeVideo);
     on<AnalyzeVideoFile>(_onAnalyzeVideoFile);
     on<PickAndAnalyzeImage>(_onPickAndAnalyzeImage);
+    on<GenerateReport>(_onGenerateReport);
   }
 
   final PoseRepository _repository;
+  final PdfReportService _pdfReportService;
 
   StreamSubscription<PoseEntity>? _poseSubscription;
   bool _mockMode = false;
@@ -219,6 +223,19 @@ class PoseBloc extends Bloc<PoseEvent, PoseState> {
       ),
       (PoseEntity? pose) =>
           emit(PoseState.imageComplete(imagePath: path, pose: pose)),
+    );
+  }
+
+  Future<void> _onGenerateReport(
+    GenerateReport event,
+    Emitter<PoseState> emit,
+  ) async {
+    emit(const PoseState.reportGenerating());
+    final Either<Failure, String> result = await _pdfReportService
+        .generateReport(event.data);
+    result.fold(
+      (Failure f) => emit(PoseState.reportFailed(message: f.message)),
+      (String path) => emit(PoseState.reportReady(filePath: path)),
     );
   }
 

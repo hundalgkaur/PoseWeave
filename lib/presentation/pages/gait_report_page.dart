@@ -1,46 +1,75 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:poseweave/core/constants/app_colors.dart';
 import 'package:poseweave/core/constants/app_theme.dart';
+import 'package:poseweave/core/utils/segment_aggregator.dart';
+import 'package:poseweave/data/models/report_data.dart';
 import 'package:poseweave/domain/entities/gait_parameters.dart';
+import 'package:poseweave/domain/entities/pose_entity.dart';
+import 'package:poseweave/injection.dart';
+import 'package:poseweave/presentation/bloc/pose_bloc.dart';
+import 'package:poseweave/presentation/bloc/pose_event.dart';
+import 'package:poseweave/presentation/bloc/pose_state.dart';
 import 'package:poseweave/presentation/widgets/glass_panel.dart';
 import 'package:poseweave/presentation/widgets/radial_gauge.dart';
+import 'package:printing/printing.dart';
 
 /// Gait Analysis report (design/gait_analysis_report). Renders gait parameters
 /// computed by `GaitAnalyzer`. Soft estimates (speed, leg rotation) carry a
 /// "~ EST" tag, since 2D monocular video can't measure them exactly.
 class GaitReportPage extends StatelessWidget {
-  const GaitReportPage({required this.params, super.key});
+  const GaitReportPage({
+    required this.params,
+    super.key,
+    this.poses = const <PoseEntity>[],
+    this.framePaths = const <String>[],
+  });
 
   final GaitParameters params;
 
+  /// Pose sequence (for segment summaries + PDF). May be empty.
+  final List<PoseEntity> poses;
+  final List<String> framePaths;
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Gait Analysis'),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.of(context).maybePop(),
+    return BlocProvider<PoseBloc>(
+      create: (_) => getIt<PoseBloc>(),
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Gait Analysis'),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () => Navigator.of(context).maybePop(),
+          ),
         ),
-      ),
-      body: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.all(16),
-          children: <Widget>[
-            _keyMetrics(),
-            const SizedBox(height: 16),
-            _upperBody(),
-            const SizedBox(height: 16),
-            _lowerLimb(),
-            const SizedBox(height: 16),
-            _gaitCycle(),
-            const SizedBox(height: 12),
-            Text(
-              'Analyzed ${params.framesAnalyzed} frames. '
-              '“~ EST” values are estimated from 2D video.',
-              style: AppTheme.labelCaps(fontSize: 9),
-            ),
-          ],
+        body: SafeArea(
+          child: ListView(
+            padding: const EdgeInsets.all(16),
+            children: <Widget>[
+              _keyMetrics(),
+              const SizedBox(height: 16),
+              _upperBody(),
+              const SizedBox(height: 16),
+              _lowerLimb(),
+              const SizedBox(height: 16),
+              _gaitCycle(),
+              const SizedBox(height: 12),
+              Text(
+                'Analyzed ${params.framesAnalyzed} frames. '
+                '“~ EST” values are estimated from 2D video.',
+                style: AppTheme.labelCaps(fontSize: 9),
+              ),
+              const SizedBox(height: 16),
+              _ExportPdfButton(
+                params: params,
+                poses: poses,
+                framePaths: framePaths,
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -327,6 +356,77 @@ class _EstTag extends StatelessWidget {
           letterSpacing: 0.5,
         ),
       ),
+    );
+  }
+}
+
+/// Builds a [ReportData] from the gait result and drives PDF generation via
+/// [PoseBloc], sharing the file through the native sheet when ready.
+class _ExportPdfButton extends StatelessWidget {
+  const _ExportPdfButton({
+    required this.params,
+    required this.poses,
+    required this.framePaths,
+  });
+
+  final GaitParameters params;
+  final List<PoseEntity> poses;
+  final List<String> framePaths;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocConsumer<PoseBloc, PoseState>(
+      listener: (BuildContext context, PoseState state) async {
+        if (state is PoseReportReady) {
+          await Printing.sharePdf(
+            bytes: await File(state.filePath).readAsBytes(),
+            filename: state.filePath.split(Platform.pathSeparator).last,
+          );
+        } else if (state is PoseReportFailed) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.message),
+              backgroundColor: AppColors.error,
+            ),
+          );
+        }
+      },
+      builder: (BuildContext context, PoseState state) {
+        final bool generating = state is PoseReportGenerating;
+        return FilledButton.icon(
+          style: FilledButton.styleFrom(
+            backgroundColor: AppColors.primary,
+            foregroundColor: AppColors.onPrimary,
+            padding: const EdgeInsets.symmetric(vertical: 14),
+          ),
+          onPressed:
+              generating
+                  ? null
+                  : () => context.read<PoseBloc>().add(
+                    PoseEvent.generateReport(
+                      ReportData(
+                        generatedAt: DateTime.now(),
+                        exerciseType: 'Gait analysis',
+                        gait: params,
+                        segments: SegmentAggregator.summarize(poses),
+                        framePaths: framePaths,
+                      ),
+                    ),
+                  ),
+          icon:
+              generating
+                  ? const SizedBox(
+                    width: 16,
+                    height: 16,
+                    child: CircularProgressIndicator(strokeWidth: 2),
+                  )
+                  : const Icon(Icons.picture_as_pdf),
+          label: Text(
+            generating ? 'Generating…' : 'EXPORT PDF',
+            style: AppTheme.labelCaps(color: AppColors.onPrimary),
+          ),
+        );
+      },
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:poseweave/data/models/report_data.dart';
 import 'package:poseweave/domain/entities/pose_entity.dart';
 
 part 'pose_event.freezed.dart';
@@ -37,4 +38,7 @@ class PoseEvent with _$PoseEvent {
 
   /// Open the image picker, then detect a pose in the chosen image.
   const factory PoseEvent.pickAndAnalyzeImage() = PickAndAnalyzeImage;
+
+  /// Generate a PDF session report from the assembled [data].
+  const factory PoseEvent.generateReport(ReportData data) = GenerateReport;
 }

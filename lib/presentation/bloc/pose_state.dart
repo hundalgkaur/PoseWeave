@@ -53,6 +53,13 @@ class PoseState with _$PoseState {
     PoseEntity? pose,
   }) = PoseImageComplete;
 
+  /// PDF report is being generated / ready / failed.
+  const factory PoseState.reportGenerating() = PoseReportGenerating;
+  const factory PoseState.reportReady({required String filePath}) =
+      PoseReportReady;
+  const factory PoseState.reportFailed({required String message}) =
+      PoseReportFailed;
+
   /// Something failed. [isRecoverable] gates whether the UI offers a retry.
   const factory PoseState.error({
     required String message,

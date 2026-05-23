@@ -45,6 +45,9 @@ mixin _$PoseState {
     videoComplete,
     required TResult Function() imageProcessing,
     required TResult Function(String imagePath, PoseEntity? pose) imageComplete,
+    required TResult Function() reportGenerating,
+    required TResult Function(String filePath) reportReady,
+    required TResult Function(String message) reportFailed,
     required TResult Function(String message, bool isRecoverable) error,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -71,6 +74,9 @@ mixin _$PoseState {
     videoComplete,
     TResult? Function()? imageProcessing,
     TResult? Function(String imagePath, PoseEntity? pose)? imageComplete,
+    TResult? Function()? reportGenerating,
+    TResult? Function(String filePath)? reportReady,
+    TResult? Function(String message)? reportFailed,
     TResult? Function(String message, bool isRecoverable)? error,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -97,6 +103,9 @@ mixin _$PoseState {
     videoComplete,
     TResult Function()? imageProcessing,
     TResult Function(String imagePath, PoseEntity? pose)? imageComplete,
+    TResult Function()? reportGenerating,
+    TResult Function(String filePath)? reportReady,
+    TResult Function(String message)? reportFailed,
     TResult Function(String message, bool isRecoverable)? error,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
@@ -112,6 +121,9 @@ mixin _$PoseState {
     required TResult Function(PoseVideoComplete value) videoComplete,
     required TResult Function(PoseImageProcessing value) imageProcessing,
     required TResult Function(PoseImageComplete value) imageComplete,
+    required TResult Function(PoseReportGenerating value) reportGenerating,
+    required TResult Function(PoseReportReady value) reportReady,
+    required TResult Function(PoseReportFailed value) reportFailed,
     required TResult Function(PoseError value) error,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -126,6 +138,9 @@ mixin _$PoseState {
     TResult? Function(PoseVideoComplete value)? videoComplete,
     TResult? Function(PoseImageProcessing value)? imageProcessing,
     TResult? Function(PoseImageComplete value)? imageComplete,
+    TResult? Function(PoseReportGenerating value)? reportGenerating,
+    TResult? Function(PoseReportReady value)? reportReady,
+    TResult? Function(PoseReportFailed value)? reportFailed,
     TResult? Function(PoseError value)? error,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -140,6 +155,9 @@ mixin _$PoseState {
     TResult Function(PoseVideoComplete value)? videoComplete,
     TResult Function(PoseImageProcessing value)? imageProcessing,
     TResult Function(PoseImageComplete value)? imageComplete,
+    TResult Function(PoseReportGenerating value)? reportGenerating,
+    TResult Function(PoseReportReady value)? reportReady,
+    TResult Function(PoseReportFailed value)? reportFailed,
     TResult Function(PoseError value)? error,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
@@ -234,6 +252,9 @@ class _$PoseInitialImpl implements PoseInitial {
     videoComplete,
     required TResult Function() imageProcessing,
     required TResult Function(String imagePath, PoseEntity? pose) imageComplete,
+    required TResult Function() reportGenerating,
+    required TResult Function(String filePath) reportReady,
+    required TResult Function(String message) reportFailed,
     required TResult Function(String message, bool isRecoverable) error,
   }) {
     return initial();
@@ -264,6 +285,9 @@ class _$PoseInitialImpl implements PoseInitial {
     videoComplete,
     TResult? Function()? imageProcessing,
     TResult? Function(String imagePath, PoseEntity? pose)? imageComplete,
+    TResult? Function()? reportGenerating,
+    TResult? Function(String filePath)? reportReady,
+    TResult? Function(String message)? reportFailed,
     TResult? Function(String message, bool isRecoverable)? error,
   }) {
     return initial?.call();
@@ -294,6 +318,9 @@ class _$PoseInitialImpl implements PoseInitial {
     videoComplete,
     TResult Function()? imageProcessing,
     TResult Function(String imagePath, PoseEntity? pose)? imageComplete,
+    TResult Function()? reportGenerating,
+    TResult Function(String filePath)? reportReady,
+    TResult Function(String message)? reportFailed,
     TResult Function(String message, bool isRecoverable)? error,
     required TResult orElse(),
   }) {
@@ -316,6 +343,9 @@ class _$PoseInitialImpl implements PoseInitial {
     required TResult Function(PoseVideoComplete value) videoComplete,
     required TResult Function(PoseImageProcessing value) imageProcessing,
     required TResult Function(PoseImageComplete value) imageComplete,
+    required TResult Function(PoseReportGenerating value) reportGenerating,
+    required TResult Function(PoseReportReady value) reportReady,
+    required TResult Function(PoseReportFailed value) reportFailed,
     required TResult Function(PoseError value) error,
   }) {
     return initial(this);
@@ -334,6 +364,9 @@ class _$PoseInitialImpl implements PoseInitial {
     TResult? Function(PoseVideoComplete value)? videoComplete,
     TResult? Function(PoseImageProcessing value)? imageProcessing,
     TResult? Function(PoseImageComplete value)? imageComplete,
+    TResult? Function(PoseReportGenerating value)? reportGenerating,
+    TResult? Function(PoseReportReady value)? reportReady,
+    TResult? Function(PoseReportFailed value)? reportFailed,
     TResult? Function(PoseError value)? error,
   }) {
     return initial?.call(this);
@@ -352,6 +385,9 @@ class _$PoseInitialImpl implements PoseInitial {
     TResult Function(PoseVideoComplete value)? videoComplete,
     TResult Function(PoseImageProcessing value)? imageProcessing,
     TResult Function(PoseImageComplete value)? imageComplete,
+    TResult Function(PoseReportGenerating value)? reportGenerating,
+    TResult Function(PoseReportReady value)? reportReady,
+    TResult Function(PoseReportFailed value)? reportFailed,
     TResult Function(PoseError value)? error,
     required TResult orElse(),
   }) {
@@ -435,6 +471,9 @@ class _$PoseLoadingImpl implements PoseLoading {
     videoComplete,
     required TResult Function() imageProcessing,
     required TResult Function(String imagePath, PoseEntity? pose) imageComplete,
+    required TResult Function() reportGenerating,
+    required TResult Function(String filePath) reportReady,
+    required TResult Function(String message) reportFailed,
     required TResult Function(String message, bool isRecoverable) error,
   }) {
     return loading();
@@ -465,6 +504,9 @@ class _$PoseLoadingImpl implements PoseLoading {
     videoComplete,
     TResult? Function()? imageProcessing,
     TResult? Function(String imagePath, PoseEntity? pose)? imageComplete,
+    TResult? Function()? reportGenerating,
+    TResult? Function(String filePath)? reportReady,
+    TResult? Function(String message)? reportFailed,
     TResult? Function(String message, bool isRecoverable)? error,
   }) {
     return loading?.call();
@@ -495,6 +537,9 @@ class _$PoseLoadingImpl implements PoseLoading {
     videoComplete,
     TResult Function()? imageProcessing,
     TResult Function(String imagePath, PoseEntity? pose)? imageComplete,
+    TResult Function()? reportGenerating,
+    TResult Function(String filePath)? reportReady,
+    TResult Function(String message)? reportFailed,
     TResult Function(String message, bool isRecoverable)? error,
     required TResult orElse(),
   }) {
@@ -517,6 +562,9 @@ class _$PoseLoadingImpl implements PoseLoading {
     required TResult Function(PoseVideoComplete value) videoComplete,
     required TResult Function(PoseImageProcessing value) imageProcessing,
     required TResult Function(PoseImageComplete value) imageComplete,
+    required TResult Function(PoseReportGenerating value) reportGenerating,
+    required TResult Function(PoseReportReady value) reportReady,
+    required TResult Function(PoseReportFailed value) reportFailed,
     required TResult Function(PoseError value) error,
   }) {
     return loading(this);
@@ -535,6 +583,9 @@ class _$PoseLoadingImpl implements PoseLoading {
     TResult? Function(PoseVideoComplete value)? videoComplete,
     TResult? Function(PoseImageProcessing value)? imageProcessing,
     TResult? Function(PoseImageComplete value)? imageComplete,
+    TResult? Function(PoseReportGenerating value)? reportGenerating,
+    TResult? Function(PoseReportReady value)? reportReady,
+    TResult? Function(PoseReportFailed value)? reportFailed,
     TResult? Function(PoseError value)? error,
   }) {
     return loading?.call(this);
@@ -553,6 +604,9 @@ class _$PoseLoadingImpl implements PoseLoading {
     TResult Function(PoseVideoComplete value)? videoComplete,
     TResult Function(PoseImageProcessing value)? imageProcessing,
     TResult Function(PoseImageComplete value)? imageComplete,
+    TResult Function(PoseReportGenerating value)? reportGenerating,
+    TResult Function(PoseReportReady value)? reportReady,
+    TResult Function(PoseReportFailed value)? reportFailed,
     TResult Function(PoseError value)? error,
     required TResult orElse(),
   }) {
@@ -636,6 +690,9 @@ class _$PoseNoPermissionImpl implements PoseNoPermission {
     videoComplete,
     required TResult Function() imageProcessing,
     required TResult Function(String imagePath, PoseEntity? pose) imageComplete,
+    required TResult Function() reportGenerating,
+    required TResult Function(String filePath) reportReady,
+    required TResult Function(String message) reportFailed,
     required TResult Function(String message, bool isRecoverable) error,
   }) {
     return noPermission();
@@ -666,6 +723,9 @@ class _$PoseNoPermissionImpl implements PoseNoPermission {
     videoComplete,
     TResult? Function()? imageProcessing,
     TResult? Function(String imagePath, PoseEntity? pose)? imageComplete,
+    TResult? Function()? reportGenerating,
+    TResult? Function(String filePath)? reportReady,
+    TResult? Function(String message)? reportFailed,
     TResult? Function(String message, bool isRecoverable)? error,
   }) {
     return noPermission?.call();
@@ -696,6 +756,9 @@ class _$PoseNoPermissionImpl implements PoseNoPermission {
     videoComplete,
     TResult Function()? imageProcessing,
     TResult Function(String imagePath, PoseEntity? pose)? imageComplete,
+    TResult Function()? reportGenerating,
+    TResult Function(String filePath)? reportReady,
+    TResult Function(String message)? reportFailed,
     TResult Function(String message, bool isRecoverable)? error,
     required TResult orElse(),
   }) {
@@ -718,6 +781,9 @@ class _$PoseNoPermissionImpl implements PoseNoPermission {
     required TResult Function(PoseVideoComplete value) videoComplete,
     required TResult Function(PoseImageProcessing value) imageProcessing,
     required TResult Function(PoseImageComplete value) imageComplete,
+    required TResult Function(PoseReportGenerating value) reportGenerating,
+    required TResult Function(PoseReportReady value) reportReady,
+    required TResult Function(PoseReportFailed value) reportFailed,
     required TResult Function(PoseError value) error,
   }) {
     return noPermission(this);
@@ -736,6 +802,9 @@ class _$PoseNoPermissionImpl implements PoseNoPermission {
     TResult? Function(PoseVideoComplete value)? videoComplete,
     TResult? Function(PoseImageProcessing value)? imageProcessing,
     TResult? Function(PoseImageComplete value)? imageComplete,
+    TResult? Function(PoseReportGenerating value)? reportGenerating,
+    TResult? Function(PoseReportReady value)? reportReady,
+    TResult? Function(PoseReportFailed value)? reportFailed,
     TResult? Function(PoseError value)? error,
   }) {
     return noPermission?.call(this);
@@ -754,6 +823,9 @@ class _$PoseNoPermissionImpl implements PoseNoPermission {
     TResult Function(PoseVideoComplete value)? videoComplete,
     TResult Function(PoseImageProcessing value)? imageProcessing,
     TResult Function(PoseImageComplete value)? imageComplete,
+    TResult Function(PoseReportGenerating value)? reportGenerating,
+    TResult Function(PoseReportReady value)? reportReady,
+    TResult Function(PoseReportFailed value)? reportFailed,
     TResult Function(PoseError value)? error,
     required TResult orElse(),
   }) {
@@ -837,6 +909,9 @@ class _$PoseStreamingImpl implements PoseStreaming {
     videoComplete,
     required TResult Function() imageProcessing,
     required TResult Function(String imagePath, PoseEntity? pose) imageComplete,
+    required TResult Function() reportGenerating,
+    required TResult Function(String filePath) reportReady,
+    required TResult Function(String message) reportFailed,
     required TResult Function(String message, bool isRecoverable) error,
   }) {
     return streaming();
@@ -867,6 +942,9 @@ class _$PoseStreamingImpl implements PoseStreaming {
     videoComplete,
     TResult? Function()? imageProcessing,
     TResult? Function(String imagePath, PoseEntity? pose)? imageComplete,
+    TResult? Function()? reportGenerating,
+    TResult? Function(String filePath)? reportReady,
+    TResult? Function(String message)? reportFailed,
     TResult? Function(String message, bool isRecoverable)? error,
   }) {
     return streaming?.call();
@@ -897,6 +975,9 @@ class _$PoseStreamingImpl implements PoseStreaming {
     videoComplete,
     TResult Function()? imageProcessing,
     TResult Function(String imagePath, PoseEntity? pose)? imageComplete,
+    TResult Function()? reportGenerating,
+    TResult Function(String filePath)? reportReady,
+    TResult Function(String message)? reportFailed,
     TResult Function(String message, bool isRecoverable)? error,
     required TResult orElse(),
   }) {
@@ -919,6 +1000,9 @@ class _$PoseStreamingImpl implements PoseStreaming {
     required TResult Function(PoseVideoComplete value) videoComplete,
     required TResult Function(PoseImageProcessing value) imageProcessing,
     required TResult Function(PoseImageComplete value) imageComplete,
+    required TResult Function(PoseReportGenerating value) reportGenerating,
+    required TResult Function(PoseReportReady value) reportReady,
+    required TResult Function(PoseReportFailed value) reportFailed,
     required TResult Function(PoseError value) error,
   }) {
     return streaming(this);
@@ -937,6 +1021,9 @@ class _$PoseStreamingImpl implements PoseStreaming {
     TResult? Function(PoseVideoComplete value)? videoComplete,
     TResult? Function(PoseImageProcessing value)? imageProcessing,
     TResult? Function(PoseImageComplete value)? imageComplete,
+    TResult? Function(PoseReportGenerating value)? reportGenerating,
+    TResult? Function(PoseReportReady value)? reportReady,
+    TResult? Function(PoseReportFailed value)? reportFailed,
     TResult? Function(PoseError value)? error,
   }) {
     return streaming?.call(this);
@@ -955,6 +1042,9 @@ class _$PoseStreamingImpl implements PoseStreaming {
     TResult Function(PoseVideoComplete value)? videoComplete,
     TResult Function(PoseImageProcessing value)? imageProcessing,
     TResult Function(PoseImageComplete value)? imageComplete,
+    TResult Function(PoseReportGenerating value)? reportGenerating,
+    TResult Function(PoseReportReady value)? reportReady,
+    TResult Function(PoseReportFailed value)? reportFailed,
     TResult Function(PoseError value)? error,
     required TResult orElse(),
   }) {
@@ -1091,6 +1181,9 @@ class _$PoseActiveImpl implements PoseActive {
     videoComplete,
     required TResult Function() imageProcessing,
     required TResult Function(String imagePath, PoseEntity? pose) imageComplete,
+    required TResult Function() reportGenerating,
+    required TResult Function(String filePath) reportReady,
+    required TResult Function(String message) reportFailed,
     required TResult Function(String message, bool isRecoverable) error,
   }) {
     return active(pose, averageConfidence, fps);
@@ -1121,6 +1214,9 @@ class _$PoseActiveImpl implements PoseActive {
     videoComplete,
     TResult? Function()? imageProcessing,
     TResult? Function(String imagePath, PoseEntity? pose)? imageComplete,
+    TResult? Function()? reportGenerating,
+    TResult? Function(String filePath)? reportReady,
+    TResult? Function(String message)? reportFailed,
     TResult? Function(String message, bool isRecoverable)? error,
   }) {
     return active?.call(pose, averageConfidence, fps);
@@ -1151,6 +1247,9 @@ class _$PoseActiveImpl implements PoseActive {
     videoComplete,
     TResult Function()? imageProcessing,
     TResult Function(String imagePath, PoseEntity? pose)? imageComplete,
+    TResult Function()? reportGenerating,
+    TResult Function(String filePath)? reportReady,
+    TResult Function(String message)? reportFailed,
     TResult Function(String message, bool isRecoverable)? error,
     required TResult orElse(),
   }) {
@@ -1173,6 +1272,9 @@ class _$PoseActiveImpl implements PoseActive {
     required TResult Function(PoseVideoComplete value) videoComplete,
     required TResult Function(PoseImageProcessing value) imageProcessing,
     required TResult Function(PoseImageComplete value) imageComplete,
+    required TResult Function(PoseReportGenerating value) reportGenerating,
+    required TResult Function(PoseReportReady value) reportReady,
+    required TResult Function(PoseReportFailed value) reportFailed,
     required TResult Function(PoseError value) error,
   }) {
     return active(this);
@@ -1191,6 +1293,9 @@ class _$PoseActiveImpl implements PoseActive {
     TResult? Function(PoseVideoComplete value)? videoComplete,
     TResult? Function(PoseImageProcessing value)? imageProcessing,
     TResult? Function(PoseImageComplete value)? imageComplete,
+    TResult? Function(PoseReportGenerating value)? reportGenerating,
+    TResult? Function(PoseReportReady value)? reportReady,
+    TResult? Function(PoseReportFailed value)? reportFailed,
     TResult? Function(PoseError value)? error,
   }) {
     return active?.call(this);
@@ -1209,6 +1314,9 @@ class _$PoseActiveImpl implements PoseActive {
     TResult Function(PoseVideoComplete value)? videoComplete,
     TResult Function(PoseImageProcessing value)? imageProcessing,
     TResult Function(PoseImageComplete value)? imageComplete,
+    TResult Function(PoseReportGenerating value)? reportGenerating,
+    TResult Function(PoseReportReady value)? reportReady,
+    TResult Function(PoseReportFailed value)? reportFailed,
     TResult Function(PoseError value)? error,
     required TResult orElse(),
   }) {
@@ -1306,6 +1414,9 @@ class _$PoseRecordingVideoImpl implements PoseRecordingVideo {
     videoComplete,
     required TResult Function() imageProcessing,
     required TResult Function(String imagePath, PoseEntity? pose) imageComplete,
+    required TResult Function() reportGenerating,
+    required TResult Function(String filePath) reportReady,
+    required TResult Function(String message) reportFailed,
     required TResult Function(String message, bool isRecoverable) error,
   }) {
     return recordingVideo();
@@ -1336,6 +1447,9 @@ class _$PoseRecordingVideoImpl implements PoseRecordingVideo {
     videoComplete,
     TResult? Function()? imageProcessing,
     TResult? Function(String imagePath, PoseEntity? pose)? imageComplete,
+    TResult? Function()? reportGenerating,
+    TResult? Function(String filePath)? reportReady,
+    TResult? Function(String message)? reportFailed,
     TResult? Function(String message, bool isRecoverable)? error,
   }) {
     return recordingVideo?.call();
@@ -1366,6 +1480,9 @@ class _$PoseRecordingVideoImpl implements PoseRecordingVideo {
     videoComplete,
     TResult Function()? imageProcessing,
     TResult Function(String imagePath, PoseEntity? pose)? imageComplete,
+    TResult Function()? reportGenerating,
+    TResult Function(String filePath)? reportReady,
+    TResult Function(String message)? reportFailed,
     TResult Function(String message, bool isRecoverable)? error,
     required TResult orElse(),
   }) {
@@ -1388,6 +1505,9 @@ class _$PoseRecordingVideoImpl implements PoseRecordingVideo {
     required TResult Function(PoseVideoComplete value) videoComplete,
     required TResult Function(PoseImageProcessing value) imageProcessing,
     required TResult Function(PoseImageComplete value) imageComplete,
+    required TResult Function(PoseReportGenerating value) reportGenerating,
+    required TResult Function(PoseReportReady value) reportReady,
+    required TResult Function(PoseReportFailed value) reportFailed,
     required TResult Function(PoseError value) error,
   }) {
     return recordingVideo(this);
@@ -1406,6 +1526,9 @@ class _$PoseRecordingVideoImpl implements PoseRecordingVideo {
     TResult? Function(PoseVideoComplete value)? videoComplete,
     TResult? Function(PoseImageProcessing value)? imageProcessing,
     TResult? Function(PoseImageComplete value)? imageComplete,
+    TResult? Function(PoseReportGenerating value)? reportGenerating,
+    TResult? Function(PoseReportReady value)? reportReady,
+    TResult? Function(PoseReportFailed value)? reportFailed,
     TResult? Function(PoseError value)? error,
   }) {
     return recordingVideo?.call(this);
@@ -1424,6 +1547,9 @@ class _$PoseRecordingVideoImpl implements PoseRecordingVideo {
     TResult Function(PoseVideoComplete value)? videoComplete,
     TResult Function(PoseImageProcessing value)? imageProcessing,
     TResult Function(PoseImageComplete value)? imageComplete,
+    TResult Function(PoseReportGenerating value)? reportGenerating,
+    TResult Function(PoseReportReady value)? reportReady,
+    TResult Function(PoseReportFailed value)? reportFailed,
     TResult Function(PoseError value)? error,
     required TResult orElse(),
   }) {
@@ -1566,6 +1692,9 @@ class _$PoseVideoProcessingImpl implements PoseVideoProcessing {
     videoComplete,
     required TResult Function() imageProcessing,
     required TResult Function(String imagePath, PoseEntity? pose) imageComplete,
+    required TResult Function() reportGenerating,
+    required TResult Function(String filePath) reportReady,
+    required TResult Function(String message) reportFailed,
     required TResult Function(String message, bool isRecoverable) error,
   }) {
     return videoProcessing(progress, framesProcessed, currentPose);
@@ -1596,6 +1725,9 @@ class _$PoseVideoProcessingImpl implements PoseVideoProcessing {
     videoComplete,
     TResult? Function()? imageProcessing,
     TResult? Function(String imagePath, PoseEntity? pose)? imageComplete,
+    TResult? Function()? reportGenerating,
+    TResult? Function(String filePath)? reportReady,
+    TResult? Function(String message)? reportFailed,
     TResult? Function(String message, bool isRecoverable)? error,
   }) {
     return videoProcessing?.call(progress, framesProcessed, currentPose);
@@ -1626,6 +1758,9 @@ class _$PoseVideoProcessingImpl implements PoseVideoProcessing {
     videoComplete,
     TResult Function()? imageProcessing,
     TResult Function(String imagePath, PoseEntity? pose)? imageComplete,
+    TResult Function()? reportGenerating,
+    TResult Function(String filePath)? reportReady,
+    TResult Function(String message)? reportFailed,
     TResult Function(String message, bool isRecoverable)? error,
     required TResult orElse(),
   }) {
@@ -1648,6 +1783,9 @@ class _$PoseVideoProcessingImpl implements PoseVideoProcessing {
     required TResult Function(PoseVideoComplete value) videoComplete,
     required TResult Function(PoseImageProcessing value) imageProcessing,
     required TResult Function(PoseImageComplete value) imageComplete,
+    required TResult Function(PoseReportGenerating value) reportGenerating,
+    required TResult Function(PoseReportReady value) reportReady,
+    required TResult Function(PoseReportFailed value) reportFailed,
     required TResult Function(PoseError value) error,
   }) {
     return videoProcessing(this);
@@ -1666,6 +1804,9 @@ class _$PoseVideoProcessingImpl implements PoseVideoProcessing {
     TResult? Function(PoseVideoComplete value)? videoComplete,
     TResult? Function(PoseImageProcessing value)? imageProcessing,
     TResult? Function(PoseImageComplete value)? imageComplete,
+    TResult? Function(PoseReportGenerating value)? reportGenerating,
+    TResult? Function(PoseReportReady value)? reportReady,
+    TResult? Function(PoseReportFailed value)? reportFailed,
     TResult? Function(PoseError value)? error,
   }) {
     return videoProcessing?.call(this);
@@ -1684,6 +1825,9 @@ class _$PoseVideoProcessingImpl implements PoseVideoProcessing {
     TResult Function(PoseVideoComplete value)? videoComplete,
     TResult Function(PoseImageProcessing value)? imageProcessing,
     TResult Function(PoseImageComplete value)? imageComplete,
+    TResult Function(PoseReportGenerating value)? reportGenerating,
+    TResult Function(PoseReportReady value)? reportReady,
+    TResult Function(PoseReportFailed value)? reportFailed,
     TResult Function(PoseError value)? error,
     required TResult orElse(),
   }) {
@@ -1875,6 +2019,9 @@ class _$PoseVideoCompleteImpl implements PoseVideoComplete {
     videoComplete,
     required TResult Function() imageProcessing,
     required TResult Function(String imagePath, PoseEntity? pose) imageComplete,
+    required TResult Function() reportGenerating,
+    required TResult Function(String filePath) reportReady,
+    required TResult Function(String message) reportFailed,
     required TResult Function(String message, bool isRecoverable) error,
   }) {
     return videoComplete(poses, frameCount, videoPath, framePaths);
@@ -1905,6 +2052,9 @@ class _$PoseVideoCompleteImpl implements PoseVideoComplete {
     videoComplete,
     TResult? Function()? imageProcessing,
     TResult? Function(String imagePath, PoseEntity? pose)? imageComplete,
+    TResult? Function()? reportGenerating,
+    TResult? Function(String filePath)? reportReady,
+    TResult? Function(String message)? reportFailed,
     TResult? Function(String message, bool isRecoverable)? error,
   }) {
     return videoComplete?.call(poses, frameCount, videoPath, framePaths);
@@ -1935,6 +2085,9 @@ class _$PoseVideoCompleteImpl implements PoseVideoComplete {
     videoComplete,
     TResult Function()? imageProcessing,
     TResult Function(String imagePath, PoseEntity? pose)? imageComplete,
+    TResult Function()? reportGenerating,
+    TResult Function(String filePath)? reportReady,
+    TResult Function(String message)? reportFailed,
     TResult Function(String message, bool isRecoverable)? error,
     required TResult orElse(),
   }) {
@@ -1957,6 +2110,9 @@ class _$PoseVideoCompleteImpl implements PoseVideoComplete {
     required TResult Function(PoseVideoComplete value) videoComplete,
     required TResult Function(PoseImageProcessing value) imageProcessing,
     required TResult Function(PoseImageComplete value) imageComplete,
+    required TResult Function(PoseReportGenerating value) reportGenerating,
+    required TResult Function(PoseReportReady value) reportReady,
+    required TResult Function(PoseReportFailed value) reportFailed,
     required TResult Function(PoseError value) error,
   }) {
     return videoComplete(this);
@@ -1975,6 +2131,9 @@ class _$PoseVideoCompleteImpl implements PoseVideoComplete {
     TResult? Function(PoseVideoComplete value)? videoComplete,
     TResult? Function(PoseImageProcessing value)? imageProcessing,
     TResult? Function(PoseImageComplete value)? imageComplete,
+    TResult? Function(PoseReportGenerating value)? reportGenerating,
+    TResult? Function(PoseReportReady value)? reportReady,
+    TResult? Function(PoseReportFailed value)? reportFailed,
     TResult? Function(PoseError value)? error,
   }) {
     return videoComplete?.call(this);
@@ -1993,6 +2152,9 @@ class _$PoseVideoCompleteImpl implements PoseVideoComplete {
     TResult Function(PoseVideoComplete value)? videoComplete,
     TResult Function(PoseImageProcessing value)? imageProcessing,
     TResult Function(PoseImageComplete value)? imageComplete,
+    TResult Function(PoseReportGenerating value)? reportGenerating,
+    TResult Function(PoseReportReady value)? reportReady,
+    TResult Function(PoseReportFailed value)? reportFailed,
     TResult Function(PoseError value)? error,
     required TResult orElse(),
   }) {
@@ -2093,6 +2255,9 @@ class _$PoseImageProcessingImpl implements PoseImageProcessing {
     videoComplete,
     required TResult Function() imageProcessing,
     required TResult Function(String imagePath, PoseEntity? pose) imageComplete,
+    required TResult Function() reportGenerating,
+    required TResult Function(String filePath) reportReady,
+    required TResult Function(String message) reportFailed,
     required TResult Function(String message, bool isRecoverable) error,
   }) {
     return imageProcessing();
@@ -2123,6 +2288,9 @@ class _$PoseImageProcessingImpl implements PoseImageProcessing {
     videoComplete,
     TResult? Function()? imageProcessing,
     TResult? Function(String imagePath, PoseEntity? pose)? imageComplete,
+    TResult? Function()? reportGenerating,
+    TResult? Function(String filePath)? reportReady,
+    TResult? Function(String message)? reportFailed,
     TResult? Function(String message, bool isRecoverable)? error,
   }) {
     return imageProcessing?.call();
@@ -2153,6 +2321,9 @@ class _$PoseImageProcessingImpl implements PoseImageProcessing {
     videoComplete,
     TResult Function()? imageProcessing,
     TResult Function(String imagePath, PoseEntity? pose)? imageComplete,
+    TResult Function()? reportGenerating,
+    TResult Function(String filePath)? reportReady,
+    TResult Function(String message)? reportFailed,
     TResult Function(String message, bool isRecoverable)? error,
     required TResult orElse(),
   }) {
@@ -2175,6 +2346,9 @@ class _$PoseImageProcessingImpl implements PoseImageProcessing {
     required TResult Function(PoseVideoComplete value) videoComplete,
     required TResult Function(PoseImageProcessing value) imageProcessing,
     required TResult Function(PoseImageComplete value) imageComplete,
+    required TResult Function(PoseReportGenerating value) reportGenerating,
+    required TResult Function(PoseReportReady value) reportReady,
+    required TResult Function(PoseReportFailed value) reportFailed,
     required TResult Function(PoseError value) error,
   }) {
     return imageProcessing(this);
@@ -2193,6 +2367,9 @@ class _$PoseImageProcessingImpl implements PoseImageProcessing {
     TResult? Function(PoseVideoComplete value)? videoComplete,
     TResult? Function(PoseImageProcessing value)? imageProcessing,
     TResult? Function(PoseImageComplete value)? imageComplete,
+    TResult? Function(PoseReportGenerating value)? reportGenerating,
+    TResult? Function(PoseReportReady value)? reportReady,
+    TResult? Function(PoseReportFailed value)? reportFailed,
     TResult? Function(PoseError value)? error,
   }) {
     return imageProcessing?.call(this);
@@ -2211,6 +2388,9 @@ class _$PoseImageProcessingImpl implements PoseImageProcessing {
     TResult Function(PoseVideoComplete value)? videoComplete,
     TResult Function(PoseImageProcessing value)? imageProcessing,
     TResult Function(PoseImageComplete value)? imageComplete,
+    TResult Function(PoseReportGenerating value)? reportGenerating,
+    TResult Function(PoseReportReady value)? reportReady,
+    TResult Function(PoseReportFailed value)? reportFailed,
     TResult Function(PoseError value)? error,
     required TResult orElse(),
   }) {
@@ -2334,6 +2514,9 @@ class _$PoseImageCompleteImpl implements PoseImageComplete {
     videoComplete,
     required TResult Function() imageProcessing,
     required TResult Function(String imagePath, PoseEntity? pose) imageComplete,
+    required TResult Function() reportGenerating,
+    required TResult Function(String filePath) reportReady,
+    required TResult Function(String message) reportFailed,
     required TResult Function(String message, bool isRecoverable) error,
   }) {
     return imageComplete(imagePath, pose);
@@ -2364,6 +2547,9 @@ class _$PoseImageCompleteImpl implements PoseImageComplete {
     videoComplete,
     TResult? Function()? imageProcessing,
     TResult? Function(String imagePath, PoseEntity? pose)? imageComplete,
+    TResult? Function()? reportGenerating,
+    TResult? Function(String filePath)? reportReady,
+    TResult? Function(String message)? reportFailed,
     TResult? Function(String message, bool isRecoverable)? error,
   }) {
     return imageComplete?.call(imagePath, pose);
@@ -2394,6 +2580,9 @@ class _$PoseImageCompleteImpl implements PoseImageComplete {
     videoComplete,
     TResult Function()? imageProcessing,
     TResult Function(String imagePath, PoseEntity? pose)? imageComplete,
+    TResult Function()? reportGenerating,
+    TResult Function(String filePath)? reportReady,
+    TResult Function(String message)? reportFailed,
     TResult Function(String message, bool isRecoverable)? error,
     required TResult orElse(),
   }) {
@@ -2416,6 +2605,9 @@ class _$PoseImageCompleteImpl implements PoseImageComplete {
     required TResult Function(PoseVideoComplete value) videoComplete,
     required TResult Function(PoseImageProcessing value) imageProcessing,
     required TResult Function(PoseImageComplete value) imageComplete,
+    required TResult Function(PoseReportGenerating value) reportGenerating,
+    required TResult Function(PoseReportReady value) reportReady,
+    required TResult Function(PoseReportFailed value) reportFailed,
     required TResult Function(PoseError value) error,
   }) {
     return imageComplete(this);
@@ -2434,6 +2626,9 @@ class _$PoseImageCompleteImpl implements PoseImageComplete {
     TResult? Function(PoseVideoComplete value)? videoComplete,
     TResult? Function(PoseImageProcessing value)? imageProcessing,
     TResult? Function(PoseImageComplete value)? imageComplete,
+    TResult? Function(PoseReportGenerating value)? reportGenerating,
+    TResult? Function(PoseReportReady value)? reportReady,
+    TResult? Function(PoseReportFailed value)? reportFailed,
     TResult? Function(PoseError value)? error,
   }) {
     return imageComplete?.call(this);
@@ -2452,6 +2647,9 @@ class _$PoseImageCompleteImpl implements PoseImageComplete {
     TResult Function(PoseVideoComplete value)? videoComplete,
     TResult Function(PoseImageProcessing value)? imageProcessing,
     TResult Function(PoseImageComplete value)? imageComplete,
+    TResult Function(PoseReportGenerating value)? reportGenerating,
+    TResult Function(PoseReportReady value)? reportReady,
+    TResult Function(PoseReportFailed value)? reportFailed,
     TResult Function(PoseError value)? error,
     required TResult orElse(),
   }) {
@@ -2475,6 +2673,745 @@ abstract class PoseImageComplete implements PoseState {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$PoseImageCompleteImplCopyWith<_$PoseImageCompleteImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$PoseReportGeneratingImplCopyWith<$Res> {
+  factory _$$PoseReportGeneratingImplCopyWith(
+    _$PoseReportGeneratingImpl value,
+    $Res Function(_$PoseReportGeneratingImpl) then,
+  ) = __$$PoseReportGeneratingImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$PoseReportGeneratingImplCopyWithImpl<$Res>
+    extends _$PoseStateCopyWithImpl<$Res, _$PoseReportGeneratingImpl>
+    implements _$$PoseReportGeneratingImplCopyWith<$Res> {
+  __$$PoseReportGeneratingImplCopyWithImpl(
+    _$PoseReportGeneratingImpl _value,
+    $Res Function(_$PoseReportGeneratingImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of PoseState
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$PoseReportGeneratingImpl implements PoseReportGenerating {
+  const _$PoseReportGeneratingImpl();
+
+  @override
+  String toString() {
+    return 'PoseState.reportGenerating()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$PoseReportGeneratingImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function() noPermission,
+    required TResult Function() streaming,
+    required TResult Function(
+      PoseEntity pose,
+      double averageConfidence,
+      double fps,
+    )
+    active,
+    required TResult Function() recordingVideo,
+    required TResult Function(
+      double progress,
+      int framesProcessed,
+      PoseEntity? currentPose,
+    )
+    videoProcessing,
+    required TResult Function(
+      List<PoseEntity> poses,
+      int frameCount,
+      String? videoPath,
+      List<String> framePaths,
+    )
+    videoComplete,
+    required TResult Function() imageProcessing,
+    required TResult Function(String imagePath, PoseEntity? pose) imageComplete,
+    required TResult Function() reportGenerating,
+    required TResult Function(String filePath) reportReady,
+    required TResult Function(String message) reportFailed,
+    required TResult Function(String message, bool isRecoverable) error,
+  }) {
+    return reportGenerating();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function()? noPermission,
+    TResult? Function()? streaming,
+    TResult? Function(PoseEntity pose, double averageConfidence, double fps)?
+    active,
+    TResult? Function()? recordingVideo,
+    TResult? Function(
+      double progress,
+      int framesProcessed,
+      PoseEntity? currentPose,
+    )?
+    videoProcessing,
+    TResult? Function(
+      List<PoseEntity> poses,
+      int frameCount,
+      String? videoPath,
+      List<String> framePaths,
+    )?
+    videoComplete,
+    TResult? Function()? imageProcessing,
+    TResult? Function(String imagePath, PoseEntity? pose)? imageComplete,
+    TResult? Function()? reportGenerating,
+    TResult? Function(String filePath)? reportReady,
+    TResult? Function(String message)? reportFailed,
+    TResult? Function(String message, bool isRecoverable)? error,
+  }) {
+    return reportGenerating?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function()? noPermission,
+    TResult Function()? streaming,
+    TResult Function(PoseEntity pose, double averageConfidence, double fps)?
+    active,
+    TResult Function()? recordingVideo,
+    TResult Function(
+      double progress,
+      int framesProcessed,
+      PoseEntity? currentPose,
+    )?
+    videoProcessing,
+    TResult Function(
+      List<PoseEntity> poses,
+      int frameCount,
+      String? videoPath,
+      List<String> framePaths,
+    )?
+    videoComplete,
+    TResult Function()? imageProcessing,
+    TResult Function(String imagePath, PoseEntity? pose)? imageComplete,
+    TResult Function()? reportGenerating,
+    TResult Function(String filePath)? reportReady,
+    TResult Function(String message)? reportFailed,
+    TResult Function(String message, bool isRecoverable)? error,
+    required TResult orElse(),
+  }) {
+    if (reportGenerating != null) {
+      return reportGenerating();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(PoseInitial value) initial,
+    required TResult Function(PoseLoading value) loading,
+    required TResult Function(PoseNoPermission value) noPermission,
+    required TResult Function(PoseStreaming value) streaming,
+    required TResult Function(PoseActive value) active,
+    required TResult Function(PoseRecordingVideo value) recordingVideo,
+    required TResult Function(PoseVideoProcessing value) videoProcessing,
+    required TResult Function(PoseVideoComplete value) videoComplete,
+    required TResult Function(PoseImageProcessing value) imageProcessing,
+    required TResult Function(PoseImageComplete value) imageComplete,
+    required TResult Function(PoseReportGenerating value) reportGenerating,
+    required TResult Function(PoseReportReady value) reportReady,
+    required TResult Function(PoseReportFailed value) reportFailed,
+    required TResult Function(PoseError value) error,
+  }) {
+    return reportGenerating(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(PoseInitial value)? initial,
+    TResult? Function(PoseLoading value)? loading,
+    TResult? Function(PoseNoPermission value)? noPermission,
+    TResult? Function(PoseStreaming value)? streaming,
+    TResult? Function(PoseActive value)? active,
+    TResult? Function(PoseRecordingVideo value)? recordingVideo,
+    TResult? Function(PoseVideoProcessing value)? videoProcessing,
+    TResult? Function(PoseVideoComplete value)? videoComplete,
+    TResult? Function(PoseImageProcessing value)? imageProcessing,
+    TResult? Function(PoseImageComplete value)? imageComplete,
+    TResult? Function(PoseReportGenerating value)? reportGenerating,
+    TResult? Function(PoseReportReady value)? reportReady,
+    TResult? Function(PoseReportFailed value)? reportFailed,
+    TResult? Function(PoseError value)? error,
+  }) {
+    return reportGenerating?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(PoseInitial value)? initial,
+    TResult Function(PoseLoading value)? loading,
+    TResult Function(PoseNoPermission value)? noPermission,
+    TResult Function(PoseStreaming value)? streaming,
+    TResult Function(PoseActive value)? active,
+    TResult Function(PoseRecordingVideo value)? recordingVideo,
+    TResult Function(PoseVideoProcessing value)? videoProcessing,
+    TResult Function(PoseVideoComplete value)? videoComplete,
+    TResult Function(PoseImageProcessing value)? imageProcessing,
+    TResult Function(PoseImageComplete value)? imageComplete,
+    TResult Function(PoseReportGenerating value)? reportGenerating,
+    TResult Function(PoseReportReady value)? reportReady,
+    TResult Function(PoseReportFailed value)? reportFailed,
+    TResult Function(PoseError value)? error,
+    required TResult orElse(),
+  }) {
+    if (reportGenerating != null) {
+      return reportGenerating(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class PoseReportGenerating implements PoseState {
+  const factory PoseReportGenerating() = _$PoseReportGeneratingImpl;
+}
+
+/// @nodoc
+abstract class _$$PoseReportReadyImplCopyWith<$Res> {
+  factory _$$PoseReportReadyImplCopyWith(
+    _$PoseReportReadyImpl value,
+    $Res Function(_$PoseReportReadyImpl) then,
+  ) = __$$PoseReportReadyImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String filePath});
+}
+
+/// @nodoc
+class __$$PoseReportReadyImplCopyWithImpl<$Res>
+    extends _$PoseStateCopyWithImpl<$Res, _$PoseReportReadyImpl>
+    implements _$$PoseReportReadyImplCopyWith<$Res> {
+  __$$PoseReportReadyImplCopyWithImpl(
+    _$PoseReportReadyImpl _value,
+    $Res Function(_$PoseReportReadyImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of PoseState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? filePath = null}) {
+    return _then(
+      _$PoseReportReadyImpl(
+        filePath:
+            null == filePath
+                ? _value.filePath
+                : filePath // ignore: cast_nullable_to_non_nullable
+                    as String,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+
+class _$PoseReportReadyImpl implements PoseReportReady {
+  const _$PoseReportReadyImpl({required this.filePath});
+
+  @override
+  final String filePath;
+
+  @override
+  String toString() {
+    return 'PoseState.reportReady(filePath: $filePath)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$PoseReportReadyImpl &&
+            (identical(other.filePath, filePath) ||
+                other.filePath == filePath));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, filePath);
+
+  /// Create a copy of PoseState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$PoseReportReadyImplCopyWith<_$PoseReportReadyImpl> get copyWith =>
+      __$$PoseReportReadyImplCopyWithImpl<_$PoseReportReadyImpl>(
+        this,
+        _$identity,
+      );
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function() noPermission,
+    required TResult Function() streaming,
+    required TResult Function(
+      PoseEntity pose,
+      double averageConfidence,
+      double fps,
+    )
+    active,
+    required TResult Function() recordingVideo,
+    required TResult Function(
+      double progress,
+      int framesProcessed,
+      PoseEntity? currentPose,
+    )
+    videoProcessing,
+    required TResult Function(
+      List<PoseEntity> poses,
+      int frameCount,
+      String? videoPath,
+      List<String> framePaths,
+    )
+    videoComplete,
+    required TResult Function() imageProcessing,
+    required TResult Function(String imagePath, PoseEntity? pose) imageComplete,
+    required TResult Function() reportGenerating,
+    required TResult Function(String filePath) reportReady,
+    required TResult Function(String message) reportFailed,
+    required TResult Function(String message, bool isRecoverable) error,
+  }) {
+    return reportReady(filePath);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function()? noPermission,
+    TResult? Function()? streaming,
+    TResult? Function(PoseEntity pose, double averageConfidence, double fps)?
+    active,
+    TResult? Function()? recordingVideo,
+    TResult? Function(
+      double progress,
+      int framesProcessed,
+      PoseEntity? currentPose,
+    )?
+    videoProcessing,
+    TResult? Function(
+      List<PoseEntity> poses,
+      int frameCount,
+      String? videoPath,
+      List<String> framePaths,
+    )?
+    videoComplete,
+    TResult? Function()? imageProcessing,
+    TResult? Function(String imagePath, PoseEntity? pose)? imageComplete,
+    TResult? Function()? reportGenerating,
+    TResult? Function(String filePath)? reportReady,
+    TResult? Function(String message)? reportFailed,
+    TResult? Function(String message, bool isRecoverable)? error,
+  }) {
+    return reportReady?.call(filePath);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function()? noPermission,
+    TResult Function()? streaming,
+    TResult Function(PoseEntity pose, double averageConfidence, double fps)?
+    active,
+    TResult Function()? recordingVideo,
+    TResult Function(
+      double progress,
+      int framesProcessed,
+      PoseEntity? currentPose,
+    )?
+    videoProcessing,
+    TResult Function(
+      List<PoseEntity> poses,
+      int frameCount,
+      String? videoPath,
+      List<String> framePaths,
+    )?
+    videoComplete,
+    TResult Function()? imageProcessing,
+    TResult Function(String imagePath, PoseEntity? pose)? imageComplete,
+    TResult Function()? reportGenerating,
+    TResult Function(String filePath)? reportReady,
+    TResult Function(String message)? reportFailed,
+    TResult Function(String message, bool isRecoverable)? error,
+    required TResult orElse(),
+  }) {
+    if (reportReady != null) {
+      return reportReady(filePath);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(PoseInitial value) initial,
+    required TResult Function(PoseLoading value) loading,
+    required TResult Function(PoseNoPermission value) noPermission,
+    required TResult Function(PoseStreaming value) streaming,
+    required TResult Function(PoseActive value) active,
+    required TResult Function(PoseRecordingVideo value) recordingVideo,
+    required TResult Function(PoseVideoProcessing value) videoProcessing,
+    required TResult Function(PoseVideoComplete value) videoComplete,
+    required TResult Function(PoseImageProcessing value) imageProcessing,
+    required TResult Function(PoseImageComplete value) imageComplete,
+    required TResult Function(PoseReportGenerating value) reportGenerating,
+    required TResult Function(PoseReportReady value) reportReady,
+    required TResult Function(PoseReportFailed value) reportFailed,
+    required TResult Function(PoseError value) error,
+  }) {
+    return reportReady(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(PoseInitial value)? initial,
+    TResult? Function(PoseLoading value)? loading,
+    TResult? Function(PoseNoPermission value)? noPermission,
+    TResult? Function(PoseStreaming value)? streaming,
+    TResult? Function(PoseActive value)? active,
+    TResult? Function(PoseRecordingVideo value)? recordingVideo,
+    TResult? Function(PoseVideoProcessing value)? videoProcessing,
+    TResult? Function(PoseVideoComplete value)? videoComplete,
+    TResult? Function(PoseImageProcessing value)? imageProcessing,
+    TResult? Function(PoseImageComplete value)? imageComplete,
+    TResult? Function(PoseReportGenerating value)? reportGenerating,
+    TResult? Function(PoseReportReady value)? reportReady,
+    TResult? Function(PoseReportFailed value)? reportFailed,
+    TResult? Function(PoseError value)? error,
+  }) {
+    return reportReady?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(PoseInitial value)? initial,
+    TResult Function(PoseLoading value)? loading,
+    TResult Function(PoseNoPermission value)? noPermission,
+    TResult Function(PoseStreaming value)? streaming,
+    TResult Function(PoseActive value)? active,
+    TResult Function(PoseRecordingVideo value)? recordingVideo,
+    TResult Function(PoseVideoProcessing value)? videoProcessing,
+    TResult Function(PoseVideoComplete value)? videoComplete,
+    TResult Function(PoseImageProcessing value)? imageProcessing,
+    TResult Function(PoseImageComplete value)? imageComplete,
+    TResult Function(PoseReportGenerating value)? reportGenerating,
+    TResult Function(PoseReportReady value)? reportReady,
+    TResult Function(PoseReportFailed value)? reportFailed,
+    TResult Function(PoseError value)? error,
+    required TResult orElse(),
+  }) {
+    if (reportReady != null) {
+      return reportReady(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class PoseReportReady implements PoseState {
+  const factory PoseReportReady({required final String filePath}) =
+      _$PoseReportReadyImpl;
+
+  String get filePath;
+
+  /// Create a copy of PoseState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$PoseReportReadyImplCopyWith<_$PoseReportReadyImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$PoseReportFailedImplCopyWith<$Res> {
+  factory _$$PoseReportFailedImplCopyWith(
+    _$PoseReportFailedImpl value,
+    $Res Function(_$PoseReportFailedImpl) then,
+  ) = __$$PoseReportFailedImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String message});
+}
+
+/// @nodoc
+class __$$PoseReportFailedImplCopyWithImpl<$Res>
+    extends _$PoseStateCopyWithImpl<$Res, _$PoseReportFailedImpl>
+    implements _$$PoseReportFailedImplCopyWith<$Res> {
+  __$$PoseReportFailedImplCopyWithImpl(
+    _$PoseReportFailedImpl _value,
+    $Res Function(_$PoseReportFailedImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of PoseState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? message = null}) {
+    return _then(
+      _$PoseReportFailedImpl(
+        message:
+            null == message
+                ? _value.message
+                : message // ignore: cast_nullable_to_non_nullable
+                    as String,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+
+class _$PoseReportFailedImpl implements PoseReportFailed {
+  const _$PoseReportFailedImpl({required this.message});
+
+  @override
+  final String message;
+
+  @override
+  String toString() {
+    return 'PoseState.reportFailed(message: $message)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$PoseReportFailedImpl &&
+            (identical(other.message, message) || other.message == message));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, message);
+
+  /// Create a copy of PoseState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$PoseReportFailedImplCopyWith<_$PoseReportFailedImpl> get copyWith =>
+      __$$PoseReportFailedImplCopyWithImpl<_$PoseReportFailedImpl>(
+        this,
+        _$identity,
+      );
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function() noPermission,
+    required TResult Function() streaming,
+    required TResult Function(
+      PoseEntity pose,
+      double averageConfidence,
+      double fps,
+    )
+    active,
+    required TResult Function() recordingVideo,
+    required TResult Function(
+      double progress,
+      int framesProcessed,
+      PoseEntity? currentPose,
+    )
+    videoProcessing,
+    required TResult Function(
+      List<PoseEntity> poses,
+      int frameCount,
+      String? videoPath,
+      List<String> framePaths,
+    )
+    videoComplete,
+    required TResult Function() imageProcessing,
+    required TResult Function(String imagePath, PoseEntity? pose) imageComplete,
+    required TResult Function() reportGenerating,
+    required TResult Function(String filePath) reportReady,
+    required TResult Function(String message) reportFailed,
+    required TResult Function(String message, bool isRecoverable) error,
+  }) {
+    return reportFailed(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function()? noPermission,
+    TResult? Function()? streaming,
+    TResult? Function(PoseEntity pose, double averageConfidence, double fps)?
+    active,
+    TResult? Function()? recordingVideo,
+    TResult? Function(
+      double progress,
+      int framesProcessed,
+      PoseEntity? currentPose,
+    )?
+    videoProcessing,
+    TResult? Function(
+      List<PoseEntity> poses,
+      int frameCount,
+      String? videoPath,
+      List<String> framePaths,
+    )?
+    videoComplete,
+    TResult? Function()? imageProcessing,
+    TResult? Function(String imagePath, PoseEntity? pose)? imageComplete,
+    TResult? Function()? reportGenerating,
+    TResult? Function(String filePath)? reportReady,
+    TResult? Function(String message)? reportFailed,
+    TResult? Function(String message, bool isRecoverable)? error,
+  }) {
+    return reportFailed?.call(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function()? noPermission,
+    TResult Function()? streaming,
+    TResult Function(PoseEntity pose, double averageConfidence, double fps)?
+    active,
+    TResult Function()? recordingVideo,
+    TResult Function(
+      double progress,
+      int framesProcessed,
+      PoseEntity? currentPose,
+    )?
+    videoProcessing,
+    TResult Function(
+      List<PoseEntity> poses,
+      int frameCount,
+      String? videoPath,
+      List<String> framePaths,
+    )?
+    videoComplete,
+    TResult Function()? imageProcessing,
+    TResult Function(String imagePath, PoseEntity? pose)? imageComplete,
+    TResult Function()? reportGenerating,
+    TResult Function(String filePath)? reportReady,
+    TResult Function(String message)? reportFailed,
+    TResult Function(String message, bool isRecoverable)? error,
+    required TResult orElse(),
+  }) {
+    if (reportFailed != null) {
+      return reportFailed(message);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(PoseInitial value) initial,
+    required TResult Function(PoseLoading value) loading,
+    required TResult Function(PoseNoPermission value) noPermission,
+    required TResult Function(PoseStreaming value) streaming,
+    required TResult Function(PoseActive value) active,
+    required TResult Function(PoseRecordingVideo value) recordingVideo,
+    required TResult Function(PoseVideoProcessing value) videoProcessing,
+    required TResult Function(PoseVideoComplete value) videoComplete,
+    required TResult Function(PoseImageProcessing value) imageProcessing,
+    required TResult Function(PoseImageComplete value) imageComplete,
+    required TResult Function(PoseReportGenerating value) reportGenerating,
+    required TResult Function(PoseReportReady value) reportReady,
+    required TResult Function(PoseReportFailed value) reportFailed,
+    required TResult Function(PoseError value) error,
+  }) {
+    return reportFailed(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(PoseInitial value)? initial,
+    TResult? Function(PoseLoading value)? loading,
+    TResult? Function(PoseNoPermission value)? noPermission,
+    TResult? Function(PoseStreaming value)? streaming,
+    TResult? Function(PoseActive value)? active,
+    TResult? Function(PoseRecordingVideo value)? recordingVideo,
+    TResult? Function(PoseVideoProcessing value)? videoProcessing,
+    TResult? Function(PoseVideoComplete value)? videoComplete,
+    TResult? Function(PoseImageProcessing value)? imageProcessing,
+    TResult? Function(PoseImageComplete value)? imageComplete,
+    TResult? Function(PoseReportGenerating value)? reportGenerating,
+    TResult? Function(PoseReportReady value)? reportReady,
+    TResult? Function(PoseReportFailed value)? reportFailed,
+    TResult? Function(PoseError value)? error,
+  }) {
+    return reportFailed?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(PoseInitial value)? initial,
+    TResult Function(PoseLoading value)? loading,
+    TResult Function(PoseNoPermission value)? noPermission,
+    TResult Function(PoseStreaming value)? streaming,
+    TResult Function(PoseActive value)? active,
+    TResult Function(PoseRecordingVideo value)? recordingVideo,
+    TResult Function(PoseVideoProcessing value)? videoProcessing,
+    TResult Function(PoseVideoComplete value)? videoComplete,
+    TResult Function(PoseImageProcessing value)? imageProcessing,
+    TResult Function(PoseImageComplete value)? imageComplete,
+    TResult Function(PoseReportGenerating value)? reportGenerating,
+    TResult Function(PoseReportReady value)? reportReady,
+    TResult Function(PoseReportFailed value)? reportFailed,
+    TResult Function(PoseError value)? error,
+    required TResult orElse(),
+  }) {
+    if (reportFailed != null) {
+      return reportFailed(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class PoseReportFailed implements PoseState {
+  const factory PoseReportFailed({required final String message}) =
+      _$PoseReportFailedImpl;
+
+  String get message;
+
+  /// Create a copy of PoseState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$PoseReportFailedImplCopyWith<_$PoseReportFailedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -2584,6 +3521,9 @@ class _$PoseErrorImpl implements PoseError {
     videoComplete,
     required TResult Function() imageProcessing,
     required TResult Function(String imagePath, PoseEntity? pose) imageComplete,
+    required TResult Function() reportGenerating,
+    required TResult Function(String filePath) reportReady,
+    required TResult Function(String message) reportFailed,
     required TResult Function(String message, bool isRecoverable) error,
   }) {
     return error(message, isRecoverable);
@@ -2614,6 +3554,9 @@ class _$PoseErrorImpl implements PoseError {
     videoComplete,
     TResult? Function()? imageProcessing,
     TResult? Function(String imagePath, PoseEntity? pose)? imageComplete,
+    TResult? Function()? reportGenerating,
+    TResult? Function(String filePath)? reportReady,
+    TResult? Function(String message)? reportFailed,
     TResult? Function(String message, bool isRecoverable)? error,
   }) {
     return error?.call(message, isRecoverable);
@@ -2644,6 +3587,9 @@ class _$PoseErrorImpl implements PoseError {
     videoComplete,
     TResult Function()? imageProcessing,
     TResult Function(String imagePath, PoseEntity? pose)? imageComplete,
+    TResult Function()? reportGenerating,
+    TResult Function(String filePath)? reportReady,
+    TResult Function(String message)? reportFailed,
     TResult Function(String message, bool isRecoverable)? error,
     required TResult orElse(),
   }) {
@@ -2666,6 +3612,9 @@ class _$PoseErrorImpl implements PoseError {
     required TResult Function(PoseVideoComplete value) videoComplete,
     required TResult Function(PoseImageProcessing value) imageProcessing,
     required TResult Function(PoseImageComplete value) imageComplete,
+    required TResult Function(PoseReportGenerating value) reportGenerating,
+    required TResult Function(PoseReportReady value) reportReady,
+    required TResult Function(PoseReportFailed value) reportFailed,
     required TResult Function(PoseError value) error,
   }) {
     return error(this);
@@ -2684,6 +3633,9 @@ class _$PoseErrorImpl implements PoseError {
     TResult? Function(PoseVideoComplete value)? videoComplete,
     TResult? Function(PoseImageProcessing value)? imageProcessing,
     TResult? Function(PoseImageComplete value)? imageComplete,
+    TResult? Function(PoseReportGenerating value)? reportGenerating,
+    TResult? Function(PoseReportReady value)? reportReady,
+    TResult? Function(PoseReportFailed value)? reportFailed,
     TResult? Function(PoseError value)? error,
   }) {
     return error?.call(this);
@@ -2702,6 +3654,9 @@ class _$PoseErrorImpl implements PoseError {
     TResult Function(PoseVideoComplete value)? videoComplete,
     TResult Function(PoseImageProcessing value)? imageProcessing,
     TResult Function(PoseImageComplete value)? imageComplete,
+    TResult Function(PoseReportGenerating value)? reportGenerating,
+    TResult Function(PoseReportReady value)? reportReady,
+    TResult Function(PoseReportFailed value)? reportFailed,
     TResult Function(PoseError value)? error,
     required TResult orElse(),
   }) {
