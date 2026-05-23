@@ -56,6 +56,11 @@ dependencies:
   flutter_secure_storage: ^9.2.2
   http: ^1.2.2
 
+  # Cloud backend client (Phase 3 I1): HTTP client, local cache, connectivity
+  dio: ^5.7.0
+  sqflite: ^2.4.1
+  connectivity_plus: ^6.1.0
+
   # Fonts: Inter (UI) + JetBrains Mono (data), per the Cyber-Kinetic design
   google_fonts: ^6.2.1
 

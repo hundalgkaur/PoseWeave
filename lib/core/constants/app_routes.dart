@@ -15,4 +15,5 @@ class AppRoutes {
   static const String login = '/login';
   static const String forgotPassword = '/forgot-password';
   static const String settings = '/settings';
+  static const String profile = '/profile';
 }

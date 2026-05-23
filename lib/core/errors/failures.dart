@@ -55,3 +55,8 @@ class AiServiceFailure extends Failure {
 class NoApiKeyFailure extends Failure {
   const NoApiKeyFailure(super.message, {super.isRecoverable = true});
 }
+
+/// Cloud backend call failed (offline, timeout, 4xx/5xx).
+class NetworkFailure extends Failure {
+  const NetworkFailure(super.message, {super.isRecoverable = true});
+}

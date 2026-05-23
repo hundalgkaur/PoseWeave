@@ -50,14 +50,29 @@ class _HomePageState extends State<HomePage> {
           children: <Widget>[
             Align(
               alignment: Alignment.topLeft,
-              child: IconButton(
-                tooltip: 'Settings',
-                icon: const Icon(
-                  Icons.settings_outlined,
-                  color: AppColors.onSurfaceVariant,
-                ),
-                onPressed:
-                    () => Navigator.of(context).pushNamed(AppRoutes.settings),
+              child: Row(
+                children: <Widget>[
+                  IconButton(
+                    tooltip: 'Settings',
+                    icon: const Icon(
+                      Icons.settings_outlined,
+                      color: AppColors.onSurfaceVariant,
+                    ),
+                    onPressed:
+                        () =>
+                            Navigator.of(context).pushNamed(AppRoutes.settings),
+                  ),
+                  IconButton(
+                    tooltip: 'Profile',
+                    icon: const Icon(
+                      Icons.person_outline,
+                      color: AppColors.onSurfaceVariant,
+                    ),
+                    onPressed:
+                        () =>
+                            Navigator.of(context).pushNamed(AppRoutes.profile),
+                  ),
+                ],
               ),
             ),
             Align(
