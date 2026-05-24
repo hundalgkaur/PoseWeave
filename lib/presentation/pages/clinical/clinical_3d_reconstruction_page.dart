@@ -6,6 +6,7 @@ import 'package:poseweave/core/constants/app_theme.dart';
 import 'package:poseweave/core/sample_pose.dart';
 import 'package:poseweave/domain/entities/clinical_patient.dart';
 import 'package:poseweave/domain/entities/pose_entity.dart';
+import 'package:poseweave/presentation/widgets/app_top_bar.dart';
 import 'package:poseweave/presentation/widgets/clinical/hud_frame.dart';
 import 'package:poseweave/presentation/widgets/clinical/kinematics_panel.dart';
 import 'package:poseweave/presentation/widgets/clinical/patient_header.dart';
@@ -50,13 +51,7 @@ class _Clinical3DReconstructionPageState
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.surfaceContainerLowest,
-      appBar: AppBar(
-        title: const Text('3D Reconstruction'),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.of(context).maybePop(),
-        ),
-      ),
+      appBar: const AppTopBar(title: '3D Reconstruction'),
       body: GestureDetector(
         onScaleStart: _onScaleStart,
         onScaleUpdate: _onScaleUpdate,
@@ -73,65 +68,91 @@ class _Clinical3DReconstructionPageState
             ),
             const HudFrame(),
             const _Crosshair(),
-            SafeArea(
-              child: Column(
-                children: <Widget>[
-                  const Padding(
+            // Patient context — compact strip at top; ignores pointers so the
+            // whole canvas below stays draggable.
+            const SafeArea(
+              child: IgnorePointer(
+                child: Align(
+                  alignment: Alignment.topCenter,
+                  child: Padding(
                     padding: EdgeInsets.all(12),
-                    child:
-                        PatientHeader(patient: ClinicalPatient.demo, detailed: true),
+                    child: PatientHeader(patient: ClinicalPatient.demo),
                   ),
-                  const Spacer(),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12),
-                    child: KinematicsPanel(pose: _pose),
-                  ),
-                  const SizedBox(height: 12),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: OutlinedButton.icon(
-                            onPressed: () => setState(() {
-                              _rotationY = 0.4;
-                              _rotationX = 0;
-                              _zoom = 1;
-                            }),
-                            icon: const Icon(Icons.restart_alt),
-                            label: const Text('RESET VIEW'),
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: FilledButton.icon(
-                            style: FilledButton.styleFrom(
-                              backgroundColor: AppColors.primary,
-                              foregroundColor: AppColors.onPrimary,
-                            ),
-                            onPressed: () =>
-                                ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(
-                                  'DICOM export is mocked in this demo.',
-                                  style: AppTheme.mono(
-                                      color: AppColors.onPrimary, fontSize: 12),
-                                ),
-                                backgroundColor: AppColors.primaryContainer,
-                              ),
-                            ),
-                            icon: const Icon(Icons.file_download_outlined),
-                            label: const Text('EXPORT DICOM'),
-                          ),
-                        ),
-                      ],
+                ),
+              ),
+            ),
+            // Live kinematics — bottom-left, above the action bar, non-blocking.
+            SafeArea(
+              child: IgnorePointer(
+                child: Align(
+                  alignment: Alignment.bottomLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 12, bottom: 92),
+                    child: SizedBox(
+                      width: 220,
+                      child: KinematicsPanel(pose: _pose),
                     ),
                   ),
-                  const SizedBox(height: 8),
-                  Text('Drag to rotate • pinch to zoom',
-                      style: AppTheme.labelCaps(fontSize: 9)),
-                  const SizedBox(height: 16),
-                ],
+                ),
+              ),
+            ),
+            // Gesture hint — non-blocking.
+            SafeArea(
+              child: IgnorePointer(
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 78),
+                    child: Text('Drag to rotate • pinch to zoom',
+                        style: AppTheme.labelCaps(fontSize: 9)),
+                  ),
+                ),
+              ),
+            ),
+            // Action bar — the only interactive overlay.
+            SafeArea(
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: OutlinedButton.icon(
+                          onPressed: () => setState(() {
+                            _rotationY = 0.4;
+                            _rotationX = 0;
+                            _zoom = 1;
+                          }),
+                          icon: const Icon(Icons.restart_alt),
+                          label: const Text('RESET VIEW'),
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: FilledButton.icon(
+                          style: FilledButton.styleFrom(
+                            backgroundColor: AppColors.primary,
+                            foregroundColor: AppColors.onPrimary,
+                          ),
+                          onPressed: () =>
+                              ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                'DICOM export is mocked in this demo.',
+                                style: AppTheme.mono(
+                                    color: AppColors.onPrimary, fontSize: 12),
+                              ),
+                              backgroundColor: AppColors.primaryContainer,
+                            ),
+                          ),
+                          icon: const Icon(Icons.file_download_outlined),
+                          label: const Text('EXPORT DICOM'),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
           ],

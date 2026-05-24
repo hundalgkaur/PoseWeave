@@ -17,21 +17,34 @@ home-screen logo to toggle mock mode.)
 From the project root, run the install script:
 
 ```powershell
-./scripts/install_apk.ps1            # install the existing APK
-./scripts/install_apk.ps1 -Build     # rebuild first, then install
-./scripts/install_apk.ps1 -Launch    # install, then launch on the phone
+./scripts/install_apk.ps1                 # install the existing APK
+./scripts/install_apk.ps1 -Build          # rebuild first, then install
+./scripts/install_apk.ps1 -Launch         # install, then launch on the phone
+./scripts/install_apk.ps1 -Launch -Logs   # also dump device logs to build/device.log
 ```
 
-The script finds `adb`, checks a device is connected, and runs
-`adb install -r build/app/outputs/flutter-apk/app-debug.apk`.
+The script finds `adb`, **retries** the install (this device drops off USB
+mid-transfer), recovers from a **signature mismatch** by uninstalling first, and
+runs `adb install -r build/app/outputs/flutter-apk/app-debug.apk`.
 
-## Alternative: run with live logs (best for debugging)
+## Capturing device logs
 
-```bash
-flutter run -d <device-id>     # builds, installs, runs with hot reload + logs
+`flutter run` can't attach on this machine (the Android SDK is missing
+`cmdline-tools`/`aapt`), so use the log script instead. It writes to
+**`build/device.log`**, which is the single place to read the device output
+(Flutter `debugPrint` + `BlocObserver`, incl. the on-screen **DETECT DEBUG**
+line, plus Java/native crashes):
+
+```powershell
+./scripts/device_logs.ps1               # dump the recent buffer once (reliable)
+./scripts/device_logs.ps1 -Clear        # clear first, then dump
+./scripts/device_logs.ps1 -Lines 500    # dump the last N matching lines
+./scripts/device_logs.ps1 -Follow       # stream continuously (auto-reconnects on USB drop)
+./scripts/device_logs.ps1 -All          # unfiltered (all tags), not just app/errors
 ```
 
-Use `flutter devices` to get the `<device-id>`.
+Typical loop: `./scripts/install_apk.ps1 -Launch`, reproduce the issue on the
+phone, then `./scripts/device_logs.ps1` and read `build/device.log`.
 
 ## What to verify on-device
 

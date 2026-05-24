@@ -15,6 +15,7 @@ import 'package:poseweave/presentation/bloc/pose_bloc.dart';
 import 'package:poseweave/presentation/bloc/pose_event.dart';
 import 'package:poseweave/presentation/bloc/pose_state.dart';
 import 'package:poseweave/presentation/bloc/recommendations_bloc.dart';
+import 'package:poseweave/presentation/widgets/app_top_bar.dart';
 import 'package:poseweave/presentation/widgets/glass_panel.dart';
 import 'package:poseweave/presentation/widgets/radial_gauge.dart';
 import 'package:poseweave/presentation/widgets/recommendations_panel.dart';
@@ -47,13 +48,7 @@ class GaitReportPage extends StatelessWidget {
         ),
       ],
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Gait Analysis'),
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () => Navigator.of(context).maybePop(),
-          ),
-        ),
+        appBar: const AppTopBar(title: 'Gait Analysis'),
         body: SafeArea(
           child: ListView(
             padding: const EdgeInsets.all(16),

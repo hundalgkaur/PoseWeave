@@ -10,7 +10,9 @@ import 'package:poseweave/presentation/bloc/pose_event.dart';
 import 'package:poseweave/presentation/bloc/pose_state.dart';
 import 'package:poseweave/presentation/widgets/body_region_legend.dart';
 import 'package:poseweave/presentation/widgets/confidence_indicator.dart';
+import 'package:poseweave/presentation/widgets/detection_debug_hud.dart';
 import 'package:poseweave/presentation/widgets/loading_overlay.dart';
+import 'package:poseweave/presentation/widgets/no_person_banner.dart';
 import 'package:poseweave/presentation/widgets/permission_rationale_dialog.dart';
 import 'package:poseweave/presentation/widgets/pose_overlay_painter.dart';
 import 'package:poseweave/presentation/widgets/pose_results_view.dart';
@@ -63,7 +65,7 @@ class _CameraView extends StatelessWidget {
             return _RecordingResults(state: state);
           }
 
-          final bool detecting = state is PoseActive;
+          final bool detecting = state is PoseActive || state is PoseSearching;
           final bool recording = state is PoseRecordingVideo;
           final bool canRecord =
               !bloc.isMockMode &&
@@ -81,6 +83,7 @@ class _CameraView extends StatelessWidget {
                     mirror: bloc.lensDirection == CameraLensDirection.front,
                   ),
                 ),
+              if (state is PoseSearching) const NoPersonBanner(),
               const _HudCorners(),
               SafeArea(
                 child: Column(
@@ -107,6 +110,7 @@ class _CameraView extends StatelessWidget {
                   child: BodyRegionLegend(),
                 ),
               ),
+              DetectionDebugHud(diagnostics: bloc.detectionDiagnostics),
               if (state is PoseLoading)
                 const LoadingOverlay(message: 'Initializing camera…'),
             ],
@@ -156,6 +160,12 @@ class _TopBar extends StatelessWidget {
           IconButton(
             onPressed: () => Navigator.of(context).maybePop(),
             icon: const Icon(Icons.arrow_back, color: AppColors.onSurface),
+          ),
+          IconButton(
+            tooltip: 'Home',
+            onPressed: () => Navigator.of(context)
+                .popUntil((Route<dynamic> r) => r.isFirst),
+            icon: const Icon(Icons.home_outlined, color: AppColors.onSurface),
           ),
           const Spacer(),
           ConfidenceIndicator(confidence: confidence),

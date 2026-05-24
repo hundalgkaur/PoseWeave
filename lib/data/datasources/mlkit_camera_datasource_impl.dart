@@ -9,6 +9,7 @@ import 'package:flutter/services.dart' show DeviceOrientation;
 import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart'
     hide PoseLandmarkType;
 import 'package:injectable/injectable.dart';
+import 'package:poseweave/core/camera_diagnostics.dart';
 import 'package:poseweave/core/errors/exceptions.dart';
 import 'package:poseweave/data/datasources/mlkit_camera_datasource.dart';
 import 'package:poseweave/data/models/landmark_model.dart';
@@ -27,7 +28,11 @@ class MLKitCameraDataSourceImpl implements MLKitCameraDataSource {
   List<CameraDescription> _cameras = <CameraDescription>[];
   CameraLensDirection _lensDirection = CameraLensDirection.back;
 
-  final StreamController<PoseModel> _poseController =
+  // Not final: this datasource is a singleton reused across camera screens, so
+  // after dispose() closes the controller it must be replaced with a fresh one
+  // (a broadcast stream can't be reopened) or detection emits nothing on the
+  // next screen.
+  StreamController<PoseModel> _poseController =
       StreamController<PoseModel>.broadcast();
 
   bool _isBusy = false;
@@ -35,6 +40,12 @@ class MLKitCameraDataSourceImpl implements MLKitCameraDataSource {
   bool _mockMode = false;
   DateTime _lastProcessed = DateTime.fromMillisecondsSinceEpoch(0);
   Timer? _mockTimer;
+
+  // On-device diagnostics for the debug HUD (see CameraDiagnostics).
+  StreamController<CameraDiagnostics> _diagController =
+      StreamController<CameraDiagnostics>.broadcast();
+  CameraDiagnostics _diag = const CameraDiagnostics();
+  DateTime _lastDiagEmit = DateTime.fromMillisecondsSinceEpoch(0);
 
   /// Exponential-moving-average state per landmark index, to smooth jitter.
   /// Higher [_alpha] = more responsive, less smoothing.
@@ -60,13 +71,37 @@ class MLKitCameraDataSourceImpl implements MLKitCameraDataSource {
   Stream<PoseModel> get poseStream => _poseController.stream;
 
   @override
+  Stream<CameraDiagnostics> get diagnostics => _diagController.stream;
+
+  void _emitDiag() {
+    final DateTime now = DateTime.now();
+    if (now.difference(_lastDiagEmit) < const Duration(milliseconds: 400)) {
+      return;
+    }
+    _lastDiagEmit = now;
+    if (!_diagController.isClosed) _diagController.add(_diag);
+  }
+
+  @override
   Future<void> initialize({
     CameraLensDirection direction = CameraLensDirection.back,
   }) async {
     if (_mockMode) return; // No hardware needed in mock mode.
     try {
       _lensDirection = direction;
-      _cameras = await availableCameras();
+      // Release any lingering controller first. This datasource is a singleton
+      // shared across camera screens, so returning to one can leave an old
+      // controller holding the camera — two live controllers contend and the
+      // second acquire hangs (the "stuck on loading" symptom).
+      final CameraController? existing = _controller;
+      if (existing != null) {
+        _controller = null;
+        if (existing.value.isStreamingImages) {
+          await existing.stopImageStream();
+        }
+        await existing.dispose();
+      }
+      _cameras = await availableCameras().timeout(const Duration(seconds: 8));
       if (_cameras.isEmpty) {
         throw const CameraException('No cameras available on this device.');
       }
@@ -74,6 +109,8 @@ class MLKitCameraDataSourceImpl implements MLKitCameraDataSource {
         options: PoseDetectorOptions(mode: PoseDetectionMode.stream),
       );
       await _startController(_pickCamera(direction));
+    } on TimeoutException {
+      throw const CameraException('Camera initialization timed out.');
     } on CameraException {
       rethrow;
     } catch (e) {
@@ -93,12 +130,21 @@ class MLKitCameraDataSourceImpl implements MLKitCameraDataSource {
       camera,
       ResolutionPreset.medium,
       enableAudio: false,
+      // Request YUV_420_888 on Android: CameraX delivers it reliably as 3
+      // planes that we convert to NV21 ourselves (yuv420ToNv21). CameraX's own
+      // NV21 output is inconsistent across devices and was the likely reason
+      // ML Kit saw nothing on this Redmi.
       imageFormatGroup:
           Platform.isAndroid
-              ? ImageFormatGroup.nv21
+              ? ImageFormatGroup.yuv420
               : ImageFormatGroup.bgra8888,
     );
-    await controller.initialize();
+    try {
+      await controller.initialize().timeout(const Duration(seconds: 12));
+    } catch (_) {
+      await controller.dispose(); // don't leak a half-initialized controller
+      rethrow;
+    }
     _controller = controller;
   }
 
@@ -106,6 +152,7 @@ class MLKitCameraDataSourceImpl implements MLKitCameraDataSource {
   Future<void> startDetection() async {
     if (_detecting) return;
     _detecting = true;
+    _diag = const CameraDiagnostics(); // reset counters for this run
 
     if (_mockMode) {
       _startMockStream();
@@ -190,7 +237,12 @@ class MLKitCameraDataSourceImpl implements MLKitCameraDataSource {
     _ema.clear();
     await _detector?.close();
     _detector = null;
+    // Close and replace so the next screen gets an open stream (see field note).
     await _poseController.close();
+    _poseController = StreamController<PoseModel>.broadcast();
+    await _diagController.close();
+    _diagController = StreamController<CameraDiagnostics>.broadcast();
+    _diag = const CameraDiagnostics();
   }
 
   /// Applies per-landmark EMA smoothing to reduce frame-to-frame jitter.
@@ -218,6 +270,14 @@ class MLKitCameraDataSourceImpl implements MLKitCameraDataSource {
   // --- Real detection -------------------------------------------------------
 
   Future<void> _processCameraImage(CameraImage image) async {
+    // Count every delivered frame + record its format (even when throttled).
+    _diag = _diag.copyWith(
+      framesReceived: _diag.framesReceived + 1,
+      lastFormatRaw: image.format.raw as int,
+      lastPlaneCount: image.planes.length,
+    );
+    _emitDiag();
+
     final DateTime now = DateTime.now();
     if (_isBusy || now.difference(_lastProcessed) < _kFrameInterval) {
       return; // Throttle + drop frames while the detector is still running.
@@ -228,8 +288,12 @@ class MLKitCameraDataSourceImpl implements MLKitCameraDataSource {
     try {
       final InputImage? inputImage = _toInputImage(image);
       if (inputImage == null) return;
+      _diag = _diag.copyWith(
+        framesSentToDetector: _diag.framesSentToDetector + 1,
+      );
       final List<Pose> poses = await _detector!.processImage(inputImage);
       if (poses.isEmpty) return;
+      _diag = _diag.copyWith(posesFound: _diag.posesFound + 1);
       final PoseModel model = PoseModel.fromMLKitPose(
         poses.first,
         imageSize: Size(image.width.toDouble(), image.height.toDouble()),
@@ -239,6 +303,7 @@ class MLKitCameraDataSourceImpl implements MLKitCameraDataSource {
       if (!_poseController.isClosed) _poseController.add(_smooth(model));
     } catch (e) {
       // Never crash the stream on a bad frame — log and continue (PRD §7.3).
+      _diag = _diag.copyWith(lastError: '$e');
       debugPrint('Pose frame skipped: $e');
     } finally {
       _isBusy = false;
@@ -258,9 +323,11 @@ class MLKitCameraDataSourceImpl implements MLKitCameraDataSource {
     if (Platform.isIOS) {
       rotation = InputImageRotationValue.fromRawValue(sensorOrientation);
     } else {
-      final int? compensation =
-          _orientations[controller.value.deviceOrientation];
-      if (compensation == null) return null;
+      // Default to 0 (portrait) rather than dropping the frame if the device
+      // reports an orientation we don't have mapped — dropping every frame is
+      // what makes detection silently produce nothing.
+      final int compensation =
+          _orientations[controller.value.deviceOrientation] ?? 0;
       final int rotationCompensation =
           camera.lensDirection == CameraLensDirection.front
               ? (sensorOrientation + compensation) % 360
@@ -269,26 +336,70 @@ class MLKitCameraDataSourceImpl implements MLKitCameraDataSource {
     }
     if (rotation == null) return null;
 
-    final InputImageFormat? format = InputImageFormatValue.fromRawValue(
+    final InputImageFormat? rawFormat = InputImageFormatValue.fromRawValue(
       image.format.raw as int,
     );
-    if (format == null ||
-        (Platform.isAndroid && format != InputImageFormat.nv21) ||
-        (Platform.isIOS && format != InputImageFormat.bgra8888)) {
-      return null;
-    }
-    if (image.planes.length != 1) return null;
-    final Plane plane = image.planes.first;
+    final Size size = Size(image.width.toDouble(), image.height.toDouble());
 
-    return InputImage.fromBytes(
-      bytes: plane.bytes,
-      metadata: InputImageMetadata(
-        size: Size(image.width.toDouble(), image.height.toDouble()),
-        rotation: rotation,
-        format: format,
-        bytesPerRow: plane.bytesPerRow,
-      ),
-    );
+    // iOS delivers a single BGRA plane; pass it straight through.
+    if (Platform.isIOS) {
+      if (rawFormat != InputImageFormat.bgra8888 || image.planes.length != 1) {
+        return null;
+      }
+      final Plane plane = image.planes.first;
+      return InputImage.fromBytes(
+        bytes: plane.bytes,
+        metadata: InputImageMetadata(
+          size: size,
+          rotation: rotation,
+          format: InputImageFormat.bgra8888,
+          bytesPerRow: plane.bytesPerRow,
+        ),
+      );
+    }
+
+    // Android: ML Kit wants NV21. Some devices honor the requested NV21 group
+    // (single packed plane); many — incl. this Redmi — hand back multi-plane
+    // YUV_420_888, which we must repack to NV21 or the detector sees nothing.
+    if (rawFormat == InputImageFormat.nv21 && image.planes.length == 1) {
+      final Plane plane = image.planes.first;
+      return InputImage.fromBytes(
+        bytes: plane.bytes,
+        metadata: InputImageMetadata(
+          size: size,
+          rotation: rotation,
+          format: InputImageFormat.nv21,
+          bytesPerRow: plane.bytesPerRow,
+        ),
+      );
+    }
+    if (image.planes.length == 3) {
+      final Plane y = image.planes[0];
+      final Plane u = image.planes[1];
+      final Plane v = image.planes[2];
+      final Uint8List nv21 = yuv420ToNv21(
+        width: image.width,
+        height: image.height,
+        y: y.bytes,
+        yRowStride: y.bytesPerRow,
+        u: u.bytes,
+        uRowStride: u.bytesPerRow,
+        uPixelStride: u.bytesPerPixel ?? 1,
+        v: v.bytes,
+        vRowStride: v.bytesPerRow,
+        vPixelStride: v.bytesPerPixel ?? 1,
+      );
+      return InputImage.fromBytes(
+        bytes: nv21,
+        metadata: InputImageMetadata(
+          size: size,
+          rotation: rotation,
+          format: InputImageFormat.nv21,
+          bytesPerRow: image.width, // packed NV21: one Y byte per pixel
+        ),
+      );
+    }
+    return null;
   }
 
   // --- Mock mode ------------------------------------------------------------
@@ -372,4 +483,48 @@ class _Smoothed {
   final double y;
   final double z;
   final double confidence;
+}
+
+/// Repacks an Android `YUV_420_888` camera frame into a contiguous **NV21**
+/// buffer (full Y plane, then interleaved V,U), which is what ML Kit accepts.
+///
+/// Strides matter: planes can be padded (`rowStride > width`) and chroma can be
+/// interleaved (`pixelStride == 2`), so every sample is read by its stride
+/// rather than assuming packed data. Pure and side-effect-free for testing.
+Uint8List yuv420ToNv21({
+  required int width,
+  required int height,
+  required Uint8List y,
+  required int yRowStride,
+  required Uint8List u,
+  required int uRowStride,
+  required int uPixelStride,
+  required Uint8List v,
+  required int vRowStride,
+  required int vPixelStride,
+}) {
+  final Uint8List out = Uint8List(width * height + 2 * ((width + 1) ~/ 2) * ((height + 1) ~/ 2));
+  int dst = 0;
+
+  // Y plane, row by row (drop any right-edge padding).
+  for (int row = 0; row < height; row++) {
+    final int srcStart = row * yRowStride;
+    out.setRange(dst, dst + width, y, srcStart);
+    dst += width;
+  }
+
+  // Interleaved V,U at quarter resolution.
+  final int chromaWidth = (width + 1) ~/ 2;
+  final int chromaHeight = (height + 1) ~/ 2;
+  for (int row = 0; row < chromaHeight; row++) {
+    int uIndex = row * uRowStride;
+    int vIndex = row * vRowStride;
+    for (int col = 0; col < chromaWidth; col++) {
+      out[dst++] = v[vIndex];
+      out[dst++] = u[uIndex];
+      uIndex += uPixelStride;
+      vIndex += vPixelStride;
+    }
+  }
+  return out;
 }

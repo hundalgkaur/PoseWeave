@@ -15,7 +15,7 @@ import 'package:poseweave/presentation/pages/clinical/clinical_portal_login_page
 import 'package:poseweave/presentation/pages/forgot_password_page.dart';
 import 'package:poseweave/presentation/pages/gait_analysis_page.dart';
 import 'package:poseweave/presentation/pages/gallery_pose_page.dart';
-import 'package:poseweave/presentation/pages/home_page.dart';
+import 'package:poseweave/presentation/pages/home_shell.dart';
 import 'package:poseweave/presentation/pages/image_analysis_page.dart';
 import 'package:poseweave/presentation/pages/login_page.dart';
 import 'package:poseweave/presentation/pages/onboarding_page.dart';
@@ -42,7 +42,7 @@ class PoseWeaveApp extends StatelessWidget {
         AppRoutes.onboarding: (_) => const OnboardingPage(),
         AppRoutes.login: (_) => const LoginPage(),
         AppRoutes.forgotPassword: (_) => const ForgotPasswordPage(),
-        AppRoutes.home: (_) => const HomePage(),
+        AppRoutes.home: (_) => const HomeShell(),
         AppRoutes.camera: (_) => const CameraPosePage(),
         AppRoutes.gallery: (_) => const GalleryPosePage(),
         AppRoutes.gait: (_) => const GaitAnalysisPage(),

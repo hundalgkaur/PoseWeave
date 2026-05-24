@@ -4,6 +4,9 @@
 *.pyc
 *.swp
 .DS_Store
+
+# Secrets — local API keys (Gemini, etc.). Commit .env.example, never .env.
+.env
 .atom/
 .build/
 .buildlog/

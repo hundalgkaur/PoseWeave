@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
@@ -105,17 +106,39 @@ class VideoFrameDataSourceImpl implements VideoFrameDataSource {
     final PoseDetector detector = PoseDetector(options: PoseDetectorOptions());
     Directory? tempDir;
     try {
-      final Duration duration = await _videoDuration(filePath);
       tempDir = await getTemporaryDirectory();
+      final int sampleMs = kVideoSampleInterval.inMilliseconds;
 
-      final int totalFrames = (duration.inMilliseconds ~/
-              kVideoSampleInterval.inMilliseconds)
-          .clamp(1, _kMaxFrames);
+      // Duration can hang or be unreported on some devices/codecs, so it's
+      // best-effort. If unknown (0), sweep up to the cap and stop once frames
+      // stop extracting (i.e. we've walked past the end of the clip).
+      final Duration duration = await _videoDuration(filePath);
+      final int byDuration = duration.inMilliseconds ~/ sampleMs;
+      final bool durationKnown = byDuration > 0;
+      final int totalFrames =
+          (durationKnown ? byDuration : _kMaxFrames).clamp(1, _kMaxFrames);
 
+      int consecutiveMisses = 0;
       for (int i = 0; i < totalFrames; i++) {
-        final int timeMs = i * kVideoSampleInterval.inMilliseconds;
+        final int timeMs = i * sampleMs;
         final ({PoseModel? pose, String? framePath}) frame =
             await _detectAtTime(detector, filePath, timeMs, tempDir.path, i);
+
+        // When we don't know the length, treat a run of failed extractions as
+        // end-of-video so we don't spin to the cap on a short clip.
+        if (frame.framePath == null) {
+          consecutiveMisses++;
+          if (!durationKnown && i > 0 && consecutiveMisses >= 3) {
+            yield VideoProcessingProgress(
+              currentFrame: totalFrames,
+              totalFrames: totalFrames,
+            );
+            break;
+          }
+        } else {
+          consecutiveMisses = 0;
+        }
+
         yield VideoProcessingProgress(
           currentFrame: i + 1,
           totalFrames: totalFrames,
@@ -130,13 +153,18 @@ class VideoFrameDataSourceImpl implements VideoFrameDataSource {
     }
   }
 
+  /// Best-effort clip duration. Returns [Duration.zero] if the player can't open
+  /// the file in time (the caller then falls back to a bounded sweep) rather
+  /// than blocking the whole pipeline on a stuck `initialize()`.
   Future<Duration> _videoDuration(String filePath) async {
     final VideoPlayerController controller = VideoPlayerController.file(
       File(filePath),
     );
     try {
-      await controller.initialize();
+      await controller.initialize().timeout(const Duration(seconds: 12));
       return controller.value.duration;
+    } catch (_) {
+      return Duration.zero;
     } finally {
       await controller.dispose();
     }
@@ -152,31 +180,43 @@ class VideoFrameDataSourceImpl implements VideoFrameDataSource {
     String tempPath,
     int index,
   ) async {
-    final String? framePath = await VideoThumbnail.thumbnailFile(
-      video: videoPath,
-      thumbnailPath: '$tempPath/frame_$index.jpg',
-      imageFormat: ImageFormat.JPEG,
-      maxHeight: 480,
-      timeMs: timeMs,
-      quality: 75,
-    );
+    // Frame extraction is per-frame fail-soft: a stuck or failed extraction
+    // returns null for this frame instead of hanging or aborting the clip.
+    String? framePath;
+    try {
+      framePath = await VideoThumbnail.thumbnailFile(
+        video: videoPath,
+        thumbnailPath: '$tempPath/frame_$index.jpg',
+        imageFormat: ImageFormat.JPEG,
+        maxHeight: 480,
+        timeMs: timeMs,
+        quality: 75,
+      ).timeout(const Duration(seconds: 10));
+    } catch (_) {
+      return (pose: null, framePath: null);
+    }
     if (framePath == null) return (pose: null, framePath: null);
 
-    final File frameFile = File(framePath);
-    final ui.Size size = await _decodeSize(await frameFile.readAsBytes());
-    final List<Pose> poses = await detector.processImage(
-      InputImage.fromFilePath(framePath),
-    );
-    if (poses.isEmpty) return (pose: null, framePath: framePath);
+    try {
+      final File frameFile = File(framePath);
+      final ui.Size size = await _decodeSize(await frameFile.readAsBytes());
+      final List<Pose> poses = await detector.processImage(
+        InputImage.fromFilePath(framePath),
+      );
+      if (poses.isEmpty) return (pose: null, framePath: framePath);
 
-    return (
-      pose: PoseModel.fromMLKitPose(
-        poses.first,
-        imageSize: size,
-        source: PoseSource.videoFile,
-      ),
-      framePath: framePath,
-    );
+      return (
+        pose: PoseModel.fromMLKitPose(
+          poses.first,
+          imageSize: size,
+          source: PoseSource.videoFile,
+        ),
+        framePath: framePath,
+      );
+    } catch (_) {
+      // Frame extracted but decode/detection failed — keep the image, no pose.
+      return (pose: null, framePath: framePath);
+    }
   }
 
   Future<ui.Size> _decodeSize(Uint8List bytes) async {

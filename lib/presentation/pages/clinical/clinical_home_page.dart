@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:poseweave/core/constants/app_routes.dart';
 import 'package:poseweave/core/constants/app_theme.dart';
 import 'package:poseweave/domain/entities/clinical_patient.dart';
+import 'package:poseweave/presentation/widgets/app_top_bar.dart';
 import 'package:poseweave/presentation/widgets/clinical/patient_header.dart';
 import 'package:poseweave/presentation/widgets/mode_selector_card.dart';
 
@@ -14,21 +15,8 @@ class ClinicalHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     const ClinicalPatient patient = ClinicalPatient.demo;
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Diagnostic Suite'),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.of(context).maybePop(),
-        ),
-        actions: <Widget>[
-          IconButton(
-            tooltip: 'End session',
-            icon: const Icon(Icons.logout),
-            onPressed: () => Navigator.of(context)
-                .popUntil((Route<dynamic> r) => r.settings.name == AppRoutes.home),
-          ),
-        ],
-      ),
+      // Home (in AppTopBar) returns to the main shell; Log out lives in its menu.
+      appBar: const AppTopBar(title: 'Diagnostic Suite'),
       body: SafeArea(
         child: ListView(
           padding: const EdgeInsets.all(16),

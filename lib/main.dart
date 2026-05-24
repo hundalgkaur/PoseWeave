@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:poseweave/app.dart';
 import 'package:poseweave/injection.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // Load the optional .env (Gemini key). Missing/empty is fine — recommendations
+  // then fall back to the Settings (Claude BYOK) key.
+  try {
+    await dotenv.load(fileName: '.env');
+  } catch (_) {
+    // No .env bundled; continue without it.
+  }
   Bloc.observer = const _AppBlocObserver();
   configureDependencies();
   // Phase 1 is portrait-only.

@@ -64,6 +64,9 @@ dependencies:
   # Fonts: Inter (UI) + JetBrains Mono (data), per the Cyber-Kinetic design
   google_fonts: ^6.2.1
 
+  # AI recommendations: Gemini API key supplied via a git-ignored .env file
+  flutter_dotenv: ^5.1.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -83,3 +86,4 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/
+    - .env

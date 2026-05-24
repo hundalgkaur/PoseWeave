@@ -1,5 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:dartz/dartz.dart';
+import 'package:poseweave/core/camera_diagnostics.dart';
 import 'package:poseweave/core/errors/failures.dart';
 import 'package:poseweave/domain/entities/pose_entity.dart';
 import 'package:poseweave/domain/entities/video_analysis_progress.dart';
@@ -25,6 +26,9 @@ abstract class PoseRepository {
 
   /// Stream of detected poses while detection is running.
   Either<Failure, Stream<PoseEntity>> getPoseStream();
+
+  /// Live pipeline diagnostics (frames/poses/format) for the on-device debug HUD.
+  Stream<CameraDiagnostics> get detectionDiagnostics;
 
   /// Start / stop live detection (preview stays alive when stopped).
   Future<Either<Failure, Unit>> startDetection();

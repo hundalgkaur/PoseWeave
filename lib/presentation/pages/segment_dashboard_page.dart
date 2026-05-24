@@ -9,7 +9,9 @@ import 'package:poseweave/injection.dart';
 import 'package:poseweave/presentation/bloc/pose_bloc.dart';
 import 'package:poseweave/presentation/bloc/pose_event.dart';
 import 'package:poseweave/presentation/bloc/pose_state.dart';
+import 'package:poseweave/presentation/widgets/app_top_bar.dart';
 import 'package:poseweave/presentation/widgets/loading_overlay.dart';
+import 'package:poseweave/presentation/widgets/no_person_banner.dart';
 import 'package:poseweave/presentation/widgets/permission_rationale_dialog.dart';
 import 'package:poseweave/presentation/widgets/segment_detail_card.dart';
 
@@ -40,13 +42,7 @@ class _SegmentViewState extends State<_SegmentView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Segment Analysis'),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.of(context).maybePop(),
-        ),
-      ),
+      appBar: const AppTopBar(title: 'Segment Analysis'),
       body: SafeArea(
         child: BlocConsumer<PoseBloc, PoseState>(
           listener: (BuildContext context, PoseState state) async {
@@ -74,11 +70,48 @@ class _SegmentViewState extends State<_SegmentView> {
             if (state is PoseActive) {
               return _Grid(pose: state.pose);
             }
+            if (state is PoseSearching) {
+              return const NoPersonBanner(
+                message: 'Step into frame to read joint angles',
+              );
+            }
             if (state is PoseNoPermission) {
               return Center(
                 child: Text(
                   'Camera permission needed',
                   style: AppTheme.mono(color: AppColors.onSurfaceVariant),
+                ),
+              );
+            }
+            if (state is PoseError) {
+              return Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(24),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      const Icon(Icons.error_outline,
+                          color: AppColors.error, size: 40),
+                      const SizedBox(height: 12),
+                      Text(
+                        state.message,
+                        textAlign: TextAlign.center,
+                        style: AppTheme.mono(
+                            color: AppColors.onSurfaceVariant, fontSize: 12),
+                      ),
+                      const SizedBox(height: 16),
+                      OutlinedButton.icon(
+                        onPressed: () {
+                          _started = false;
+                          context
+                              .read<PoseBloc>()
+                              .add(const PoseEvent.initializeCamera());
+                        },
+                        icon: const Icon(Icons.refresh),
+                        label: const Text('Retry'),
+                      ),
+                    ],
+                  ),
                 ),
               );
             }

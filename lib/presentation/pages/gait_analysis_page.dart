@@ -8,6 +8,7 @@ import 'package:poseweave/presentation/bloc/pose_bloc.dart';
 import 'package:poseweave/presentation/bloc/pose_event.dart';
 import 'package:poseweave/presentation/bloc/pose_state.dart';
 import 'package:poseweave/presentation/pages/gait_report_page.dart';
+import 'package:poseweave/presentation/widgets/app_top_bar.dart';
 import 'package:poseweave/presentation/widgets/glass_panel.dart';
 
 /// Home entry for gait analysis: pick a walking clip, analyze it frame-by-frame
@@ -31,19 +32,24 @@ class _GaitAnalysisView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Gait Analysis'),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.of(context).maybePop(),
-        ),
-      ),
+      appBar: const AppTopBar(title: 'Gait Analysis'),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(20),
           child: BlocConsumer<PoseBloc, PoseState>(
             listener: (BuildContext context, PoseState state) {
               if (state is PoseVideoComplete) {
+                if (state.poses.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text(
+                        'No human detected in that clip. Try a clearer, '
+                        'side-on walking video.',
+                      ),
+                    ),
+                  );
+                  return;
+                }
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute<void>(
                     builder:

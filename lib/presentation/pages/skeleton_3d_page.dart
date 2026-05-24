@@ -10,6 +10,7 @@ import 'package:poseweave/core/sample_pose.dart';
 import 'package:poseweave/domain/entities/pose_entity.dart';
 import 'package:poseweave/domain/repositories/pose_repository.dart';
 import 'package:poseweave/injection.dart';
+import 'package:poseweave/presentation/widgets/app_top_bar.dart';
 import 'package:poseweave/presentation/widgets/glass_panel.dart';
 import 'package:poseweave/presentation/widgets/joint_angles_panel.dart';
 import 'package:poseweave/presentation/widgets/skeleton_3d_painter.dart';
@@ -109,13 +110,7 @@ class _Skeleton3DPageState extends State<Skeleton3DPage>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.surfaceContainerLowest,
-      appBar: AppBar(
-        title: const Text('3D Skeleton'),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.of(context).maybePop(),
-        ),
-      ),
+      appBar: const AppTopBar(title: '3D Skeleton'),
       body: GestureDetector(
         onScaleStart: _onScaleStart,
         onScaleUpdate: _onScaleUpdate,
@@ -131,11 +126,15 @@ class _Skeleton3DPageState extends State<Skeleton3DPage>
                 zoom: _zoom,
               ),
             ),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 16),
-                child: JointAnglesPanel(pose: _pose),
+            // IgnorePointer so a drag starting over the panel still rotates the
+            // model rather than being swallowed.
+            IgnorePointer(
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 16),
+                  child: JointAnglesPanel(pose: _pose),
+                ),
               ),
             ),
             const Align(

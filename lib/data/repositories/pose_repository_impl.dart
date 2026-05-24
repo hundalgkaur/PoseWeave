@@ -7,6 +7,7 @@ import 'package:camera/camera.dart' hide CameraException;
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:poseweave/core/camera_diagnostics.dart';
 import 'package:poseweave/core/errors/exceptions.dart';
 import 'package:poseweave/core/errors/failures.dart';
 import 'package:poseweave/data/datasources/mlkit_camera_datasource.dart';
@@ -53,6 +54,10 @@ class PoseRepositoryImpl implements PoseRepository {
       return Left<Failure, Unit>(CameraFailure('$e'));
     }
   }
+
+  @override
+  Stream<CameraDiagnostics> get detectionDiagnostics =>
+      _cameraDataSource.diagnostics;
 
   @override
   Either<Failure, Stream<PoseEntity>> getPoseStream() {

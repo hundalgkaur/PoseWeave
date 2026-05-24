@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:poseweave/core/constants/app_colors.dart';
@@ -8,10 +10,11 @@ import 'package:poseweave/injection.dart';
 import 'package:poseweave/presentation/bloc/pose_bloc.dart';
 import 'package:poseweave/presentation/bloc/pose_event.dart';
 import 'package:poseweave/presentation/bloc/pose_state.dart';
+import 'package:poseweave/presentation/widgets/app_top_bar.dart';
 import 'package:poseweave/presentation/widgets/clinical/landmark_metrics_table.dart';
 import 'package:poseweave/presentation/widgets/clinical/patient_header.dart';
 import 'package:poseweave/presentation/widgets/glass_panel.dart';
-import 'package:poseweave/presentation/widgets/pose_results_view.dart';
+import 'package:poseweave/presentation/widgets/pose_overlay_painter.dart';
 
 /// Biomechanical analysis: reuses the video analyze pipeline (`PoseBloc`
 /// pickAndAnalyzeVideo → `PoseVideoComplete`), then shows the frame + skeleton
@@ -35,13 +38,7 @@ class _BiomechView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Biomechanical Analysis'),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.of(context).maybePop(),
-        ),
-      ),
+      appBar: const AppTopBar(title: 'Biomechanical Analysis'),
       body: SafeArea(
         child: BlocConsumer<PoseBloc, PoseState>(
           listener: (BuildContext context, PoseState state) {
@@ -62,6 +59,15 @@ class _BiomechView extends StatelessWidget {
               );
             }
             if (state is PoseVideoComplete) {
+              if (state.poses.isEmpty) {
+                return _Prompt(
+                  note: 'No human detected in that clip. Try a clearer, '
+                      'side-on video with the full body in frame.',
+                  onPick: () => context
+                      .read<PoseBloc>()
+                      .add(const PoseEvent.pickAndAnalyzeVideo()),
+                );
+              }
               return _Results(state: state);
             }
             return _Prompt(
@@ -82,61 +88,68 @@ class _Results extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Representative frame for the landmark metrics table: the middle pose.
+    // Representative (mid) frame + its index-aligned image, if available.
     final List<PoseEntity> poses = state.poses;
-    final PoseEntity? rep =
-        poses.isEmpty ? null : poses[poses.length ~/ 2];
-    return Padding(
+    final int mid = poses.length ~/ 2;
+    final PoseEntity rep = poses[mid];
+    final String? repFrame =
+        mid < state.framePaths.length ? state.framePaths[mid] : null;
+
+    // A scrollable list avoids the fixed-height overflow PoseResultsView caused
+    // here; the frame keeps its 3:4 aspect and the metrics table scrolls below.
+    return ListView(
       padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          const PatientHeader(patient: ClinicalPatient.demo, detailed: true),
-          const SizedBox(height: 12),
-          Expanded(
-            child: ListView(
+      children: <Widget>[
+        const PatientHeader(patient: ClinicalPatient.demo, detailed: true),
+        const SizedBox(height: 16),
+        GlassPanel(
+          padding: EdgeInsets.zero,
+          child: AspectRatio(
+            aspectRatio: 3 / 4,
+            child: Stack(
+              fit: StackFit.expand,
               children: <Widget>[
-                SizedBox(
-                  height: 360,
-                  child: PoseResultsView(
-                    poses: poses,
-                    frameCount: state.frameCount,
-                    videoPath: state.videoPath,
-                    framePaths: state.framePaths,
-                  ),
-                ),
-                const SizedBox(height: 16),
-                GlassPanel(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text('LANDMARK METRICS (mid-frame)',
-                          style: AppTheme.labelCaps()),
-                      const SizedBox(height: 8),
-                      if (rep != null)
-                        LandmarkMetricsTable(landmarks: rep.landmarks)
-                      else
-                        Text('No poses detected.',
-                            style: AppTheme.mono(
-                                color: AppColors.onSurfaceVariant)),
-                    ],
+                if (repFrame != null && File(repFrame).existsSync())
+                  Image.file(File(repFrame), fit: BoxFit.contain),
+                CustomPaint(
+                  painter: PoseOverlayPainter(
+                    landmarks: rep.landmarks,
+                    imageSize: rep.imageSize ?? const Size(1, 1),
                   ),
                 ),
               ],
             ),
           ),
-        ],
-      ),
+        ),
+        const SizedBox(height: 8),
+        Text('${poses.length} frames analyzed · showing mid-frame',
+            style: AppTheme.labelCaps(fontSize: 9)),
+        const SizedBox(height: 16),
+        GlassPanel(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text('LANDMARK METRICS (mid-frame)', style: AppTheme.labelCaps()),
+              const SizedBox(height: 8),
+              LandmarkMetricsTable(landmarks: rep.landmarks),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
 
 class _Prompt extends StatelessWidget {
-  const _Prompt({required this.onPick});
+  const _Prompt({required this.onPick, this.note});
   final VoidCallback onPick;
+
+  /// Optional context line (e.g. shown after a clip yielded no detections).
+  final String? note;
 
   @override
   Widget build(BuildContext context) {
+    final bool isEmptyResult = note != null;
     return Center(
       child: GestureDetector(
         onTap: onPick,
@@ -145,18 +158,22 @@ class _Prompt extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              const Icon(Icons.biotech_outlined,
-                  color: AppColors.primary, size: 48),
+              Icon(isEmptyResult ? Icons.person_off_outlined : Icons.biotech_outlined,
+                  color: isEmptyResult ? AppColors.warning : AppColors.primary,
+                  size: 48),
               const SizedBox(height: 16),
-              Text('Select a clip to analyze',
+              Text(isEmptyResult ? 'No human detected' : 'Select a clip to analyze',
                   style: Theme.of(context).textTheme.titleMedium),
               const SizedBox(height: 8),
               Text(
-                'Side-on, full body. Landmark depth (mm) is uncalibrated.',
+                note ??
+                    'Side-on, full body. Landmark depth (mm) is uncalibrated.',
                 textAlign: TextAlign.center,
                 style: AppTheme.mono(
                     color: AppColors.onSurfaceVariant, fontSize: 12),
               ),
+              const SizedBox(height: 12),
+              Text('TAP TO PICK A VIDEO', style: AppTheme.labelCaps(fontSize: 9)),
             ],
           ),
         ),

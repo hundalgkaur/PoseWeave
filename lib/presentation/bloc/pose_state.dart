@@ -17,6 +17,10 @@ class PoseState with _$PoseState {
   /// Camera is live but no pose has been detected yet.
   const factory PoseState.streaming() = PoseStreaming;
 
+  /// Detection is running but no person is currently in frame (ML Kit returned
+  /// no pose for a short window). The UI shows a "no person detected" hint.
+  const factory PoseState.searching() = PoseSearching;
+
   /// A pose is being tracked. Carries the full pose (landmarks + image size for
   /// the painter), the mean confidence for the badge, and a live FPS estimate.
   const factory PoseState.active({

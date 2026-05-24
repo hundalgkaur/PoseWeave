@@ -30,6 +30,10 @@ class PoseEvent with _$PoseEvent {
   /// Internal: a pose arrived on the stream. Not dispatched by the UI.
   const factory PoseEvent.poseReceived(PoseEntity pose) = PoseReceived;
 
+  /// Internal: detection is running but no pose has arrived for a short window
+  /// (no person in frame). Not dispatched by the UI.
+  const factory PoseEvent.poseLost() = PoseLost;
+
   /// Open the gallery picker, then analyze the chosen video.
   const factory PoseEvent.pickAndAnalyzeVideo() = PickAndAnalyzeVideo;
 

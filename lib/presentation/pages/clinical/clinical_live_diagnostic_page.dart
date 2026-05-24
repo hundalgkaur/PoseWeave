@@ -14,7 +14,9 @@ import 'package:poseweave/presentation/widgets/clinical/kinematics_panel.dart';
 import 'package:poseweave/presentation/widgets/clinical/patient_header.dart';
 import 'package:poseweave/presentation/widgets/clinical/sensor_status_panel.dart';
 import 'package:poseweave/presentation/widgets/confidence_indicator.dart';
+import 'package:poseweave/presentation/widgets/detection_debug_hud.dart';
 import 'package:poseweave/presentation/widgets/loading_overlay.dart';
+import 'package:poseweave/presentation/widgets/no_person_banner.dart';
 import 'package:poseweave/presentation/widgets/permission_rationale_dialog.dart';
 import 'package:poseweave/presentation/widgets/pose_overlay_painter.dart';
 
@@ -59,7 +61,14 @@ class _LiveView extends StatelessWidget {
         },
         builder: (BuildContext context, PoseState state) {
           final PoseBloc bloc = context.read<PoseBloc>();
-          final bool detecting = state is PoseActive;
+          final bool detecting =
+              state is PoseActive || state is PoseSearching;
+          // The camera is ready to start only once it's streaming (or already
+          // detecting). Gating the button on this avoids a no-op tap during
+          // initialization or while permission is still pending.
+          final bool ready = state is PoseStreaming ||
+              state is PoseActive ||
+              state is PoseSearching;
           return Stack(
             fit: StackFit.expand,
             children: <Widget>[
@@ -71,6 +80,10 @@ class _LiveView extends StatelessWidget {
                     imageSize: state.pose.imageSize ?? const Size(1, 1),
                     mirror: bloc.lensDirection == CameraLensDirection.front,
                   ),
+                ),
+              if (state is PoseSearching)
+                const NoPersonBanner(
+                  message: 'Position the patient in frame, full body visible',
                 ),
               const HudFrame(),
               SafeArea(
@@ -86,7 +99,7 @@ class _LiveView extends StatelessWidget {
                           PatientHeader(patient: ClinicalPatient.demo),
                     ),
                     const Spacer(),
-                    if (detecting)
+                    if (state is PoseActive)
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 12),
                         child: Row(
@@ -101,11 +114,12 @@ class _LiveView extends StatelessWidget {
                         ),
                       ),
                     const SizedBox(height: 12),
-                    _Controls(detecting: detecting, bloc: bloc),
+                    _Controls(detecting: detecting, ready: ready, bloc: bloc),
                     const SizedBox(height: 20),
                   ],
                 ),
               ),
+              DetectionDebugHud(diagnostics: bloc.detectionDiagnostics),
               if (state is PoseLoading)
                 const LoadingOverlay(message: 'Initializing sensors…'),
             ],
@@ -152,6 +166,12 @@ class _TopBar extends StatelessWidget {
             onPressed: () => Navigator.of(context).maybePop(),
             icon: const Icon(Icons.arrow_back, color: AppColors.onSurface),
           ),
+          IconButton(
+            tooltip: 'Home',
+            onPressed: () => Navigator.of(context)
+                .popUntil((Route<dynamic> r) => r.isFirst),
+            icon: const Icon(Icons.home_outlined, color: AppColors.onSurface),
+          ),
           const Spacer(),
           const _CalibrationBadge(),
           const SizedBox(width: 8),
@@ -189,12 +209,24 @@ class _CalibrationBadge extends StatelessWidget {
 }
 
 class _Controls extends StatelessWidget {
-  const _Controls({required this.detecting, required this.bloc});
+  const _Controls({
+    required this.detecting,
+    required this.ready,
+    required this.bloc,
+  });
   final bool detecting;
+
+  /// Camera is streaming (or already detecting) — the start button is a no-op
+  /// before this, so it stays disabled and labelled "INITIALIZING…".
+  final bool ready;
   final PoseBloc bloc;
 
   @override
   Widget build(BuildContext context) {
+    final bool enabled = detecting || ready;
+    final String label = detecting
+        ? 'END SESSION'
+        : (ready ? 'BEGIN DIAGNOSTIC SESSION' : 'INITIALIZING…');
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Row(
@@ -206,22 +238,25 @@ class _Controls extends StatelessWidget {
                     detecting ? AppColors.error : AppColors.primary,
                 foregroundColor:
                     detecting ? AppColors.onError : AppColors.onPrimary,
+                disabledBackgroundColor: AppColors.surfaceContainerHighest,
                 padding: const EdgeInsets.symmetric(vertical: 14),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(999),
                 ),
               ),
-              onPressed: () {
-                HapticFeedback.mediumImpact();
-                bloc.add(
-                  detecting
-                      ? const PoseEvent.stopDetection()
-                      : const PoseEvent.startDetection(),
-                );
-              },
+              onPressed: enabled
+                  ? () {
+                      HapticFeedback.mediumImpact();
+                      bloc.add(
+                        detecting
+                            ? const PoseEvent.stopDetection()
+                            : const PoseEvent.startDetection(),
+                      );
+                    }
+                  : null,
               icon: Icon(detecting ? Icons.stop : Icons.play_arrow),
               label: Text(
-                detecting ? 'END SESSION' : 'BEGIN DIAGNOSTIC SESSION',
+                label,
                 style: AppTheme.labelCaps(
                   color: detecting ? AppColors.onError : AppColors.onPrimary,
                 ),
@@ -230,7 +265,8 @@ class _Controls extends StatelessWidget {
           ),
           const SizedBox(width: 12),
           IconButton.outlined(
-            onPressed: () => bloc.add(const PoseEvent.switchCamera()),
+            onPressed:
+                ready ? () => bloc.add(const PoseEvent.switchCamera()) : null,
             icon: const Icon(Icons.cameraswitch, color: AppColors.onSurface),
           ),
         ],

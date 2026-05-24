@@ -118,13 +118,22 @@ class _PoseResultsViewState extends State<PoseResultsView> {
           children: <Widget>[
             const Icon(
               Icons.person_off,
-              color: AppColors.onSurfaceVariant,
+              color: AppColors.warning,
               size: 40,
             ),
             const SizedBox(height: 12),
             Text(
-              'No poses detected in ${widget.frameCount} frames',
-              style: AppTheme.mono(color: AppColors.onSurfaceVariant),
+              'No human detected',
+              style: AppTheme.labelCaps(color: AppColors.warning),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              'None of the ${widget.frameCount} frames contained a person',
+              textAlign: TextAlign.center,
+              style: AppTheme.mono(
+                color: AppColors.onSurfaceVariant,
+                fontSize: 11,
+              ),
             ),
             if (widget.onRestart != null) ...<Widget>[
               const SizedBox(height: 16),

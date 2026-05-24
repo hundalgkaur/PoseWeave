@@ -9,6 +9,7 @@ import 'package:poseweave/injection.dart';
 import 'package:poseweave/presentation/bloc/pose_bloc.dart';
 import 'package:poseweave/presentation/bloc/pose_event.dart';
 import 'package:poseweave/presentation/bloc/pose_state.dart';
+import 'package:poseweave/presentation/widgets/app_top_bar.dart';
 import 'package:poseweave/presentation/widgets/glass_panel.dart';
 import 'package:poseweave/presentation/widgets/joint_angles_panel.dart';
 import 'package:poseweave/presentation/widgets/landmark_table.dart';
@@ -35,13 +36,7 @@ class _ImageAnalysisView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Image Analysis'),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.of(context).maybePop(),
-        ),
-      ),
+      appBar: const AppTopBar(title: 'Image Analysis'),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(20),
@@ -173,11 +168,19 @@ class _ImageResultState extends State<_ImageResult> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  Text(
-                    'No pose detected',
-                    style: AppTheme.mono(color: AppColors.onSurfaceVariant),
-                  ),
+                  const Icon(Icons.person_off,
+                      color: AppColors.warning, size: 40),
                   const SizedBox(height: 12),
+                  Text('No human detected',
+                      style: AppTheme.labelCaps(color: AppColors.warning)),
+                  const SizedBox(height: 4),
+                  Text(
+                    'Pick an image with a person, full body visible',
+                    textAlign: TextAlign.center,
+                    style: AppTheme.mono(
+                        color: AppColors.onSurfaceVariant, fontSize: 11),
+                  ),
+                  const SizedBox(height: 16),
                   _pickButton(),
                 ],
               ),

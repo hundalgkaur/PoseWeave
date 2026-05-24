@@ -8,4 +8,8 @@ class AppSettings {
   const AppSettings._();
 
   static bool mockMode = false;
+
+  /// Shows the on-device camera→ML Kit diagnostics HUD on the live screens.
+  /// On while we debug detection; flip off before shipping to normal users.
+  static bool debugHud = true;
 }

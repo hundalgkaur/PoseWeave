@@ -1,4 +1,5 @@
 import 'package:camera/camera.dart';
+import 'package:poseweave/core/camera_diagnostics.dart';
 import 'package:poseweave/data/models/pose_model.dart';
 
 /// Owns the live camera + on-device ML Kit pose detection pipeline.
@@ -20,6 +21,10 @@ abstract class MLKitCameraDataSource {
 
   /// Broadcast stream of detected poses, throttled to ~15 FPS internally.
   Stream<PoseModel> get poseStream;
+
+  /// Broadcast stream of pipeline diagnostics (frames/poses/format) for the
+  /// on-device debug HUD.
+  Stream<CameraDiagnostics> get diagnostics;
 
   /// Begin feeding frames to the detector (or synthetic frames in mock mode).
   Future<void> startDetection();

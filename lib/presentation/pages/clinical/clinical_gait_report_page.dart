@@ -18,6 +18,7 @@ import 'package:poseweave/presentation/bloc/pose_bloc.dart';
 import 'package:poseweave/presentation/bloc/pose_event.dart';
 import 'package:poseweave/presentation/bloc/pose_state.dart';
 import 'package:poseweave/presentation/bloc/recommendations_bloc.dart';
+import 'package:poseweave/presentation/widgets/app_top_bar.dart';
 import 'package:poseweave/presentation/widgets/clinical/patient_header.dart';
 import 'package:poseweave/presentation/widgets/clinical/rom_table.dart';
 import 'package:poseweave/presentation/widgets/clinical/status_metric_pod.dart';
@@ -55,13 +56,7 @@ class _GaitView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Clinical Gait Report'),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.of(context).maybePop(),
-        ),
-      ),
+      appBar: const AppTopBar(title: 'Clinical Gait Report'),
       body: SafeArea(
         child: BlocConsumer<PoseBloc, PoseState>(
           listener: (BuildContext context, PoseState state) {
@@ -82,6 +77,15 @@ class _GaitView extends StatelessWidget {
               );
             }
             if (state is PoseVideoComplete) {
+              if (state.poses.isEmpty) {
+                return _Prompt(
+                  note: 'No human detected in that clip. Try a clearer, '
+                      'side-on walking video with the full body in frame.',
+                  onPick: () => context
+                      .read<PoseBloc>()
+                      .add(const PoseEvent.pickAndAnalyzeVideo()),
+                );
+              }
               return _Report(
                 params: GaitAnalyzer.analyze(state.poses),
                 poses: state.poses,
@@ -127,14 +131,18 @@ class _Report extends StatelessWidget {
         const SizedBox(height: 16),
         Text('CLINICAL METRICS', style: AppTheme.labelCaps()),
         const SizedBox(height: 8),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            for (int i = 0; i < metrics.length; i++) ...<Widget>[
-              if (i > 0) const SizedBox(width: 8),
-              Expanded(child: StatusMetricPod(metric: metrics[i])),
+        // IntrinsicHeight gives the Row a bounded height so the pods can stretch
+        // to equal height; a stretching Row directly in a ListView would throw.
+        IntrinsicHeight(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              for (int i = 0; i < metrics.length; i++) ...<Widget>[
+                if (i > 0) const SizedBox(width: 8),
+                Expanded(child: StatusMetricPod(metric: metrics[i])),
+              ],
             ],
-          ],
+          ),
         ),
         const SizedBox(height: 16),
         RomTable(segments: segments),
@@ -421,11 +429,15 @@ class _ExportPdfButton extends StatelessWidget {
 }
 
 class _Prompt extends StatelessWidget {
-  const _Prompt({required this.onPick});
+  const _Prompt({required this.onPick, this.note});
   final VoidCallback onPick;
+
+  /// Optional context line (e.g. shown after a clip yielded no detections).
+  final String? note;
 
   @override
   Widget build(BuildContext context) {
+    final bool isEmptyResult = note != null;
     return Center(
       child: GestureDetector(
         onTap: onPick,
@@ -434,18 +446,21 @@ class _Prompt extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              const Icon(Icons.directions_walk,
-                  color: AppColors.primary, size: 48),
+              Icon(isEmptyResult ? Icons.person_off_outlined : Icons.directions_walk,
+                  color: isEmptyResult ? AppColors.warning : AppColors.primary,
+                  size: 48),
               const SizedBox(height: 16),
-              Text('Select a walking video',
+              Text(isEmptyResult ? 'No human detected' : 'Select a walking video',
                   style: Theme.of(context).textTheme.titleMedium),
               const SizedBox(height: 8),
               Text(
-                'Side-on, full body, a few steps.',
+                note ?? 'Side-on, full body, a few steps.',
                 textAlign: TextAlign.center,
                 style: AppTheme.mono(
                     color: AppColors.onSurfaceVariant, fontSize: 12),
               ),
+              const SizedBox(height: 12),
+              Text('TAP TO PICK A VIDEO', style: AppTheme.labelCaps(fontSize: 9)),
             ],
           ),
         ),

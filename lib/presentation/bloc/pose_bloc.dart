@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:poseweave/core/app_settings.dart';
+import 'package:poseweave/core/camera_diagnostics.dart';
 import 'package:poseweave/core/errors/failures.dart';
 import 'package:poseweave/data/services/pdf_report_service.dart';
 import 'package:poseweave/domain/entities/pose_entity.dart';
@@ -33,6 +34,7 @@ class PoseBloc extends Bloc<PoseEvent, PoseState> {
     on<StartVideoRecording>(_onStartVideoRecording);
     on<StopVideoRecording>(_onStopVideoRecording);
     on<PoseReceived>(_onPoseReceived);
+    on<PoseLost>(_onPoseLost);
     on<PickAndAnalyzeVideo>(_onPickAndAnalyzeVideo);
     on<AnalyzeVideoFile>(_onAnalyzeVideoFile);
     on<PickAndAnalyzeImage>(_onPickAndAnalyzeImage);
@@ -42,10 +44,19 @@ class PoseBloc extends Bloc<PoseEvent, PoseState> {
   final PoseRepository _repository;
   final PdfReportService _pdfReportService;
 
-  StreamSubscription<PoseEntity>? _poseSubscription;
+  StreamSubscription<PoseEntity?>? _poseSubscription;
   bool _mockMode = false;
+  bool _detecting = false;
   DateTime? _lastPoseTime;
   double _fps = 0;
+
+  /// How long without a pose before we treat the frame as "no person".
+  static const Duration _noPoseTimeout = Duration(milliseconds: 1500);
+
+  /// Live pipeline diagnostics for the debug HUD (read directly by the HUD —
+  /// a debug-only carve-out of the "state via bloc" rule).
+  Stream<CameraDiagnostics> get detectionDiagnostics =>
+      _repository.detectionDiagnostics;
 
   /// Exposed for the preview widget only (display). Null in mock mode.
   CameraController? get cameraController => _repository.cameraController;
@@ -89,14 +100,27 @@ class PoseBloc extends Bloc<PoseEvent, PoseState> {
     if (stream == null) return;
 
     await _poseSubscription?.cancel();
-    _poseSubscription = stream.listen(
-      (PoseEntity pose) => add(PoseEvent.poseReceived(pose)),
-      onError:
-          (Object e) => add(
-            const PoseEvent.stopDetection(),
-          ), // bad stream -> stop cleanly
-    );
+    // A timeout injects a null when no pose arrives for [_noPoseTimeout] — that
+    // is how we tell "no person in frame" apart from "detector idle".
+    _poseSubscription = stream
+        .map<PoseEntity?>((PoseEntity p) => p)
+        .timeout(
+          _noPoseTimeout,
+          onTimeout: (EventSink<PoseEntity?> sink) => sink.add(null),
+        )
+        .listen(
+          (PoseEntity? pose) => add(
+            pose == null
+                ? const PoseEvent.poseLost()
+                : PoseEvent.poseReceived(pose),
+          ),
+          onError:
+              (Object e) => add(
+                const PoseEvent.stopDetection(),
+              ), // bad stream -> stop cleanly
+        );
 
+    _detecting = true;
     final Either<Failure, Unit> started = await _repository.startDetection();
     started.fold(
       (Failure f) => emit(
@@ -106,10 +130,17 @@ class PoseBloc extends Bloc<PoseEvent, PoseState> {
     );
   }
 
+  void _onPoseLost(PoseLost event, Emitter<PoseState> emit) {
+    // Only surface "no person" while we're actually detecting (a late timeout
+    // after stop/record should be ignored).
+    if (_detecting) emit(const PoseState.searching());
+  }
+
   Future<void> _onStopDetection(
     StopDetection event,
     Emitter<PoseState> emit,
   ) async {
+    _detecting = false;
     await _poseSubscription?.cancel();
     _poseSubscription = null;
     _lastPoseTime = null;
@@ -144,6 +175,7 @@ class PoseBloc extends Bloc<PoseEvent, PoseState> {
   ) async {
     // Recording uses the camera plugin's video path, which can't coexist with
     // the ML Kit image stream — cancel detection first.
+    _detecting = false;
     await _poseSubscription?.cancel();
     _poseSubscription = null;
     final Either<Failure, Unit> result =
@@ -292,6 +324,7 @@ class PoseBloc extends Bloc<PoseEvent, PoseState> {
 
   @override
   Future<void> close() async {
+    _detecting = false;
     await _poseSubscription?.cancel();
     await _repository.disposeCamera();
     return super.close();
