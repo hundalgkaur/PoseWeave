@@ -7,6 +7,7 @@ import 'package:poseweave/core/sample_pose.dart';
 import 'package:poseweave/domain/entities/clinical_patient.dart';
 import 'package:poseweave/domain/entities/pose_entity.dart';
 import 'package:poseweave/presentation/widgets/app_top_bar.dart';
+import 'package:poseweave/presentation/widgets/clinical/clinical_bottom_nav.dart';
 import 'package:poseweave/presentation/widgets/clinical/hud_frame.dart';
 import 'package:poseweave/presentation/widgets/clinical/kinematics_panel.dart';
 import 'package:poseweave/presentation/widgets/clinical/patient_header.dart';
@@ -52,6 +53,7 @@ class _Clinical3DReconstructionPageState
     return Scaffold(
       backgroundColor: AppColors.surfaceContainerLowest,
       appBar: const AppTopBar(title: '3D Reconstruction'),
+      bottomNavigationBar: const ClinicalBottomNav(current: 2),
       body: GestureDetector(
         onScaleStart: _onScaleStart,
         onScaleUpdate: _onScaleUpdate,
@@ -132,7 +134,7 @@ class _Clinical3DReconstructionPageState
                       Expanded(
                         child: FilledButton.icon(
                           style: FilledButton.styleFrom(
-                            backgroundColor: AppColors.primary,
+                            backgroundColor: AppColors.primaryContainer,
                             foregroundColor: AppColors.onPrimary,
                           ),
                           onPressed: () =>

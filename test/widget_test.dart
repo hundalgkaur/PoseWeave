@@ -4,36 +4,33 @@ import 'package:poseweave/core/constants/app_theme.dart';
 import 'package:poseweave/presentation/pages/home_shell.dart';
 
 void main() {
-  testWidgets('home shell shows grouped tabs and the Live hub', (
+  testWidgets('home dashboard shows greeting, streak and feature grid', (
     WidgetTester tester,
   ) async {
     await tester.pumpWidget(
       MaterialApp(theme: AppTheme.dark, home: const HomeShell()),
     );
 
-    // Bottom-nav destinations.
-    expect(find.text('Live'), findsOneWidget);
-    expect(find.text('Analyze'), findsOneWidget);
-    expect(find.text('3D'), findsOneWidget);
-    expect(find.text('Clinical'), findsOneWidget);
+    // Dashboard chrome.
+    expect(find.text('Welcome back'), findsOneWidget);
+    expect(find.text('ACTIVE STREAK'), findsOneWidget);
+    expect(find.text('QUICK ACTIONS'), findsOneWidget);
 
-    // Live tab is shown first with its grouped cards.
+    // Feature grid keeps every mode reachable.
     expect(find.text('Live Camera'), findsOneWidget);
-    expect(find.text('Segment Analysis'), findsOneWidget);
+    expect(find.text('Rep Counter'), findsOneWidget);
+    expect(find.text('Diagnostic'), findsOneWidget);
   });
 
-  testWidgets('switching to the Analyze tab shows its modes', (
-    WidgetTester tester,
-  ) async {
+  testWidgets('home shows the 5-item bottom nav', (WidgetTester tester) async {
     await tester.pumpWidget(
       MaterialApp(theme: AppTheme.dark, home: const HomeShell()),
     );
 
-    await tester.tap(find.text('Analyze'));
-    await tester.pumpAndSettle();
-
-    expect(find.text('Video Analysis'), findsOneWidget);
-    expect(find.text('Gait Analysis'), findsOneWidget);
-    expect(find.text('Image Analysis'), findsOneWidget);
+    expect(find.text('Home'), findsOneWidget);
+    expect(find.text('Camera'), findsOneWidget);
+    expect(find.text('Analytics'), findsOneWidget);
+    expect(find.text('Rank'), findsOneWidget);
+    expect(find.text('Profile'), findsOneWidget);
   });
 }

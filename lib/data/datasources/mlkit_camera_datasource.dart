@@ -19,8 +19,12 @@ abstract class MLKitCameraDataSource {
   /// (data-layer) on hardware/permission failure.
   Future<void> initialize({CameraLensDirection direction});
 
-  /// Broadcast stream of detected poses, throttled to ~15 FPS internally.
+  /// Broadcast stream of detected poses (primary person), throttled to ~15 FPS.
   Stream<PoseModel> get poseStream;
+
+  /// All people detected in the most recent frame (primary first). For drawing
+  /// every skeleton and showing a person count.
+  List<PoseModel> get latestPoses;
 
   /// Broadcast stream of pipeline diagnostics (frames/poses/format) for the
   /// on-device debug HUD.

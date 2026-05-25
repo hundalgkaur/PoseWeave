@@ -91,6 +91,7 @@ void main() {
         when(
           () => repo.getPoseStream(),
         ).thenReturn(Right<Failure, Stream<PoseEntity>>(stream.stream));
+        when(() => repo.latestPoses).thenReturn(<PoseEntity>[]);
         when(
           () => repo.startDetection(),
         ).thenAnswer((_) async => const Right<Failure, Unit>(unit));

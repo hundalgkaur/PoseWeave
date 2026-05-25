@@ -29,6 +29,7 @@ mixin _$PoseEvent {
     required TResult Function(PoseEntity pose) poseReceived,
     required TResult Function() poseLost,
     required TResult Function() pickAndAnalyzeVideo,
+    required TResult Function() pickVideoForTrim,
     required TResult Function(String filePath) analyzeVideoFile,
     required TResult Function() pickAndAnalyzeImage,
     required TResult Function(ReportData data) generateReport,
@@ -45,6 +46,7 @@ mixin _$PoseEvent {
     TResult? Function(PoseEntity pose)? poseReceived,
     TResult? Function()? poseLost,
     TResult? Function()? pickAndAnalyzeVideo,
+    TResult? Function()? pickVideoForTrim,
     TResult? Function(String filePath)? analyzeVideoFile,
     TResult? Function()? pickAndAnalyzeImage,
     TResult? Function(ReportData data)? generateReport,
@@ -61,6 +63,7 @@ mixin _$PoseEvent {
     TResult Function(PoseEntity pose)? poseReceived,
     TResult Function()? poseLost,
     TResult Function()? pickAndAnalyzeVideo,
+    TResult Function()? pickVideoForTrim,
     TResult Function(String filePath)? analyzeVideoFile,
     TResult Function()? pickAndAnalyzeImage,
     TResult Function(ReportData data)? generateReport,
@@ -78,6 +81,7 @@ mixin _$PoseEvent {
     required TResult Function(PoseReceived value) poseReceived,
     required TResult Function(PoseLost value) poseLost,
     required TResult Function(PickAndAnalyzeVideo value) pickAndAnalyzeVideo,
+    required TResult Function(PickVideoForTrim value) pickVideoForTrim,
     required TResult Function(AnalyzeVideoFile value) analyzeVideoFile,
     required TResult Function(PickAndAnalyzeImage value) pickAndAnalyzeImage,
     required TResult Function(GenerateReport value) generateReport,
@@ -94,6 +98,7 @@ mixin _$PoseEvent {
     TResult? Function(PoseReceived value)? poseReceived,
     TResult? Function(PoseLost value)? poseLost,
     TResult? Function(PickAndAnalyzeVideo value)? pickAndAnalyzeVideo,
+    TResult? Function(PickVideoForTrim value)? pickVideoForTrim,
     TResult? Function(AnalyzeVideoFile value)? analyzeVideoFile,
     TResult? Function(PickAndAnalyzeImage value)? pickAndAnalyzeImage,
     TResult? Function(GenerateReport value)? generateReport,
@@ -110,6 +115,7 @@ mixin _$PoseEvent {
     TResult Function(PoseReceived value)? poseReceived,
     TResult Function(PoseLost value)? poseLost,
     TResult Function(PickAndAnalyzeVideo value)? pickAndAnalyzeVideo,
+    TResult Function(PickVideoForTrim value)? pickVideoForTrim,
     TResult Function(AnalyzeVideoFile value)? analyzeVideoFile,
     TResult Function(PickAndAnalyzeImage value)? pickAndAnalyzeImage,
     TResult Function(GenerateReport value)? generateReport,
@@ -190,6 +196,7 @@ class _$InitializeCameraImpl implements InitializeCamera {
     required TResult Function(PoseEntity pose) poseReceived,
     required TResult Function() poseLost,
     required TResult Function() pickAndAnalyzeVideo,
+    required TResult Function() pickVideoForTrim,
     required TResult Function(String filePath) analyzeVideoFile,
     required TResult Function() pickAndAnalyzeImage,
     required TResult Function(ReportData data) generateReport,
@@ -210,6 +217,7 @@ class _$InitializeCameraImpl implements InitializeCamera {
     TResult? Function(PoseEntity pose)? poseReceived,
     TResult? Function()? poseLost,
     TResult? Function()? pickAndAnalyzeVideo,
+    TResult? Function()? pickVideoForTrim,
     TResult? Function(String filePath)? analyzeVideoFile,
     TResult? Function()? pickAndAnalyzeImage,
     TResult? Function(ReportData data)? generateReport,
@@ -230,6 +238,7 @@ class _$InitializeCameraImpl implements InitializeCamera {
     TResult Function(PoseEntity pose)? poseReceived,
     TResult Function()? poseLost,
     TResult Function()? pickAndAnalyzeVideo,
+    TResult Function()? pickVideoForTrim,
     TResult Function(String filePath)? analyzeVideoFile,
     TResult Function()? pickAndAnalyzeImage,
     TResult Function(ReportData data)? generateReport,
@@ -254,6 +263,7 @@ class _$InitializeCameraImpl implements InitializeCamera {
     required TResult Function(PoseReceived value) poseReceived,
     required TResult Function(PoseLost value) poseLost,
     required TResult Function(PickAndAnalyzeVideo value) pickAndAnalyzeVideo,
+    required TResult Function(PickVideoForTrim value) pickVideoForTrim,
     required TResult Function(AnalyzeVideoFile value) analyzeVideoFile,
     required TResult Function(PickAndAnalyzeImage value) pickAndAnalyzeImage,
     required TResult Function(GenerateReport value) generateReport,
@@ -274,6 +284,7 @@ class _$InitializeCameraImpl implements InitializeCamera {
     TResult? Function(PoseReceived value)? poseReceived,
     TResult? Function(PoseLost value)? poseLost,
     TResult? Function(PickAndAnalyzeVideo value)? pickAndAnalyzeVideo,
+    TResult? Function(PickVideoForTrim value)? pickVideoForTrim,
     TResult? Function(AnalyzeVideoFile value)? analyzeVideoFile,
     TResult? Function(PickAndAnalyzeImage value)? pickAndAnalyzeImage,
     TResult? Function(GenerateReport value)? generateReport,
@@ -294,6 +305,7 @@ class _$InitializeCameraImpl implements InitializeCamera {
     TResult Function(PoseReceived value)? poseReceived,
     TResult Function(PoseLost value)? poseLost,
     TResult Function(PickAndAnalyzeVideo value)? pickAndAnalyzeVideo,
+    TResult Function(PickVideoForTrim value)? pickVideoForTrim,
     TResult Function(AnalyzeVideoFile value)? analyzeVideoFile,
     TResult Function(PickAndAnalyzeImage value)? pickAndAnalyzeImage,
     TResult Function(GenerateReport value)? generateReport,
@@ -363,6 +375,7 @@ class _$StartDetectionImpl implements StartDetection {
     required TResult Function(PoseEntity pose) poseReceived,
     required TResult Function() poseLost,
     required TResult Function() pickAndAnalyzeVideo,
+    required TResult Function() pickVideoForTrim,
     required TResult Function(String filePath) analyzeVideoFile,
     required TResult Function() pickAndAnalyzeImage,
     required TResult Function(ReportData data) generateReport,
@@ -383,6 +396,7 @@ class _$StartDetectionImpl implements StartDetection {
     TResult? Function(PoseEntity pose)? poseReceived,
     TResult? Function()? poseLost,
     TResult? Function()? pickAndAnalyzeVideo,
+    TResult? Function()? pickVideoForTrim,
     TResult? Function(String filePath)? analyzeVideoFile,
     TResult? Function()? pickAndAnalyzeImage,
     TResult? Function(ReportData data)? generateReport,
@@ -403,6 +417,7 @@ class _$StartDetectionImpl implements StartDetection {
     TResult Function(PoseEntity pose)? poseReceived,
     TResult Function()? poseLost,
     TResult Function()? pickAndAnalyzeVideo,
+    TResult Function()? pickVideoForTrim,
     TResult Function(String filePath)? analyzeVideoFile,
     TResult Function()? pickAndAnalyzeImage,
     TResult Function(ReportData data)? generateReport,
@@ -427,6 +442,7 @@ class _$StartDetectionImpl implements StartDetection {
     required TResult Function(PoseReceived value) poseReceived,
     required TResult Function(PoseLost value) poseLost,
     required TResult Function(PickAndAnalyzeVideo value) pickAndAnalyzeVideo,
+    required TResult Function(PickVideoForTrim value) pickVideoForTrim,
     required TResult Function(AnalyzeVideoFile value) analyzeVideoFile,
     required TResult Function(PickAndAnalyzeImage value) pickAndAnalyzeImage,
     required TResult Function(GenerateReport value) generateReport,
@@ -447,6 +463,7 @@ class _$StartDetectionImpl implements StartDetection {
     TResult? Function(PoseReceived value)? poseReceived,
     TResult? Function(PoseLost value)? poseLost,
     TResult? Function(PickAndAnalyzeVideo value)? pickAndAnalyzeVideo,
+    TResult? Function(PickVideoForTrim value)? pickVideoForTrim,
     TResult? Function(AnalyzeVideoFile value)? analyzeVideoFile,
     TResult? Function(PickAndAnalyzeImage value)? pickAndAnalyzeImage,
     TResult? Function(GenerateReport value)? generateReport,
@@ -467,6 +484,7 @@ class _$StartDetectionImpl implements StartDetection {
     TResult Function(PoseReceived value)? poseReceived,
     TResult Function(PoseLost value)? poseLost,
     TResult Function(PickAndAnalyzeVideo value)? pickAndAnalyzeVideo,
+    TResult Function(PickVideoForTrim value)? pickVideoForTrim,
     TResult Function(AnalyzeVideoFile value)? analyzeVideoFile,
     TResult Function(PickAndAnalyzeImage value)? pickAndAnalyzeImage,
     TResult Function(GenerateReport value)? generateReport,
@@ -536,6 +554,7 @@ class _$StopDetectionImpl implements StopDetection {
     required TResult Function(PoseEntity pose) poseReceived,
     required TResult Function() poseLost,
     required TResult Function() pickAndAnalyzeVideo,
+    required TResult Function() pickVideoForTrim,
     required TResult Function(String filePath) analyzeVideoFile,
     required TResult Function() pickAndAnalyzeImage,
     required TResult Function(ReportData data) generateReport,
@@ -556,6 +575,7 @@ class _$StopDetectionImpl implements StopDetection {
     TResult? Function(PoseEntity pose)? poseReceived,
     TResult? Function()? poseLost,
     TResult? Function()? pickAndAnalyzeVideo,
+    TResult? Function()? pickVideoForTrim,
     TResult? Function(String filePath)? analyzeVideoFile,
     TResult? Function()? pickAndAnalyzeImage,
     TResult? Function(ReportData data)? generateReport,
@@ -576,6 +596,7 @@ class _$StopDetectionImpl implements StopDetection {
     TResult Function(PoseEntity pose)? poseReceived,
     TResult Function()? poseLost,
     TResult Function()? pickAndAnalyzeVideo,
+    TResult Function()? pickVideoForTrim,
     TResult Function(String filePath)? analyzeVideoFile,
     TResult Function()? pickAndAnalyzeImage,
     TResult Function(ReportData data)? generateReport,
@@ -600,6 +621,7 @@ class _$StopDetectionImpl implements StopDetection {
     required TResult Function(PoseReceived value) poseReceived,
     required TResult Function(PoseLost value) poseLost,
     required TResult Function(PickAndAnalyzeVideo value) pickAndAnalyzeVideo,
+    required TResult Function(PickVideoForTrim value) pickVideoForTrim,
     required TResult Function(AnalyzeVideoFile value) analyzeVideoFile,
     required TResult Function(PickAndAnalyzeImage value) pickAndAnalyzeImage,
     required TResult Function(GenerateReport value) generateReport,
@@ -620,6 +642,7 @@ class _$StopDetectionImpl implements StopDetection {
     TResult? Function(PoseReceived value)? poseReceived,
     TResult? Function(PoseLost value)? poseLost,
     TResult? Function(PickAndAnalyzeVideo value)? pickAndAnalyzeVideo,
+    TResult? Function(PickVideoForTrim value)? pickVideoForTrim,
     TResult? Function(AnalyzeVideoFile value)? analyzeVideoFile,
     TResult? Function(PickAndAnalyzeImage value)? pickAndAnalyzeImage,
     TResult? Function(GenerateReport value)? generateReport,
@@ -640,6 +663,7 @@ class _$StopDetectionImpl implements StopDetection {
     TResult Function(PoseReceived value)? poseReceived,
     TResult Function(PoseLost value)? poseLost,
     TResult Function(PickAndAnalyzeVideo value)? pickAndAnalyzeVideo,
+    TResult Function(PickVideoForTrim value)? pickVideoForTrim,
     TResult Function(AnalyzeVideoFile value)? analyzeVideoFile,
     TResult Function(PickAndAnalyzeImage value)? pickAndAnalyzeImage,
     TResult Function(GenerateReport value)? generateReport,
@@ -709,6 +733,7 @@ class _$SwitchCameraImpl implements SwitchCamera {
     required TResult Function(PoseEntity pose) poseReceived,
     required TResult Function() poseLost,
     required TResult Function() pickAndAnalyzeVideo,
+    required TResult Function() pickVideoForTrim,
     required TResult Function(String filePath) analyzeVideoFile,
     required TResult Function() pickAndAnalyzeImage,
     required TResult Function(ReportData data) generateReport,
@@ -729,6 +754,7 @@ class _$SwitchCameraImpl implements SwitchCamera {
     TResult? Function(PoseEntity pose)? poseReceived,
     TResult? Function()? poseLost,
     TResult? Function()? pickAndAnalyzeVideo,
+    TResult? Function()? pickVideoForTrim,
     TResult? Function(String filePath)? analyzeVideoFile,
     TResult? Function()? pickAndAnalyzeImage,
     TResult? Function(ReportData data)? generateReport,
@@ -749,6 +775,7 @@ class _$SwitchCameraImpl implements SwitchCamera {
     TResult Function(PoseEntity pose)? poseReceived,
     TResult Function()? poseLost,
     TResult Function()? pickAndAnalyzeVideo,
+    TResult Function()? pickVideoForTrim,
     TResult Function(String filePath)? analyzeVideoFile,
     TResult Function()? pickAndAnalyzeImage,
     TResult Function(ReportData data)? generateReport,
@@ -773,6 +800,7 @@ class _$SwitchCameraImpl implements SwitchCamera {
     required TResult Function(PoseReceived value) poseReceived,
     required TResult Function(PoseLost value) poseLost,
     required TResult Function(PickAndAnalyzeVideo value) pickAndAnalyzeVideo,
+    required TResult Function(PickVideoForTrim value) pickVideoForTrim,
     required TResult Function(AnalyzeVideoFile value) analyzeVideoFile,
     required TResult Function(PickAndAnalyzeImage value) pickAndAnalyzeImage,
     required TResult Function(GenerateReport value) generateReport,
@@ -793,6 +821,7 @@ class _$SwitchCameraImpl implements SwitchCamera {
     TResult? Function(PoseReceived value)? poseReceived,
     TResult? Function(PoseLost value)? poseLost,
     TResult? Function(PickAndAnalyzeVideo value)? pickAndAnalyzeVideo,
+    TResult? Function(PickVideoForTrim value)? pickVideoForTrim,
     TResult? Function(AnalyzeVideoFile value)? analyzeVideoFile,
     TResult? Function(PickAndAnalyzeImage value)? pickAndAnalyzeImage,
     TResult? Function(GenerateReport value)? generateReport,
@@ -813,6 +842,7 @@ class _$SwitchCameraImpl implements SwitchCamera {
     TResult Function(PoseReceived value)? poseReceived,
     TResult Function(PoseLost value)? poseLost,
     TResult Function(PickAndAnalyzeVideo value)? pickAndAnalyzeVideo,
+    TResult Function(PickVideoForTrim value)? pickVideoForTrim,
     TResult Function(AnalyzeVideoFile value)? analyzeVideoFile,
     TResult Function(PickAndAnalyzeImage value)? pickAndAnalyzeImage,
     TResult Function(GenerateReport value)? generateReport,
@@ -882,6 +912,7 @@ class _$ToggleMockModeImpl implements ToggleMockMode {
     required TResult Function(PoseEntity pose) poseReceived,
     required TResult Function() poseLost,
     required TResult Function() pickAndAnalyzeVideo,
+    required TResult Function() pickVideoForTrim,
     required TResult Function(String filePath) analyzeVideoFile,
     required TResult Function() pickAndAnalyzeImage,
     required TResult Function(ReportData data) generateReport,
@@ -902,6 +933,7 @@ class _$ToggleMockModeImpl implements ToggleMockMode {
     TResult? Function(PoseEntity pose)? poseReceived,
     TResult? Function()? poseLost,
     TResult? Function()? pickAndAnalyzeVideo,
+    TResult? Function()? pickVideoForTrim,
     TResult? Function(String filePath)? analyzeVideoFile,
     TResult? Function()? pickAndAnalyzeImage,
     TResult? Function(ReportData data)? generateReport,
@@ -922,6 +954,7 @@ class _$ToggleMockModeImpl implements ToggleMockMode {
     TResult Function(PoseEntity pose)? poseReceived,
     TResult Function()? poseLost,
     TResult Function()? pickAndAnalyzeVideo,
+    TResult Function()? pickVideoForTrim,
     TResult Function(String filePath)? analyzeVideoFile,
     TResult Function()? pickAndAnalyzeImage,
     TResult Function(ReportData data)? generateReport,
@@ -946,6 +979,7 @@ class _$ToggleMockModeImpl implements ToggleMockMode {
     required TResult Function(PoseReceived value) poseReceived,
     required TResult Function(PoseLost value) poseLost,
     required TResult Function(PickAndAnalyzeVideo value) pickAndAnalyzeVideo,
+    required TResult Function(PickVideoForTrim value) pickVideoForTrim,
     required TResult Function(AnalyzeVideoFile value) analyzeVideoFile,
     required TResult Function(PickAndAnalyzeImage value) pickAndAnalyzeImage,
     required TResult Function(GenerateReport value) generateReport,
@@ -966,6 +1000,7 @@ class _$ToggleMockModeImpl implements ToggleMockMode {
     TResult? Function(PoseReceived value)? poseReceived,
     TResult? Function(PoseLost value)? poseLost,
     TResult? Function(PickAndAnalyzeVideo value)? pickAndAnalyzeVideo,
+    TResult? Function(PickVideoForTrim value)? pickVideoForTrim,
     TResult? Function(AnalyzeVideoFile value)? analyzeVideoFile,
     TResult? Function(PickAndAnalyzeImage value)? pickAndAnalyzeImage,
     TResult? Function(GenerateReport value)? generateReport,
@@ -986,6 +1021,7 @@ class _$ToggleMockModeImpl implements ToggleMockMode {
     TResult Function(PoseReceived value)? poseReceived,
     TResult Function(PoseLost value)? poseLost,
     TResult Function(PickAndAnalyzeVideo value)? pickAndAnalyzeVideo,
+    TResult Function(PickVideoForTrim value)? pickVideoForTrim,
     TResult Function(AnalyzeVideoFile value)? analyzeVideoFile,
     TResult Function(PickAndAnalyzeImage value)? pickAndAnalyzeImage,
     TResult Function(GenerateReport value)? generateReport,
@@ -1056,6 +1092,7 @@ class _$StartVideoRecordingImpl implements StartVideoRecording {
     required TResult Function(PoseEntity pose) poseReceived,
     required TResult Function() poseLost,
     required TResult Function() pickAndAnalyzeVideo,
+    required TResult Function() pickVideoForTrim,
     required TResult Function(String filePath) analyzeVideoFile,
     required TResult Function() pickAndAnalyzeImage,
     required TResult Function(ReportData data) generateReport,
@@ -1076,6 +1113,7 @@ class _$StartVideoRecordingImpl implements StartVideoRecording {
     TResult? Function(PoseEntity pose)? poseReceived,
     TResult? Function()? poseLost,
     TResult? Function()? pickAndAnalyzeVideo,
+    TResult? Function()? pickVideoForTrim,
     TResult? Function(String filePath)? analyzeVideoFile,
     TResult? Function()? pickAndAnalyzeImage,
     TResult? Function(ReportData data)? generateReport,
@@ -1096,6 +1134,7 @@ class _$StartVideoRecordingImpl implements StartVideoRecording {
     TResult Function(PoseEntity pose)? poseReceived,
     TResult Function()? poseLost,
     TResult Function()? pickAndAnalyzeVideo,
+    TResult Function()? pickVideoForTrim,
     TResult Function(String filePath)? analyzeVideoFile,
     TResult Function()? pickAndAnalyzeImage,
     TResult Function(ReportData data)? generateReport,
@@ -1120,6 +1159,7 @@ class _$StartVideoRecordingImpl implements StartVideoRecording {
     required TResult Function(PoseReceived value) poseReceived,
     required TResult Function(PoseLost value) poseLost,
     required TResult Function(PickAndAnalyzeVideo value) pickAndAnalyzeVideo,
+    required TResult Function(PickVideoForTrim value) pickVideoForTrim,
     required TResult Function(AnalyzeVideoFile value) analyzeVideoFile,
     required TResult Function(PickAndAnalyzeImage value) pickAndAnalyzeImage,
     required TResult Function(GenerateReport value) generateReport,
@@ -1140,6 +1180,7 @@ class _$StartVideoRecordingImpl implements StartVideoRecording {
     TResult? Function(PoseReceived value)? poseReceived,
     TResult? Function(PoseLost value)? poseLost,
     TResult? Function(PickAndAnalyzeVideo value)? pickAndAnalyzeVideo,
+    TResult? Function(PickVideoForTrim value)? pickVideoForTrim,
     TResult? Function(AnalyzeVideoFile value)? analyzeVideoFile,
     TResult? Function(PickAndAnalyzeImage value)? pickAndAnalyzeImage,
     TResult? Function(GenerateReport value)? generateReport,
@@ -1160,6 +1201,7 @@ class _$StartVideoRecordingImpl implements StartVideoRecording {
     TResult Function(PoseReceived value)? poseReceived,
     TResult Function(PoseLost value)? poseLost,
     TResult Function(PickAndAnalyzeVideo value)? pickAndAnalyzeVideo,
+    TResult Function(PickVideoForTrim value)? pickVideoForTrim,
     TResult Function(AnalyzeVideoFile value)? analyzeVideoFile,
     TResult Function(PickAndAnalyzeImage value)? pickAndAnalyzeImage,
     TResult Function(GenerateReport value)? generateReport,
@@ -1229,6 +1271,7 @@ class _$StopVideoRecordingImpl implements StopVideoRecording {
     required TResult Function(PoseEntity pose) poseReceived,
     required TResult Function() poseLost,
     required TResult Function() pickAndAnalyzeVideo,
+    required TResult Function() pickVideoForTrim,
     required TResult Function(String filePath) analyzeVideoFile,
     required TResult Function() pickAndAnalyzeImage,
     required TResult Function(ReportData data) generateReport,
@@ -1249,6 +1292,7 @@ class _$StopVideoRecordingImpl implements StopVideoRecording {
     TResult? Function(PoseEntity pose)? poseReceived,
     TResult? Function()? poseLost,
     TResult? Function()? pickAndAnalyzeVideo,
+    TResult? Function()? pickVideoForTrim,
     TResult? Function(String filePath)? analyzeVideoFile,
     TResult? Function()? pickAndAnalyzeImage,
     TResult? Function(ReportData data)? generateReport,
@@ -1269,6 +1313,7 @@ class _$StopVideoRecordingImpl implements StopVideoRecording {
     TResult Function(PoseEntity pose)? poseReceived,
     TResult Function()? poseLost,
     TResult Function()? pickAndAnalyzeVideo,
+    TResult Function()? pickVideoForTrim,
     TResult Function(String filePath)? analyzeVideoFile,
     TResult Function()? pickAndAnalyzeImage,
     TResult Function(ReportData data)? generateReport,
@@ -1293,6 +1338,7 @@ class _$StopVideoRecordingImpl implements StopVideoRecording {
     required TResult Function(PoseReceived value) poseReceived,
     required TResult Function(PoseLost value) poseLost,
     required TResult Function(PickAndAnalyzeVideo value) pickAndAnalyzeVideo,
+    required TResult Function(PickVideoForTrim value) pickVideoForTrim,
     required TResult Function(AnalyzeVideoFile value) analyzeVideoFile,
     required TResult Function(PickAndAnalyzeImage value) pickAndAnalyzeImage,
     required TResult Function(GenerateReport value) generateReport,
@@ -1313,6 +1359,7 @@ class _$StopVideoRecordingImpl implements StopVideoRecording {
     TResult? Function(PoseReceived value)? poseReceived,
     TResult? Function(PoseLost value)? poseLost,
     TResult? Function(PickAndAnalyzeVideo value)? pickAndAnalyzeVideo,
+    TResult? Function(PickVideoForTrim value)? pickVideoForTrim,
     TResult? Function(AnalyzeVideoFile value)? analyzeVideoFile,
     TResult? Function(PickAndAnalyzeImage value)? pickAndAnalyzeImage,
     TResult? Function(GenerateReport value)? generateReport,
@@ -1333,6 +1380,7 @@ class _$StopVideoRecordingImpl implements StopVideoRecording {
     TResult Function(PoseReceived value)? poseReceived,
     TResult Function(PoseLost value)? poseLost,
     TResult Function(PickAndAnalyzeVideo value)? pickAndAnalyzeVideo,
+    TResult Function(PickVideoForTrim value)? pickVideoForTrim,
     TResult Function(AnalyzeVideoFile value)? analyzeVideoFile,
     TResult Function(PickAndAnalyzeImage value)? pickAndAnalyzeImage,
     TResult Function(GenerateReport value)? generateReport,
@@ -1429,6 +1477,7 @@ class _$PoseReceivedImpl implements PoseReceived {
     required TResult Function(PoseEntity pose) poseReceived,
     required TResult Function() poseLost,
     required TResult Function() pickAndAnalyzeVideo,
+    required TResult Function() pickVideoForTrim,
     required TResult Function(String filePath) analyzeVideoFile,
     required TResult Function() pickAndAnalyzeImage,
     required TResult Function(ReportData data) generateReport,
@@ -1449,6 +1498,7 @@ class _$PoseReceivedImpl implements PoseReceived {
     TResult? Function(PoseEntity pose)? poseReceived,
     TResult? Function()? poseLost,
     TResult? Function()? pickAndAnalyzeVideo,
+    TResult? Function()? pickVideoForTrim,
     TResult? Function(String filePath)? analyzeVideoFile,
     TResult? Function()? pickAndAnalyzeImage,
     TResult? Function(ReportData data)? generateReport,
@@ -1469,6 +1519,7 @@ class _$PoseReceivedImpl implements PoseReceived {
     TResult Function(PoseEntity pose)? poseReceived,
     TResult Function()? poseLost,
     TResult Function()? pickAndAnalyzeVideo,
+    TResult Function()? pickVideoForTrim,
     TResult Function(String filePath)? analyzeVideoFile,
     TResult Function()? pickAndAnalyzeImage,
     TResult Function(ReportData data)? generateReport,
@@ -1493,6 +1544,7 @@ class _$PoseReceivedImpl implements PoseReceived {
     required TResult Function(PoseReceived value) poseReceived,
     required TResult Function(PoseLost value) poseLost,
     required TResult Function(PickAndAnalyzeVideo value) pickAndAnalyzeVideo,
+    required TResult Function(PickVideoForTrim value) pickVideoForTrim,
     required TResult Function(AnalyzeVideoFile value) analyzeVideoFile,
     required TResult Function(PickAndAnalyzeImage value) pickAndAnalyzeImage,
     required TResult Function(GenerateReport value) generateReport,
@@ -1513,6 +1565,7 @@ class _$PoseReceivedImpl implements PoseReceived {
     TResult? Function(PoseReceived value)? poseReceived,
     TResult? Function(PoseLost value)? poseLost,
     TResult? Function(PickAndAnalyzeVideo value)? pickAndAnalyzeVideo,
+    TResult? Function(PickVideoForTrim value)? pickVideoForTrim,
     TResult? Function(AnalyzeVideoFile value)? analyzeVideoFile,
     TResult? Function(PickAndAnalyzeImage value)? pickAndAnalyzeImage,
     TResult? Function(GenerateReport value)? generateReport,
@@ -1533,6 +1586,7 @@ class _$PoseReceivedImpl implements PoseReceived {
     TResult Function(PoseReceived value)? poseReceived,
     TResult Function(PoseLost value)? poseLost,
     TResult Function(PickAndAnalyzeVideo value)? pickAndAnalyzeVideo,
+    TResult Function(PickVideoForTrim value)? pickVideoForTrim,
     TResult Function(AnalyzeVideoFile value)? analyzeVideoFile,
     TResult Function(PickAndAnalyzeImage value)? pickAndAnalyzeImage,
     TResult Function(GenerateReport value)? generateReport,
@@ -1610,6 +1664,7 @@ class _$PoseLostImpl implements PoseLost {
     required TResult Function(PoseEntity pose) poseReceived,
     required TResult Function() poseLost,
     required TResult Function() pickAndAnalyzeVideo,
+    required TResult Function() pickVideoForTrim,
     required TResult Function(String filePath) analyzeVideoFile,
     required TResult Function() pickAndAnalyzeImage,
     required TResult Function(ReportData data) generateReport,
@@ -1630,6 +1685,7 @@ class _$PoseLostImpl implements PoseLost {
     TResult? Function(PoseEntity pose)? poseReceived,
     TResult? Function()? poseLost,
     TResult? Function()? pickAndAnalyzeVideo,
+    TResult? Function()? pickVideoForTrim,
     TResult? Function(String filePath)? analyzeVideoFile,
     TResult? Function()? pickAndAnalyzeImage,
     TResult? Function(ReportData data)? generateReport,
@@ -1650,6 +1706,7 @@ class _$PoseLostImpl implements PoseLost {
     TResult Function(PoseEntity pose)? poseReceived,
     TResult Function()? poseLost,
     TResult Function()? pickAndAnalyzeVideo,
+    TResult Function()? pickVideoForTrim,
     TResult Function(String filePath)? analyzeVideoFile,
     TResult Function()? pickAndAnalyzeImage,
     TResult Function(ReportData data)? generateReport,
@@ -1674,6 +1731,7 @@ class _$PoseLostImpl implements PoseLost {
     required TResult Function(PoseReceived value) poseReceived,
     required TResult Function(PoseLost value) poseLost,
     required TResult Function(PickAndAnalyzeVideo value) pickAndAnalyzeVideo,
+    required TResult Function(PickVideoForTrim value) pickVideoForTrim,
     required TResult Function(AnalyzeVideoFile value) analyzeVideoFile,
     required TResult Function(PickAndAnalyzeImage value) pickAndAnalyzeImage,
     required TResult Function(GenerateReport value) generateReport,
@@ -1694,6 +1752,7 @@ class _$PoseLostImpl implements PoseLost {
     TResult? Function(PoseReceived value)? poseReceived,
     TResult? Function(PoseLost value)? poseLost,
     TResult? Function(PickAndAnalyzeVideo value)? pickAndAnalyzeVideo,
+    TResult? Function(PickVideoForTrim value)? pickVideoForTrim,
     TResult? Function(AnalyzeVideoFile value)? analyzeVideoFile,
     TResult? Function(PickAndAnalyzeImage value)? pickAndAnalyzeImage,
     TResult? Function(GenerateReport value)? generateReport,
@@ -1714,6 +1773,7 @@ class _$PoseLostImpl implements PoseLost {
     TResult Function(PoseReceived value)? poseReceived,
     TResult Function(PoseLost value)? poseLost,
     TResult Function(PickAndAnalyzeVideo value)? pickAndAnalyzeVideo,
+    TResult Function(PickVideoForTrim value)? pickVideoForTrim,
     TResult Function(AnalyzeVideoFile value)? analyzeVideoFile,
     TResult Function(PickAndAnalyzeImage value)? pickAndAnalyzeImage,
     TResult Function(GenerateReport value)? generateReport,
@@ -1784,6 +1844,7 @@ class _$PickAndAnalyzeVideoImpl implements PickAndAnalyzeVideo {
     required TResult Function(PoseEntity pose) poseReceived,
     required TResult Function() poseLost,
     required TResult Function() pickAndAnalyzeVideo,
+    required TResult Function() pickVideoForTrim,
     required TResult Function(String filePath) analyzeVideoFile,
     required TResult Function() pickAndAnalyzeImage,
     required TResult Function(ReportData data) generateReport,
@@ -1804,6 +1865,7 @@ class _$PickAndAnalyzeVideoImpl implements PickAndAnalyzeVideo {
     TResult? Function(PoseEntity pose)? poseReceived,
     TResult? Function()? poseLost,
     TResult? Function()? pickAndAnalyzeVideo,
+    TResult? Function()? pickVideoForTrim,
     TResult? Function(String filePath)? analyzeVideoFile,
     TResult? Function()? pickAndAnalyzeImage,
     TResult? Function(ReportData data)? generateReport,
@@ -1824,6 +1886,7 @@ class _$PickAndAnalyzeVideoImpl implements PickAndAnalyzeVideo {
     TResult Function(PoseEntity pose)? poseReceived,
     TResult Function()? poseLost,
     TResult Function()? pickAndAnalyzeVideo,
+    TResult Function()? pickVideoForTrim,
     TResult Function(String filePath)? analyzeVideoFile,
     TResult Function()? pickAndAnalyzeImage,
     TResult Function(ReportData data)? generateReport,
@@ -1848,6 +1911,7 @@ class _$PickAndAnalyzeVideoImpl implements PickAndAnalyzeVideo {
     required TResult Function(PoseReceived value) poseReceived,
     required TResult Function(PoseLost value) poseLost,
     required TResult Function(PickAndAnalyzeVideo value) pickAndAnalyzeVideo,
+    required TResult Function(PickVideoForTrim value) pickVideoForTrim,
     required TResult Function(AnalyzeVideoFile value) analyzeVideoFile,
     required TResult Function(PickAndAnalyzeImage value) pickAndAnalyzeImage,
     required TResult Function(GenerateReport value) generateReport,
@@ -1868,6 +1932,7 @@ class _$PickAndAnalyzeVideoImpl implements PickAndAnalyzeVideo {
     TResult? Function(PoseReceived value)? poseReceived,
     TResult? Function(PoseLost value)? poseLost,
     TResult? Function(PickAndAnalyzeVideo value)? pickAndAnalyzeVideo,
+    TResult? Function(PickVideoForTrim value)? pickVideoForTrim,
     TResult? Function(AnalyzeVideoFile value)? analyzeVideoFile,
     TResult? Function(PickAndAnalyzeImage value)? pickAndAnalyzeImage,
     TResult? Function(GenerateReport value)? generateReport,
@@ -1888,6 +1953,7 @@ class _$PickAndAnalyzeVideoImpl implements PickAndAnalyzeVideo {
     TResult Function(PoseReceived value)? poseReceived,
     TResult Function(PoseLost value)? poseLost,
     TResult Function(PickAndAnalyzeVideo value)? pickAndAnalyzeVideo,
+    TResult Function(PickVideoForTrim value)? pickVideoForTrim,
     TResult Function(AnalyzeVideoFile value)? analyzeVideoFile,
     TResult Function(PickAndAnalyzeImage value)? pickAndAnalyzeImage,
     TResult Function(GenerateReport value)? generateReport,
@@ -1902,6 +1968,185 @@ class _$PickAndAnalyzeVideoImpl implements PickAndAnalyzeVideo {
 
 abstract class PickAndAnalyzeVideo implements PoseEvent {
   const factory PickAndAnalyzeVideo() = _$PickAndAnalyzeVideoImpl;
+}
+
+/// @nodoc
+abstract class _$$PickVideoForTrimImplCopyWith<$Res> {
+  factory _$$PickVideoForTrimImplCopyWith(
+    _$PickVideoForTrimImpl value,
+    $Res Function(_$PickVideoForTrimImpl) then,
+  ) = __$$PickVideoForTrimImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$PickVideoForTrimImplCopyWithImpl<$Res>
+    extends _$PoseEventCopyWithImpl<$Res, _$PickVideoForTrimImpl>
+    implements _$$PickVideoForTrimImplCopyWith<$Res> {
+  __$$PickVideoForTrimImplCopyWithImpl(
+    _$PickVideoForTrimImpl _value,
+    $Res Function(_$PickVideoForTrimImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of PoseEvent
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$PickVideoForTrimImpl implements PickVideoForTrim {
+  const _$PickVideoForTrimImpl();
+
+  @override
+  String toString() {
+    return 'PoseEvent.pickVideoForTrim()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$PickVideoForTrimImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initializeCamera,
+    required TResult Function() startDetection,
+    required TResult Function() stopDetection,
+    required TResult Function() switchCamera,
+    required TResult Function() toggleMockMode,
+    required TResult Function() startVideoRecording,
+    required TResult Function() stopVideoRecording,
+    required TResult Function(PoseEntity pose) poseReceived,
+    required TResult Function() poseLost,
+    required TResult Function() pickAndAnalyzeVideo,
+    required TResult Function() pickVideoForTrim,
+    required TResult Function(String filePath) analyzeVideoFile,
+    required TResult Function() pickAndAnalyzeImage,
+    required TResult Function(ReportData data) generateReport,
+  }) {
+    return pickVideoForTrim();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initializeCamera,
+    TResult? Function()? startDetection,
+    TResult? Function()? stopDetection,
+    TResult? Function()? switchCamera,
+    TResult? Function()? toggleMockMode,
+    TResult? Function()? startVideoRecording,
+    TResult? Function()? stopVideoRecording,
+    TResult? Function(PoseEntity pose)? poseReceived,
+    TResult? Function()? poseLost,
+    TResult? Function()? pickAndAnalyzeVideo,
+    TResult? Function()? pickVideoForTrim,
+    TResult? Function(String filePath)? analyzeVideoFile,
+    TResult? Function()? pickAndAnalyzeImage,
+    TResult? Function(ReportData data)? generateReport,
+  }) {
+    return pickVideoForTrim?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initializeCamera,
+    TResult Function()? startDetection,
+    TResult Function()? stopDetection,
+    TResult Function()? switchCamera,
+    TResult Function()? toggleMockMode,
+    TResult Function()? startVideoRecording,
+    TResult Function()? stopVideoRecording,
+    TResult Function(PoseEntity pose)? poseReceived,
+    TResult Function()? poseLost,
+    TResult Function()? pickAndAnalyzeVideo,
+    TResult Function()? pickVideoForTrim,
+    TResult Function(String filePath)? analyzeVideoFile,
+    TResult Function()? pickAndAnalyzeImage,
+    TResult Function(ReportData data)? generateReport,
+    required TResult orElse(),
+  }) {
+    if (pickVideoForTrim != null) {
+      return pickVideoForTrim();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(InitializeCamera value) initializeCamera,
+    required TResult Function(StartDetection value) startDetection,
+    required TResult Function(StopDetection value) stopDetection,
+    required TResult Function(SwitchCamera value) switchCamera,
+    required TResult Function(ToggleMockMode value) toggleMockMode,
+    required TResult Function(StartVideoRecording value) startVideoRecording,
+    required TResult Function(StopVideoRecording value) stopVideoRecording,
+    required TResult Function(PoseReceived value) poseReceived,
+    required TResult Function(PoseLost value) poseLost,
+    required TResult Function(PickAndAnalyzeVideo value) pickAndAnalyzeVideo,
+    required TResult Function(PickVideoForTrim value) pickVideoForTrim,
+    required TResult Function(AnalyzeVideoFile value) analyzeVideoFile,
+    required TResult Function(PickAndAnalyzeImage value) pickAndAnalyzeImage,
+    required TResult Function(GenerateReport value) generateReport,
+  }) {
+    return pickVideoForTrim(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(InitializeCamera value)? initializeCamera,
+    TResult? Function(StartDetection value)? startDetection,
+    TResult? Function(StopDetection value)? stopDetection,
+    TResult? Function(SwitchCamera value)? switchCamera,
+    TResult? Function(ToggleMockMode value)? toggleMockMode,
+    TResult? Function(StartVideoRecording value)? startVideoRecording,
+    TResult? Function(StopVideoRecording value)? stopVideoRecording,
+    TResult? Function(PoseReceived value)? poseReceived,
+    TResult? Function(PoseLost value)? poseLost,
+    TResult? Function(PickAndAnalyzeVideo value)? pickAndAnalyzeVideo,
+    TResult? Function(PickVideoForTrim value)? pickVideoForTrim,
+    TResult? Function(AnalyzeVideoFile value)? analyzeVideoFile,
+    TResult? Function(PickAndAnalyzeImage value)? pickAndAnalyzeImage,
+    TResult? Function(GenerateReport value)? generateReport,
+  }) {
+    return pickVideoForTrim?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(InitializeCamera value)? initializeCamera,
+    TResult Function(StartDetection value)? startDetection,
+    TResult Function(StopDetection value)? stopDetection,
+    TResult Function(SwitchCamera value)? switchCamera,
+    TResult Function(ToggleMockMode value)? toggleMockMode,
+    TResult Function(StartVideoRecording value)? startVideoRecording,
+    TResult Function(StopVideoRecording value)? stopVideoRecording,
+    TResult Function(PoseReceived value)? poseReceived,
+    TResult Function(PoseLost value)? poseLost,
+    TResult Function(PickAndAnalyzeVideo value)? pickAndAnalyzeVideo,
+    TResult Function(PickVideoForTrim value)? pickVideoForTrim,
+    TResult Function(AnalyzeVideoFile value)? analyzeVideoFile,
+    TResult Function(PickAndAnalyzeImage value)? pickAndAnalyzeImage,
+    TResult Function(GenerateReport value)? generateReport,
+    required TResult orElse(),
+  }) {
+    if (pickVideoForTrim != null) {
+      return pickVideoForTrim(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class PickVideoForTrim implements PoseEvent {
+  const factory PickVideoForTrim() = _$PickVideoForTrimImpl;
 }
 
 /// @nodoc
@@ -1988,6 +2233,7 @@ class _$AnalyzeVideoFileImpl implements AnalyzeVideoFile {
     required TResult Function(PoseEntity pose) poseReceived,
     required TResult Function() poseLost,
     required TResult Function() pickAndAnalyzeVideo,
+    required TResult Function() pickVideoForTrim,
     required TResult Function(String filePath) analyzeVideoFile,
     required TResult Function() pickAndAnalyzeImage,
     required TResult Function(ReportData data) generateReport,
@@ -2008,6 +2254,7 @@ class _$AnalyzeVideoFileImpl implements AnalyzeVideoFile {
     TResult? Function(PoseEntity pose)? poseReceived,
     TResult? Function()? poseLost,
     TResult? Function()? pickAndAnalyzeVideo,
+    TResult? Function()? pickVideoForTrim,
     TResult? Function(String filePath)? analyzeVideoFile,
     TResult? Function()? pickAndAnalyzeImage,
     TResult? Function(ReportData data)? generateReport,
@@ -2028,6 +2275,7 @@ class _$AnalyzeVideoFileImpl implements AnalyzeVideoFile {
     TResult Function(PoseEntity pose)? poseReceived,
     TResult Function()? poseLost,
     TResult Function()? pickAndAnalyzeVideo,
+    TResult Function()? pickVideoForTrim,
     TResult Function(String filePath)? analyzeVideoFile,
     TResult Function()? pickAndAnalyzeImage,
     TResult Function(ReportData data)? generateReport,
@@ -2052,6 +2300,7 @@ class _$AnalyzeVideoFileImpl implements AnalyzeVideoFile {
     required TResult Function(PoseReceived value) poseReceived,
     required TResult Function(PoseLost value) poseLost,
     required TResult Function(PickAndAnalyzeVideo value) pickAndAnalyzeVideo,
+    required TResult Function(PickVideoForTrim value) pickVideoForTrim,
     required TResult Function(AnalyzeVideoFile value) analyzeVideoFile,
     required TResult Function(PickAndAnalyzeImage value) pickAndAnalyzeImage,
     required TResult Function(GenerateReport value) generateReport,
@@ -2072,6 +2321,7 @@ class _$AnalyzeVideoFileImpl implements AnalyzeVideoFile {
     TResult? Function(PoseReceived value)? poseReceived,
     TResult? Function(PoseLost value)? poseLost,
     TResult? Function(PickAndAnalyzeVideo value)? pickAndAnalyzeVideo,
+    TResult? Function(PickVideoForTrim value)? pickVideoForTrim,
     TResult? Function(AnalyzeVideoFile value)? analyzeVideoFile,
     TResult? Function(PickAndAnalyzeImage value)? pickAndAnalyzeImage,
     TResult? Function(GenerateReport value)? generateReport,
@@ -2092,6 +2342,7 @@ class _$AnalyzeVideoFileImpl implements AnalyzeVideoFile {
     TResult Function(PoseReceived value)? poseReceived,
     TResult Function(PoseLost value)? poseLost,
     TResult Function(PickAndAnalyzeVideo value)? pickAndAnalyzeVideo,
+    TResult Function(PickVideoForTrim value)? pickVideoForTrim,
     TResult Function(AnalyzeVideoFile value)? analyzeVideoFile,
     TResult Function(PickAndAnalyzeImage value)? pickAndAnalyzeImage,
     TResult Function(GenerateReport value)? generateReport,
@@ -2171,6 +2422,7 @@ class _$PickAndAnalyzeImageImpl implements PickAndAnalyzeImage {
     required TResult Function(PoseEntity pose) poseReceived,
     required TResult Function() poseLost,
     required TResult Function() pickAndAnalyzeVideo,
+    required TResult Function() pickVideoForTrim,
     required TResult Function(String filePath) analyzeVideoFile,
     required TResult Function() pickAndAnalyzeImage,
     required TResult Function(ReportData data) generateReport,
@@ -2191,6 +2443,7 @@ class _$PickAndAnalyzeImageImpl implements PickAndAnalyzeImage {
     TResult? Function(PoseEntity pose)? poseReceived,
     TResult? Function()? poseLost,
     TResult? Function()? pickAndAnalyzeVideo,
+    TResult? Function()? pickVideoForTrim,
     TResult? Function(String filePath)? analyzeVideoFile,
     TResult? Function()? pickAndAnalyzeImage,
     TResult? Function(ReportData data)? generateReport,
@@ -2211,6 +2464,7 @@ class _$PickAndAnalyzeImageImpl implements PickAndAnalyzeImage {
     TResult Function(PoseEntity pose)? poseReceived,
     TResult Function()? poseLost,
     TResult Function()? pickAndAnalyzeVideo,
+    TResult Function()? pickVideoForTrim,
     TResult Function(String filePath)? analyzeVideoFile,
     TResult Function()? pickAndAnalyzeImage,
     TResult Function(ReportData data)? generateReport,
@@ -2235,6 +2489,7 @@ class _$PickAndAnalyzeImageImpl implements PickAndAnalyzeImage {
     required TResult Function(PoseReceived value) poseReceived,
     required TResult Function(PoseLost value) poseLost,
     required TResult Function(PickAndAnalyzeVideo value) pickAndAnalyzeVideo,
+    required TResult Function(PickVideoForTrim value) pickVideoForTrim,
     required TResult Function(AnalyzeVideoFile value) analyzeVideoFile,
     required TResult Function(PickAndAnalyzeImage value) pickAndAnalyzeImage,
     required TResult Function(GenerateReport value) generateReport,
@@ -2255,6 +2510,7 @@ class _$PickAndAnalyzeImageImpl implements PickAndAnalyzeImage {
     TResult? Function(PoseReceived value)? poseReceived,
     TResult? Function(PoseLost value)? poseLost,
     TResult? Function(PickAndAnalyzeVideo value)? pickAndAnalyzeVideo,
+    TResult? Function(PickVideoForTrim value)? pickVideoForTrim,
     TResult? Function(AnalyzeVideoFile value)? analyzeVideoFile,
     TResult? Function(PickAndAnalyzeImage value)? pickAndAnalyzeImage,
     TResult? Function(GenerateReport value)? generateReport,
@@ -2275,6 +2531,7 @@ class _$PickAndAnalyzeImageImpl implements PickAndAnalyzeImage {
     TResult Function(PoseReceived value)? poseReceived,
     TResult Function(PoseLost value)? poseLost,
     TResult Function(PickAndAnalyzeVideo value)? pickAndAnalyzeVideo,
+    TResult Function(PickVideoForTrim value)? pickVideoForTrim,
     TResult Function(AnalyzeVideoFile value)? analyzeVideoFile,
     TResult Function(PickAndAnalyzeImage value)? pickAndAnalyzeImage,
     TResult Function(GenerateReport value)? generateReport,
@@ -2374,6 +2631,7 @@ class _$GenerateReportImpl implements GenerateReport {
     required TResult Function(PoseEntity pose) poseReceived,
     required TResult Function() poseLost,
     required TResult Function() pickAndAnalyzeVideo,
+    required TResult Function() pickVideoForTrim,
     required TResult Function(String filePath) analyzeVideoFile,
     required TResult Function() pickAndAnalyzeImage,
     required TResult Function(ReportData data) generateReport,
@@ -2394,6 +2652,7 @@ class _$GenerateReportImpl implements GenerateReport {
     TResult? Function(PoseEntity pose)? poseReceived,
     TResult? Function()? poseLost,
     TResult? Function()? pickAndAnalyzeVideo,
+    TResult? Function()? pickVideoForTrim,
     TResult? Function(String filePath)? analyzeVideoFile,
     TResult? Function()? pickAndAnalyzeImage,
     TResult? Function(ReportData data)? generateReport,
@@ -2414,6 +2673,7 @@ class _$GenerateReportImpl implements GenerateReport {
     TResult Function(PoseEntity pose)? poseReceived,
     TResult Function()? poseLost,
     TResult Function()? pickAndAnalyzeVideo,
+    TResult Function()? pickVideoForTrim,
     TResult Function(String filePath)? analyzeVideoFile,
     TResult Function()? pickAndAnalyzeImage,
     TResult Function(ReportData data)? generateReport,
@@ -2438,6 +2698,7 @@ class _$GenerateReportImpl implements GenerateReport {
     required TResult Function(PoseReceived value) poseReceived,
     required TResult Function(PoseLost value) poseLost,
     required TResult Function(PickAndAnalyzeVideo value) pickAndAnalyzeVideo,
+    required TResult Function(PickVideoForTrim value) pickVideoForTrim,
     required TResult Function(AnalyzeVideoFile value) analyzeVideoFile,
     required TResult Function(PickAndAnalyzeImage value) pickAndAnalyzeImage,
     required TResult Function(GenerateReport value) generateReport,
@@ -2458,6 +2719,7 @@ class _$GenerateReportImpl implements GenerateReport {
     TResult? Function(PoseReceived value)? poseReceived,
     TResult? Function(PoseLost value)? poseLost,
     TResult? Function(PickAndAnalyzeVideo value)? pickAndAnalyzeVideo,
+    TResult? Function(PickVideoForTrim value)? pickVideoForTrim,
     TResult? Function(AnalyzeVideoFile value)? analyzeVideoFile,
     TResult? Function(PickAndAnalyzeImage value)? pickAndAnalyzeImage,
     TResult? Function(GenerateReport value)? generateReport,
@@ -2478,6 +2740,7 @@ class _$GenerateReportImpl implements GenerateReport {
     TResult Function(PoseReceived value)? poseReceived,
     TResult Function(PoseLost value)? poseLost,
     TResult Function(PickAndAnalyzeVideo value)? pickAndAnalyzeVideo,
+    TResult Function(PickVideoForTrim value)? pickVideoForTrim,
     TResult Function(AnalyzeVideoFile value)? analyzeVideoFile,
     TResult Function(PickAndAnalyzeImage value)? pickAndAnalyzeImage,
     TResult Function(GenerateReport value)? generateReport,

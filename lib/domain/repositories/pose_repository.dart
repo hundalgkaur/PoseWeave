@@ -55,6 +55,10 @@ abstract class PoseRepository {
   /// Most recent poses (newest last), capped, for review/replay.
   List<PoseEntity> get recentPoses;
 
+  /// Everyone detected in the latest live frame (primary first) — for drawing
+  /// all skeletons and showing a person count.
+  List<PoseEntity> get latestPoses;
+
   /// Open the gallery picker; returns the chosen path or null.
   Future<Either<Failure, String?>> pickVideo();
 

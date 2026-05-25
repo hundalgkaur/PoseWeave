@@ -40,6 +40,11 @@ class PoseRepositoryImpl implements PoseRepository {
       List<PoseEntity>.unmodifiable(_recentPoses);
 
   @override
+  List<PoseEntity> get latestPoses => _cameraDataSource.latestPoses
+      .map((PoseModel m) => m.toEntity())
+      .toList();
+
+  @override
   Future<Either<Failure, Unit>> initializeCamera({
     CameraLensDirection direction = CameraLensDirection.back,
   }) async {

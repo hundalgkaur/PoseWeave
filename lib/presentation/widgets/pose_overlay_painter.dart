@@ -22,6 +22,11 @@ class PoseOverlayPainter extends CustomPainter {
   /// Flip horizontally (front-facing camera preview is mirrored).
   final bool mirror;
 
+  /// Draw a landmark/bone down to this confidence. Lower than the domain
+  /// `isVisible` gate (0.5) so more of the skeleton renders — weak joints
+  /// (partly out of frame, occluded) still show, just faintly.
+  static const double _kDrawThreshold = 0.3;
+
   // Pre-created paints reused every frame (no per-paint allocation). The bone
   // paint's color is set per-bone inside [paint].
   static final Paint _bonePaint =
@@ -48,8 +53,11 @@ class PoseOverlayPainter extends CustomPainter {
     final List<Offset?> points = List<Offset?>.filled(33, null);
     for (int i = 0; i < landmarks.length; i++) {
       final LandmarkEntity lm = landmarks[i];
-      if (!lm.isVisible) continue;
+      if (lm.confidence < _kDrawThreshold) continue;
       Offset o = PoseMath.normalizedToCanvas(lm, size, imageSize);
+      // Display-only horizontal flip for the front camera. The landmark data
+      // itself stays un-mirrored so angle/rep math (which is mirror-invariant)
+      // keeps left/right identity — never feed mirrored coords back into math.
       if (mirror) o = Offset(size.width - o.dx, o.dy);
       points[i] = o;
     }

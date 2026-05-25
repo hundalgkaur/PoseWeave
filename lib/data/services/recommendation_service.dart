@@ -63,39 +63,32 @@ class RecommendationService {
     required GaitParameters gait,
     required Map<String, SegmentSummary> segments,
   }) async {
-    final String model = () {
-      final String? m = _env('GEMINI_MODEL');
-      return (m == null || m.isEmpty) ? 'gemini-2.0-flash' : m;
-    }();
+    final String? override = _env('GEMINI_MODEL');
+    // `gemini-flash-latest` is a stable alias that tracks the current Flash
+    // model, avoiding 404s when a pinned version (e.g. gemini-2.0-flash) is
+    // retired or not enabled for the key.
+    final String model = (override == null || override.isEmpty)
+        ? 'gemini-flash-latest'
+        : _normalizeModel(override);
     try {
-      final http.Response res = await http.post(
-        Uri.parse(
-          'https://generativelanguage.googleapis.com/v1beta/models/'
-          '$model:generateContent?key=$key',
-        ),
-        headers: <String, String>{'content-type': 'application/json'},
-        body: jsonEncode(<String, Object>{
-          'systemInstruction': <String, Object>{
-            'parts': <Map<String, String>>[
-              <String, String>{'text': RecommendationPromptBuilder.system},
-            ],
-          },
-          'contents': <Map<String, Object>>[
-            <String, Object>{
-              'parts': <Map<String, String>>[
-                <String, String>{
-                  'text':
-                      RecommendationPromptBuilder.buildUser(gait, segments),
-                },
-              ],
-            },
-          ],
-          'generationConfig': <String, Object>{
-            'responseMimeType': 'application/json',
-            'temperature': 0.4,
-          },
-        }),
-      );
+      http.Response res = await _geminiGenerate(model, key, gait, segments);
+
+      // A 404 means the model name isn't available for this key/version. Try to
+      // discover a working model via ListModels and retry once before failing.
+      if (res.statusCode == 404) {
+        final String? discovered = await _geminiFirstUsableModel(key);
+        if (discovered != null && discovered != model) {
+          res = await _geminiGenerate(discovered, key, gait, segments);
+        }
+        if (res.statusCode == 404) {
+          return const Left<Failure, List<RecommendationEntity>>(
+            AiServiceFailure(
+              'Gemini model not found for this key. Set GEMINI_MODEL in .env '
+              '(try gemini-flash-latest) or enable the model for your key.',
+            ),
+          );
+        }
+      }
 
       if (res.statusCode == 400) {
         return const Left<Failure, List<RecommendationEntity>>(
@@ -145,6 +138,75 @@ class RecommendationService {
       return Left<Failure, List<RecommendationEntity>>(
         AiServiceFailure('Failed to get recommendations: $e'),
       );
+    }
+  }
+
+  /// Normalizes a user-supplied model id by stripping any leading `models/`.
+  String _normalizeModel(String m) =>
+      m.startsWith('models/') ? m.substring('models/'.length) : m;
+
+  /// Posts the recommendation prompt to a given Gemini [model].
+  Future<http.Response> _geminiGenerate(
+    String model,
+    String key,
+    GaitParameters gait,
+    Map<String, SegmentSummary> segments,
+  ) {
+    return http.post(
+      Uri.parse(
+        'https://generativelanguage.googleapis.com/v1beta/models/'
+        '$model:generateContent?key=$key',
+      ),
+      headers: <String, String>{'content-type': 'application/json'},
+      body: jsonEncode(<String, Object>{
+        'systemInstruction': <String, Object>{
+          'parts': <Map<String, String>>[
+            <String, String>{'text': RecommendationPromptBuilder.system},
+          ],
+        },
+        'contents': <Map<String, Object>>[
+          <String, Object>{
+            'parts': <Map<String, String>>[
+              <String, String>{
+                'text': RecommendationPromptBuilder.buildUser(gait, segments),
+              },
+            ],
+          },
+        ],
+        'generationConfig': <String, Object>{
+          'responseMimeType': 'application/json',
+          'temperature': 0.4,
+        },
+      }),
+    );
+  }
+
+  /// Calls ListModels and returns the first model that supports
+  /// `generateContent` (name without the `models/` prefix), or null on failure.
+  Future<String?> _geminiFirstUsableModel(String key) async {
+    try {
+      final http.Response res = await http.get(
+        Uri.parse(
+          'https://generativelanguage.googleapis.com/v1beta/models?key=$key',
+        ),
+      );
+      if (res.statusCode != 200) return null;
+      final Map<String, dynamic> body =
+          jsonDecode(res.body) as Map<String, dynamic>;
+      final List<dynamic>? models = body['models'] as List<dynamic>?;
+      if (models == null) return null;
+      for (final Object? m in models) {
+        if (m is! Map<String, dynamic>) continue;
+        final List<dynamic>? methods =
+            m['supportedGenerationMethods'] as List<dynamic>?;
+        final String? name = m['name'] as String?;
+        if (name != null && (methods?.contains('generateContent') ?? false)) {
+          return _normalizeModel(name);
+        }
+      }
+      return null;
+    } catch (_) {
+      return null;
     }
   }
 

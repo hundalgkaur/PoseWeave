@@ -28,9 +28,11 @@ mixin _$PoseState {
       PoseEntity pose,
       double averageConfidence,
       double fps,
+      List<PoseEntity> allPoses,
     )
     active,
     required TResult Function() recordingVideo,
+    required TResult Function(String path) videoPicked,
     required TResult Function(
       double progress,
       int framesProcessed,
@@ -58,9 +60,15 @@ mixin _$PoseState {
     TResult? Function()? noPermission,
     TResult? Function()? streaming,
     TResult? Function()? searching,
-    TResult? Function(PoseEntity pose, double averageConfidence, double fps)?
+    TResult? Function(
+      PoseEntity pose,
+      double averageConfidence,
+      double fps,
+      List<PoseEntity> allPoses,
+    )?
     active,
     TResult? Function()? recordingVideo,
+    TResult? Function(String path)? videoPicked,
     TResult? Function(
       double progress,
       int framesProcessed,
@@ -88,9 +96,15 @@ mixin _$PoseState {
     TResult Function()? noPermission,
     TResult Function()? streaming,
     TResult Function()? searching,
-    TResult Function(PoseEntity pose, double averageConfidence, double fps)?
+    TResult Function(
+      PoseEntity pose,
+      double averageConfidence,
+      double fps,
+      List<PoseEntity> allPoses,
+    )?
     active,
     TResult Function()? recordingVideo,
+    TResult Function(String path)? videoPicked,
     TResult Function(
       double progress,
       int framesProcessed,
@@ -121,6 +135,7 @@ mixin _$PoseState {
     required TResult Function(PoseSearching value) searching,
     required TResult Function(PoseActive value) active,
     required TResult Function(PoseRecordingVideo value) recordingVideo,
+    required TResult Function(PoseVideoPicked value) videoPicked,
     required TResult Function(PoseVideoProcessing value) videoProcessing,
     required TResult Function(PoseVideoComplete value) videoComplete,
     required TResult Function(PoseImageProcessing value) imageProcessing,
@@ -139,6 +154,7 @@ mixin _$PoseState {
     TResult? Function(PoseSearching value)? searching,
     TResult? Function(PoseActive value)? active,
     TResult? Function(PoseRecordingVideo value)? recordingVideo,
+    TResult? Function(PoseVideoPicked value)? videoPicked,
     TResult? Function(PoseVideoProcessing value)? videoProcessing,
     TResult? Function(PoseVideoComplete value)? videoComplete,
     TResult? Function(PoseImageProcessing value)? imageProcessing,
@@ -157,6 +173,7 @@ mixin _$PoseState {
     TResult Function(PoseSearching value)? searching,
     TResult Function(PoseActive value)? active,
     TResult Function(PoseRecordingVideo value)? recordingVideo,
+    TResult Function(PoseVideoPicked value)? videoPicked,
     TResult Function(PoseVideoProcessing value)? videoProcessing,
     TResult Function(PoseVideoComplete value)? videoComplete,
     TResult Function(PoseImageProcessing value)? imageProcessing,
@@ -241,9 +258,11 @@ class _$PoseInitialImpl implements PoseInitial {
       PoseEntity pose,
       double averageConfidence,
       double fps,
+      List<PoseEntity> allPoses,
     )
     active,
     required TResult Function() recordingVideo,
+    required TResult Function(String path) videoPicked,
     required TResult Function(
       double progress,
       int framesProcessed,
@@ -275,9 +294,15 @@ class _$PoseInitialImpl implements PoseInitial {
     TResult? Function()? noPermission,
     TResult? Function()? streaming,
     TResult? Function()? searching,
-    TResult? Function(PoseEntity pose, double averageConfidence, double fps)?
+    TResult? Function(
+      PoseEntity pose,
+      double averageConfidence,
+      double fps,
+      List<PoseEntity> allPoses,
+    )?
     active,
     TResult? Function()? recordingVideo,
+    TResult? Function(String path)? videoPicked,
     TResult? Function(
       double progress,
       int framesProcessed,
@@ -309,9 +334,15 @@ class _$PoseInitialImpl implements PoseInitial {
     TResult Function()? noPermission,
     TResult Function()? streaming,
     TResult Function()? searching,
-    TResult Function(PoseEntity pose, double averageConfidence, double fps)?
+    TResult Function(
+      PoseEntity pose,
+      double averageConfidence,
+      double fps,
+      List<PoseEntity> allPoses,
+    )?
     active,
     TResult Function()? recordingVideo,
+    TResult Function(String path)? videoPicked,
     TResult Function(
       double progress,
       int framesProcessed,
@@ -349,6 +380,7 @@ class _$PoseInitialImpl implements PoseInitial {
     required TResult Function(PoseSearching value) searching,
     required TResult Function(PoseActive value) active,
     required TResult Function(PoseRecordingVideo value) recordingVideo,
+    required TResult Function(PoseVideoPicked value) videoPicked,
     required TResult Function(PoseVideoProcessing value) videoProcessing,
     required TResult Function(PoseVideoComplete value) videoComplete,
     required TResult Function(PoseImageProcessing value) imageProcessing,
@@ -371,6 +403,7 @@ class _$PoseInitialImpl implements PoseInitial {
     TResult? Function(PoseSearching value)? searching,
     TResult? Function(PoseActive value)? active,
     TResult? Function(PoseRecordingVideo value)? recordingVideo,
+    TResult? Function(PoseVideoPicked value)? videoPicked,
     TResult? Function(PoseVideoProcessing value)? videoProcessing,
     TResult? Function(PoseVideoComplete value)? videoComplete,
     TResult? Function(PoseImageProcessing value)? imageProcessing,
@@ -393,6 +426,7 @@ class _$PoseInitialImpl implements PoseInitial {
     TResult Function(PoseSearching value)? searching,
     TResult Function(PoseActive value)? active,
     TResult Function(PoseRecordingVideo value)? recordingVideo,
+    TResult Function(PoseVideoPicked value)? videoPicked,
     TResult Function(PoseVideoProcessing value)? videoProcessing,
     TResult Function(PoseVideoComplete value)? videoComplete,
     TResult Function(PoseImageProcessing value)? imageProcessing,
@@ -466,9 +500,11 @@ class _$PoseLoadingImpl implements PoseLoading {
       PoseEntity pose,
       double averageConfidence,
       double fps,
+      List<PoseEntity> allPoses,
     )
     active,
     required TResult Function() recordingVideo,
+    required TResult Function(String path) videoPicked,
     required TResult Function(
       double progress,
       int framesProcessed,
@@ -500,9 +536,15 @@ class _$PoseLoadingImpl implements PoseLoading {
     TResult? Function()? noPermission,
     TResult? Function()? streaming,
     TResult? Function()? searching,
-    TResult? Function(PoseEntity pose, double averageConfidence, double fps)?
+    TResult? Function(
+      PoseEntity pose,
+      double averageConfidence,
+      double fps,
+      List<PoseEntity> allPoses,
+    )?
     active,
     TResult? Function()? recordingVideo,
+    TResult? Function(String path)? videoPicked,
     TResult? Function(
       double progress,
       int framesProcessed,
@@ -534,9 +576,15 @@ class _$PoseLoadingImpl implements PoseLoading {
     TResult Function()? noPermission,
     TResult Function()? streaming,
     TResult Function()? searching,
-    TResult Function(PoseEntity pose, double averageConfidence, double fps)?
+    TResult Function(
+      PoseEntity pose,
+      double averageConfidence,
+      double fps,
+      List<PoseEntity> allPoses,
+    )?
     active,
     TResult Function()? recordingVideo,
+    TResult Function(String path)? videoPicked,
     TResult Function(
       double progress,
       int framesProcessed,
@@ -574,6 +622,7 @@ class _$PoseLoadingImpl implements PoseLoading {
     required TResult Function(PoseSearching value) searching,
     required TResult Function(PoseActive value) active,
     required TResult Function(PoseRecordingVideo value) recordingVideo,
+    required TResult Function(PoseVideoPicked value) videoPicked,
     required TResult Function(PoseVideoProcessing value) videoProcessing,
     required TResult Function(PoseVideoComplete value) videoComplete,
     required TResult Function(PoseImageProcessing value) imageProcessing,
@@ -596,6 +645,7 @@ class _$PoseLoadingImpl implements PoseLoading {
     TResult? Function(PoseSearching value)? searching,
     TResult? Function(PoseActive value)? active,
     TResult? Function(PoseRecordingVideo value)? recordingVideo,
+    TResult? Function(PoseVideoPicked value)? videoPicked,
     TResult? Function(PoseVideoProcessing value)? videoProcessing,
     TResult? Function(PoseVideoComplete value)? videoComplete,
     TResult? Function(PoseImageProcessing value)? imageProcessing,
@@ -618,6 +668,7 @@ class _$PoseLoadingImpl implements PoseLoading {
     TResult Function(PoseSearching value)? searching,
     TResult Function(PoseActive value)? active,
     TResult Function(PoseRecordingVideo value)? recordingVideo,
+    TResult Function(PoseVideoPicked value)? videoPicked,
     TResult Function(PoseVideoProcessing value)? videoProcessing,
     TResult Function(PoseVideoComplete value)? videoComplete,
     TResult Function(PoseImageProcessing value)? imageProcessing,
@@ -691,9 +742,11 @@ class _$PoseNoPermissionImpl implements PoseNoPermission {
       PoseEntity pose,
       double averageConfidence,
       double fps,
+      List<PoseEntity> allPoses,
     )
     active,
     required TResult Function() recordingVideo,
+    required TResult Function(String path) videoPicked,
     required TResult Function(
       double progress,
       int framesProcessed,
@@ -725,9 +778,15 @@ class _$PoseNoPermissionImpl implements PoseNoPermission {
     TResult? Function()? noPermission,
     TResult? Function()? streaming,
     TResult? Function()? searching,
-    TResult? Function(PoseEntity pose, double averageConfidence, double fps)?
+    TResult? Function(
+      PoseEntity pose,
+      double averageConfidence,
+      double fps,
+      List<PoseEntity> allPoses,
+    )?
     active,
     TResult? Function()? recordingVideo,
+    TResult? Function(String path)? videoPicked,
     TResult? Function(
       double progress,
       int framesProcessed,
@@ -759,9 +818,15 @@ class _$PoseNoPermissionImpl implements PoseNoPermission {
     TResult Function()? noPermission,
     TResult Function()? streaming,
     TResult Function()? searching,
-    TResult Function(PoseEntity pose, double averageConfidence, double fps)?
+    TResult Function(
+      PoseEntity pose,
+      double averageConfidence,
+      double fps,
+      List<PoseEntity> allPoses,
+    )?
     active,
     TResult Function()? recordingVideo,
+    TResult Function(String path)? videoPicked,
     TResult Function(
       double progress,
       int framesProcessed,
@@ -799,6 +864,7 @@ class _$PoseNoPermissionImpl implements PoseNoPermission {
     required TResult Function(PoseSearching value) searching,
     required TResult Function(PoseActive value) active,
     required TResult Function(PoseRecordingVideo value) recordingVideo,
+    required TResult Function(PoseVideoPicked value) videoPicked,
     required TResult Function(PoseVideoProcessing value) videoProcessing,
     required TResult Function(PoseVideoComplete value) videoComplete,
     required TResult Function(PoseImageProcessing value) imageProcessing,
@@ -821,6 +887,7 @@ class _$PoseNoPermissionImpl implements PoseNoPermission {
     TResult? Function(PoseSearching value)? searching,
     TResult? Function(PoseActive value)? active,
     TResult? Function(PoseRecordingVideo value)? recordingVideo,
+    TResult? Function(PoseVideoPicked value)? videoPicked,
     TResult? Function(PoseVideoProcessing value)? videoProcessing,
     TResult? Function(PoseVideoComplete value)? videoComplete,
     TResult? Function(PoseImageProcessing value)? imageProcessing,
@@ -843,6 +910,7 @@ class _$PoseNoPermissionImpl implements PoseNoPermission {
     TResult Function(PoseSearching value)? searching,
     TResult Function(PoseActive value)? active,
     TResult Function(PoseRecordingVideo value)? recordingVideo,
+    TResult Function(PoseVideoPicked value)? videoPicked,
     TResult Function(PoseVideoProcessing value)? videoProcessing,
     TResult Function(PoseVideoComplete value)? videoComplete,
     TResult Function(PoseImageProcessing value)? imageProcessing,
@@ -916,9 +984,11 @@ class _$PoseStreamingImpl implements PoseStreaming {
       PoseEntity pose,
       double averageConfidence,
       double fps,
+      List<PoseEntity> allPoses,
     )
     active,
     required TResult Function() recordingVideo,
+    required TResult Function(String path) videoPicked,
     required TResult Function(
       double progress,
       int framesProcessed,
@@ -950,9 +1020,15 @@ class _$PoseStreamingImpl implements PoseStreaming {
     TResult? Function()? noPermission,
     TResult? Function()? streaming,
     TResult? Function()? searching,
-    TResult? Function(PoseEntity pose, double averageConfidence, double fps)?
+    TResult? Function(
+      PoseEntity pose,
+      double averageConfidence,
+      double fps,
+      List<PoseEntity> allPoses,
+    )?
     active,
     TResult? Function()? recordingVideo,
+    TResult? Function(String path)? videoPicked,
     TResult? Function(
       double progress,
       int framesProcessed,
@@ -984,9 +1060,15 @@ class _$PoseStreamingImpl implements PoseStreaming {
     TResult Function()? noPermission,
     TResult Function()? streaming,
     TResult Function()? searching,
-    TResult Function(PoseEntity pose, double averageConfidence, double fps)?
+    TResult Function(
+      PoseEntity pose,
+      double averageConfidence,
+      double fps,
+      List<PoseEntity> allPoses,
+    )?
     active,
     TResult Function()? recordingVideo,
+    TResult Function(String path)? videoPicked,
     TResult Function(
       double progress,
       int framesProcessed,
@@ -1024,6 +1106,7 @@ class _$PoseStreamingImpl implements PoseStreaming {
     required TResult Function(PoseSearching value) searching,
     required TResult Function(PoseActive value) active,
     required TResult Function(PoseRecordingVideo value) recordingVideo,
+    required TResult Function(PoseVideoPicked value) videoPicked,
     required TResult Function(PoseVideoProcessing value) videoProcessing,
     required TResult Function(PoseVideoComplete value) videoComplete,
     required TResult Function(PoseImageProcessing value) imageProcessing,
@@ -1046,6 +1129,7 @@ class _$PoseStreamingImpl implements PoseStreaming {
     TResult? Function(PoseSearching value)? searching,
     TResult? Function(PoseActive value)? active,
     TResult? Function(PoseRecordingVideo value)? recordingVideo,
+    TResult? Function(PoseVideoPicked value)? videoPicked,
     TResult? Function(PoseVideoProcessing value)? videoProcessing,
     TResult? Function(PoseVideoComplete value)? videoComplete,
     TResult? Function(PoseImageProcessing value)? imageProcessing,
@@ -1068,6 +1152,7 @@ class _$PoseStreamingImpl implements PoseStreaming {
     TResult Function(PoseSearching value)? searching,
     TResult Function(PoseActive value)? active,
     TResult Function(PoseRecordingVideo value)? recordingVideo,
+    TResult Function(PoseVideoPicked value)? videoPicked,
     TResult Function(PoseVideoProcessing value)? videoProcessing,
     TResult Function(PoseVideoComplete value)? videoComplete,
     TResult Function(PoseImageProcessing value)? imageProcessing,
@@ -1141,9 +1226,11 @@ class _$PoseSearchingImpl implements PoseSearching {
       PoseEntity pose,
       double averageConfidence,
       double fps,
+      List<PoseEntity> allPoses,
     )
     active,
     required TResult Function() recordingVideo,
+    required TResult Function(String path) videoPicked,
     required TResult Function(
       double progress,
       int framesProcessed,
@@ -1175,9 +1262,15 @@ class _$PoseSearchingImpl implements PoseSearching {
     TResult? Function()? noPermission,
     TResult? Function()? streaming,
     TResult? Function()? searching,
-    TResult? Function(PoseEntity pose, double averageConfidence, double fps)?
+    TResult? Function(
+      PoseEntity pose,
+      double averageConfidence,
+      double fps,
+      List<PoseEntity> allPoses,
+    )?
     active,
     TResult? Function()? recordingVideo,
+    TResult? Function(String path)? videoPicked,
     TResult? Function(
       double progress,
       int framesProcessed,
@@ -1209,9 +1302,15 @@ class _$PoseSearchingImpl implements PoseSearching {
     TResult Function()? noPermission,
     TResult Function()? streaming,
     TResult Function()? searching,
-    TResult Function(PoseEntity pose, double averageConfidence, double fps)?
+    TResult Function(
+      PoseEntity pose,
+      double averageConfidence,
+      double fps,
+      List<PoseEntity> allPoses,
+    )?
     active,
     TResult Function()? recordingVideo,
+    TResult Function(String path)? videoPicked,
     TResult Function(
       double progress,
       int framesProcessed,
@@ -1249,6 +1348,7 @@ class _$PoseSearchingImpl implements PoseSearching {
     required TResult Function(PoseSearching value) searching,
     required TResult Function(PoseActive value) active,
     required TResult Function(PoseRecordingVideo value) recordingVideo,
+    required TResult Function(PoseVideoPicked value) videoPicked,
     required TResult Function(PoseVideoProcessing value) videoProcessing,
     required TResult Function(PoseVideoComplete value) videoComplete,
     required TResult Function(PoseImageProcessing value) imageProcessing,
@@ -1271,6 +1371,7 @@ class _$PoseSearchingImpl implements PoseSearching {
     TResult? Function(PoseSearching value)? searching,
     TResult? Function(PoseActive value)? active,
     TResult? Function(PoseRecordingVideo value)? recordingVideo,
+    TResult? Function(PoseVideoPicked value)? videoPicked,
     TResult? Function(PoseVideoProcessing value)? videoProcessing,
     TResult? Function(PoseVideoComplete value)? videoComplete,
     TResult? Function(PoseImageProcessing value)? imageProcessing,
@@ -1293,6 +1394,7 @@ class _$PoseSearchingImpl implements PoseSearching {
     TResult Function(PoseSearching value)? searching,
     TResult Function(PoseActive value)? active,
     TResult Function(PoseRecordingVideo value)? recordingVideo,
+    TResult Function(PoseVideoPicked value)? videoPicked,
     TResult Function(PoseVideoProcessing value)? videoProcessing,
     TResult Function(PoseVideoComplete value)? videoComplete,
     TResult Function(PoseImageProcessing value)? imageProcessing,
@@ -1321,7 +1423,12 @@ abstract class _$$PoseActiveImplCopyWith<$Res> {
     $Res Function(_$PoseActiveImpl) then,
   ) = __$$PoseActiveImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({PoseEntity pose, double averageConfidence, double fps});
+  $Res call({
+    PoseEntity pose,
+    double averageConfidence,
+    double fps,
+    List<PoseEntity> allPoses,
+  });
 }
 
 /// @nodoc
@@ -1341,6 +1448,7 @@ class __$$PoseActiveImplCopyWithImpl<$Res>
     Object? pose = null,
     Object? averageConfidence = null,
     Object? fps = null,
+    Object? allPoses = null,
   }) {
     return _then(
       _$PoseActiveImpl(
@@ -1359,6 +1467,11 @@ class __$$PoseActiveImplCopyWithImpl<$Res>
                 ? _value.fps
                 : fps // ignore: cast_nullable_to_non_nullable
                     as double,
+        allPoses:
+            null == allPoses
+                ? _value._allPoses
+                : allPoses // ignore: cast_nullable_to_non_nullable
+                    as List<PoseEntity>,
       ),
     );
   }
@@ -1371,7 +1484,8 @@ class _$PoseActiveImpl implements PoseActive {
     required this.pose,
     required this.averageConfidence,
     required this.fps,
-  });
+    final List<PoseEntity> allPoses = const <PoseEntity>[],
+  }) : _allPoses = allPoses;
 
   @override
   final PoseEntity pose;
@@ -1379,10 +1493,22 @@ class _$PoseActiveImpl implements PoseActive {
   final double averageConfidence;
   @override
   final double fps;
+  // Everyone detected this frame (primary first) for drawing all skeletons +
+  // a person count. [pose] remains the primary for single-person features.
+  final List<PoseEntity> _allPoses;
+  // Everyone detected this frame (primary first) for drawing all skeletons +
+  // a person count. [pose] remains the primary for single-person features.
+  @override
+  @JsonKey()
+  List<PoseEntity> get allPoses {
+    if (_allPoses is EqualUnmodifiableListView) return _allPoses;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_allPoses);
+  }
 
   @override
   String toString() {
-    return 'PoseState.active(pose: $pose, averageConfidence: $averageConfidence, fps: $fps)';
+    return 'PoseState.active(pose: $pose, averageConfidence: $averageConfidence, fps: $fps, allPoses: $allPoses)';
   }
 
   @override
@@ -1393,11 +1519,18 @@ class _$PoseActiveImpl implements PoseActive {
             (identical(other.pose, pose) || other.pose == pose) &&
             (identical(other.averageConfidence, averageConfidence) ||
                 other.averageConfidence == averageConfidence) &&
-            (identical(other.fps, fps) || other.fps == fps));
+            (identical(other.fps, fps) || other.fps == fps) &&
+            const DeepCollectionEquality().equals(other._allPoses, _allPoses));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, pose, averageConfidence, fps);
+  int get hashCode => Object.hash(
+    runtimeType,
+    pose,
+    averageConfidence,
+    fps,
+    const DeepCollectionEquality().hash(_allPoses),
+  );
 
   /// Create a copy of PoseState
   /// with the given fields replaced by the non-null parameter values.
@@ -1419,9 +1552,11 @@ class _$PoseActiveImpl implements PoseActive {
       PoseEntity pose,
       double averageConfidence,
       double fps,
+      List<PoseEntity> allPoses,
     )
     active,
     required TResult Function() recordingVideo,
+    required TResult Function(String path) videoPicked,
     required TResult Function(
       double progress,
       int framesProcessed,
@@ -1442,7 +1577,7 @@ class _$PoseActiveImpl implements PoseActive {
     required TResult Function(String message) reportFailed,
     required TResult Function(String message, bool isRecoverable) error,
   }) {
-    return active(pose, averageConfidence, fps);
+    return active(pose, averageConfidence, fps, allPoses);
   }
 
   @override
@@ -1453,9 +1588,15 @@ class _$PoseActiveImpl implements PoseActive {
     TResult? Function()? noPermission,
     TResult? Function()? streaming,
     TResult? Function()? searching,
-    TResult? Function(PoseEntity pose, double averageConfidence, double fps)?
+    TResult? Function(
+      PoseEntity pose,
+      double averageConfidence,
+      double fps,
+      List<PoseEntity> allPoses,
+    )?
     active,
     TResult? Function()? recordingVideo,
+    TResult? Function(String path)? videoPicked,
     TResult? Function(
       double progress,
       int framesProcessed,
@@ -1476,7 +1617,7 @@ class _$PoseActiveImpl implements PoseActive {
     TResult? Function(String message)? reportFailed,
     TResult? Function(String message, bool isRecoverable)? error,
   }) {
-    return active?.call(pose, averageConfidence, fps);
+    return active?.call(pose, averageConfidence, fps, allPoses);
   }
 
   @override
@@ -1487,9 +1628,15 @@ class _$PoseActiveImpl implements PoseActive {
     TResult Function()? noPermission,
     TResult Function()? streaming,
     TResult Function()? searching,
-    TResult Function(PoseEntity pose, double averageConfidence, double fps)?
+    TResult Function(
+      PoseEntity pose,
+      double averageConfidence,
+      double fps,
+      List<PoseEntity> allPoses,
+    )?
     active,
     TResult Function()? recordingVideo,
+    TResult Function(String path)? videoPicked,
     TResult Function(
       double progress,
       int framesProcessed,
@@ -1512,7 +1659,7 @@ class _$PoseActiveImpl implements PoseActive {
     required TResult orElse(),
   }) {
     if (active != null) {
-      return active(pose, averageConfidence, fps);
+      return active(pose, averageConfidence, fps, allPoses);
     }
     return orElse();
   }
@@ -1527,6 +1674,7 @@ class _$PoseActiveImpl implements PoseActive {
     required TResult Function(PoseSearching value) searching,
     required TResult Function(PoseActive value) active,
     required TResult Function(PoseRecordingVideo value) recordingVideo,
+    required TResult Function(PoseVideoPicked value) videoPicked,
     required TResult Function(PoseVideoProcessing value) videoProcessing,
     required TResult Function(PoseVideoComplete value) videoComplete,
     required TResult Function(PoseImageProcessing value) imageProcessing,
@@ -1549,6 +1697,7 @@ class _$PoseActiveImpl implements PoseActive {
     TResult? Function(PoseSearching value)? searching,
     TResult? Function(PoseActive value)? active,
     TResult? Function(PoseRecordingVideo value)? recordingVideo,
+    TResult? Function(PoseVideoPicked value)? videoPicked,
     TResult? Function(PoseVideoProcessing value)? videoProcessing,
     TResult? Function(PoseVideoComplete value)? videoComplete,
     TResult? Function(PoseImageProcessing value)? imageProcessing,
@@ -1571,6 +1720,7 @@ class _$PoseActiveImpl implements PoseActive {
     TResult Function(PoseSearching value)? searching,
     TResult Function(PoseActive value)? active,
     TResult Function(PoseRecordingVideo value)? recordingVideo,
+    TResult Function(PoseVideoPicked value)? videoPicked,
     TResult Function(PoseVideoProcessing value)? videoProcessing,
     TResult Function(PoseVideoComplete value)? videoComplete,
     TResult Function(PoseImageProcessing value)? imageProcessing,
@@ -1593,11 +1743,15 @@ abstract class PoseActive implements PoseState {
     required final PoseEntity pose,
     required final double averageConfidence,
     required final double fps,
+    final List<PoseEntity> allPoses,
   }) = _$PoseActiveImpl;
 
   PoseEntity get pose;
   double get averageConfidence;
-  double get fps;
+  double
+  get fps; // Everyone detected this frame (primary first) for drawing all skeletons +
+  // a person count. [pose] remains the primary for single-person features.
+  List<PoseEntity> get allPoses;
 
   /// Create a copy of PoseState
   /// with the given fields replaced by the non-null parameter values.
@@ -1658,9 +1812,11 @@ class _$PoseRecordingVideoImpl implements PoseRecordingVideo {
       PoseEntity pose,
       double averageConfidence,
       double fps,
+      List<PoseEntity> allPoses,
     )
     active,
     required TResult Function() recordingVideo,
+    required TResult Function(String path) videoPicked,
     required TResult Function(
       double progress,
       int framesProcessed,
@@ -1692,9 +1848,15 @@ class _$PoseRecordingVideoImpl implements PoseRecordingVideo {
     TResult? Function()? noPermission,
     TResult? Function()? streaming,
     TResult? Function()? searching,
-    TResult? Function(PoseEntity pose, double averageConfidence, double fps)?
+    TResult? Function(
+      PoseEntity pose,
+      double averageConfidence,
+      double fps,
+      List<PoseEntity> allPoses,
+    )?
     active,
     TResult? Function()? recordingVideo,
+    TResult? Function(String path)? videoPicked,
     TResult? Function(
       double progress,
       int framesProcessed,
@@ -1726,9 +1888,15 @@ class _$PoseRecordingVideoImpl implements PoseRecordingVideo {
     TResult Function()? noPermission,
     TResult Function()? streaming,
     TResult Function()? searching,
-    TResult Function(PoseEntity pose, double averageConfidence, double fps)?
+    TResult Function(
+      PoseEntity pose,
+      double averageConfidence,
+      double fps,
+      List<PoseEntity> allPoses,
+    )?
     active,
     TResult Function()? recordingVideo,
+    TResult Function(String path)? videoPicked,
     TResult Function(
       double progress,
       int framesProcessed,
@@ -1766,6 +1934,7 @@ class _$PoseRecordingVideoImpl implements PoseRecordingVideo {
     required TResult Function(PoseSearching value) searching,
     required TResult Function(PoseActive value) active,
     required TResult Function(PoseRecordingVideo value) recordingVideo,
+    required TResult Function(PoseVideoPicked value) videoPicked,
     required TResult Function(PoseVideoProcessing value) videoProcessing,
     required TResult Function(PoseVideoComplete value) videoComplete,
     required TResult Function(PoseImageProcessing value) imageProcessing,
@@ -1788,6 +1957,7 @@ class _$PoseRecordingVideoImpl implements PoseRecordingVideo {
     TResult? Function(PoseSearching value)? searching,
     TResult? Function(PoseActive value)? active,
     TResult? Function(PoseRecordingVideo value)? recordingVideo,
+    TResult? Function(PoseVideoPicked value)? videoPicked,
     TResult? Function(PoseVideoProcessing value)? videoProcessing,
     TResult? Function(PoseVideoComplete value)? videoComplete,
     TResult? Function(PoseImageProcessing value)? imageProcessing,
@@ -1810,6 +1980,7 @@ class _$PoseRecordingVideoImpl implements PoseRecordingVideo {
     TResult Function(PoseSearching value)? searching,
     TResult Function(PoseActive value)? active,
     TResult Function(PoseRecordingVideo value)? recordingVideo,
+    TResult Function(PoseVideoPicked value)? videoPicked,
     TResult Function(PoseVideoProcessing value)? videoProcessing,
     TResult Function(PoseVideoComplete value)? videoComplete,
     TResult Function(PoseImageProcessing value)? imageProcessing,
@@ -1829,6 +2000,286 @@ class _$PoseRecordingVideoImpl implements PoseRecordingVideo {
 
 abstract class PoseRecordingVideo implements PoseState {
   const factory PoseRecordingVideo() = _$PoseRecordingVideoImpl;
+}
+
+/// @nodoc
+abstract class _$$PoseVideoPickedImplCopyWith<$Res> {
+  factory _$$PoseVideoPickedImplCopyWith(
+    _$PoseVideoPickedImpl value,
+    $Res Function(_$PoseVideoPickedImpl) then,
+  ) = __$$PoseVideoPickedImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String path});
+}
+
+/// @nodoc
+class __$$PoseVideoPickedImplCopyWithImpl<$Res>
+    extends _$PoseStateCopyWithImpl<$Res, _$PoseVideoPickedImpl>
+    implements _$$PoseVideoPickedImplCopyWith<$Res> {
+  __$$PoseVideoPickedImplCopyWithImpl(
+    _$PoseVideoPickedImpl _value,
+    $Res Function(_$PoseVideoPickedImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of PoseState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? path = null}) {
+    return _then(
+      _$PoseVideoPickedImpl(
+        null == path
+            ? _value.path
+            : path // ignore: cast_nullable_to_non_nullable
+                as String,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+
+class _$PoseVideoPickedImpl implements PoseVideoPicked {
+  const _$PoseVideoPickedImpl(this.path);
+
+  @override
+  final String path;
+
+  @override
+  String toString() {
+    return 'PoseState.videoPicked(path: $path)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$PoseVideoPickedImpl &&
+            (identical(other.path, path) || other.path == path));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, path);
+
+  /// Create a copy of PoseState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$PoseVideoPickedImplCopyWith<_$PoseVideoPickedImpl> get copyWith =>
+      __$$PoseVideoPickedImplCopyWithImpl<_$PoseVideoPickedImpl>(
+        this,
+        _$identity,
+      );
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function() noPermission,
+    required TResult Function() streaming,
+    required TResult Function() searching,
+    required TResult Function(
+      PoseEntity pose,
+      double averageConfidence,
+      double fps,
+      List<PoseEntity> allPoses,
+    )
+    active,
+    required TResult Function() recordingVideo,
+    required TResult Function(String path) videoPicked,
+    required TResult Function(
+      double progress,
+      int framesProcessed,
+      PoseEntity? currentPose,
+    )
+    videoProcessing,
+    required TResult Function(
+      List<PoseEntity> poses,
+      int frameCount,
+      String? videoPath,
+      List<String> framePaths,
+    )
+    videoComplete,
+    required TResult Function() imageProcessing,
+    required TResult Function(String imagePath, PoseEntity? pose) imageComplete,
+    required TResult Function() reportGenerating,
+    required TResult Function(String filePath) reportReady,
+    required TResult Function(String message) reportFailed,
+    required TResult Function(String message, bool isRecoverable) error,
+  }) {
+    return videoPicked(path);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function()? noPermission,
+    TResult? Function()? streaming,
+    TResult? Function()? searching,
+    TResult? Function(
+      PoseEntity pose,
+      double averageConfidence,
+      double fps,
+      List<PoseEntity> allPoses,
+    )?
+    active,
+    TResult? Function()? recordingVideo,
+    TResult? Function(String path)? videoPicked,
+    TResult? Function(
+      double progress,
+      int framesProcessed,
+      PoseEntity? currentPose,
+    )?
+    videoProcessing,
+    TResult? Function(
+      List<PoseEntity> poses,
+      int frameCount,
+      String? videoPath,
+      List<String> framePaths,
+    )?
+    videoComplete,
+    TResult? Function()? imageProcessing,
+    TResult? Function(String imagePath, PoseEntity? pose)? imageComplete,
+    TResult? Function()? reportGenerating,
+    TResult? Function(String filePath)? reportReady,
+    TResult? Function(String message)? reportFailed,
+    TResult? Function(String message, bool isRecoverable)? error,
+  }) {
+    return videoPicked?.call(path);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function()? noPermission,
+    TResult Function()? streaming,
+    TResult Function()? searching,
+    TResult Function(
+      PoseEntity pose,
+      double averageConfidence,
+      double fps,
+      List<PoseEntity> allPoses,
+    )?
+    active,
+    TResult Function()? recordingVideo,
+    TResult Function(String path)? videoPicked,
+    TResult Function(
+      double progress,
+      int framesProcessed,
+      PoseEntity? currentPose,
+    )?
+    videoProcessing,
+    TResult Function(
+      List<PoseEntity> poses,
+      int frameCount,
+      String? videoPath,
+      List<String> framePaths,
+    )?
+    videoComplete,
+    TResult Function()? imageProcessing,
+    TResult Function(String imagePath, PoseEntity? pose)? imageComplete,
+    TResult Function()? reportGenerating,
+    TResult Function(String filePath)? reportReady,
+    TResult Function(String message)? reportFailed,
+    TResult Function(String message, bool isRecoverable)? error,
+    required TResult orElse(),
+  }) {
+    if (videoPicked != null) {
+      return videoPicked(path);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(PoseInitial value) initial,
+    required TResult Function(PoseLoading value) loading,
+    required TResult Function(PoseNoPermission value) noPermission,
+    required TResult Function(PoseStreaming value) streaming,
+    required TResult Function(PoseSearching value) searching,
+    required TResult Function(PoseActive value) active,
+    required TResult Function(PoseRecordingVideo value) recordingVideo,
+    required TResult Function(PoseVideoPicked value) videoPicked,
+    required TResult Function(PoseVideoProcessing value) videoProcessing,
+    required TResult Function(PoseVideoComplete value) videoComplete,
+    required TResult Function(PoseImageProcessing value) imageProcessing,
+    required TResult Function(PoseImageComplete value) imageComplete,
+    required TResult Function(PoseReportGenerating value) reportGenerating,
+    required TResult Function(PoseReportReady value) reportReady,
+    required TResult Function(PoseReportFailed value) reportFailed,
+    required TResult Function(PoseError value) error,
+  }) {
+    return videoPicked(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(PoseInitial value)? initial,
+    TResult? Function(PoseLoading value)? loading,
+    TResult? Function(PoseNoPermission value)? noPermission,
+    TResult? Function(PoseStreaming value)? streaming,
+    TResult? Function(PoseSearching value)? searching,
+    TResult? Function(PoseActive value)? active,
+    TResult? Function(PoseRecordingVideo value)? recordingVideo,
+    TResult? Function(PoseVideoPicked value)? videoPicked,
+    TResult? Function(PoseVideoProcessing value)? videoProcessing,
+    TResult? Function(PoseVideoComplete value)? videoComplete,
+    TResult? Function(PoseImageProcessing value)? imageProcessing,
+    TResult? Function(PoseImageComplete value)? imageComplete,
+    TResult? Function(PoseReportGenerating value)? reportGenerating,
+    TResult? Function(PoseReportReady value)? reportReady,
+    TResult? Function(PoseReportFailed value)? reportFailed,
+    TResult? Function(PoseError value)? error,
+  }) {
+    return videoPicked?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(PoseInitial value)? initial,
+    TResult Function(PoseLoading value)? loading,
+    TResult Function(PoseNoPermission value)? noPermission,
+    TResult Function(PoseStreaming value)? streaming,
+    TResult Function(PoseSearching value)? searching,
+    TResult Function(PoseActive value)? active,
+    TResult Function(PoseRecordingVideo value)? recordingVideo,
+    TResult Function(PoseVideoPicked value)? videoPicked,
+    TResult Function(PoseVideoProcessing value)? videoProcessing,
+    TResult Function(PoseVideoComplete value)? videoComplete,
+    TResult Function(PoseImageProcessing value)? imageProcessing,
+    TResult Function(PoseImageComplete value)? imageComplete,
+    TResult Function(PoseReportGenerating value)? reportGenerating,
+    TResult Function(PoseReportReady value)? reportReady,
+    TResult Function(PoseReportFailed value)? reportFailed,
+    TResult Function(PoseError value)? error,
+    required TResult orElse(),
+  }) {
+    if (videoPicked != null) {
+      return videoPicked(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class PoseVideoPicked implements PoseState {
+  const factory PoseVideoPicked(final String path) = _$PoseVideoPickedImpl;
+
+  String get path;
+
+  /// Create a copy of PoseState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$PoseVideoPickedImplCopyWith<_$PoseVideoPickedImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -1942,9 +2393,11 @@ class _$PoseVideoProcessingImpl implements PoseVideoProcessing {
       PoseEntity pose,
       double averageConfidence,
       double fps,
+      List<PoseEntity> allPoses,
     )
     active,
     required TResult Function() recordingVideo,
+    required TResult Function(String path) videoPicked,
     required TResult Function(
       double progress,
       int framesProcessed,
@@ -1976,9 +2429,15 @@ class _$PoseVideoProcessingImpl implements PoseVideoProcessing {
     TResult? Function()? noPermission,
     TResult? Function()? streaming,
     TResult? Function()? searching,
-    TResult? Function(PoseEntity pose, double averageConfidence, double fps)?
+    TResult? Function(
+      PoseEntity pose,
+      double averageConfidence,
+      double fps,
+      List<PoseEntity> allPoses,
+    )?
     active,
     TResult? Function()? recordingVideo,
+    TResult? Function(String path)? videoPicked,
     TResult? Function(
       double progress,
       int framesProcessed,
@@ -2010,9 +2469,15 @@ class _$PoseVideoProcessingImpl implements PoseVideoProcessing {
     TResult Function()? noPermission,
     TResult Function()? streaming,
     TResult Function()? searching,
-    TResult Function(PoseEntity pose, double averageConfidence, double fps)?
+    TResult Function(
+      PoseEntity pose,
+      double averageConfidence,
+      double fps,
+      List<PoseEntity> allPoses,
+    )?
     active,
     TResult Function()? recordingVideo,
+    TResult Function(String path)? videoPicked,
     TResult Function(
       double progress,
       int framesProcessed,
@@ -2050,6 +2515,7 @@ class _$PoseVideoProcessingImpl implements PoseVideoProcessing {
     required TResult Function(PoseSearching value) searching,
     required TResult Function(PoseActive value) active,
     required TResult Function(PoseRecordingVideo value) recordingVideo,
+    required TResult Function(PoseVideoPicked value) videoPicked,
     required TResult Function(PoseVideoProcessing value) videoProcessing,
     required TResult Function(PoseVideoComplete value) videoComplete,
     required TResult Function(PoseImageProcessing value) imageProcessing,
@@ -2072,6 +2538,7 @@ class _$PoseVideoProcessingImpl implements PoseVideoProcessing {
     TResult? Function(PoseSearching value)? searching,
     TResult? Function(PoseActive value)? active,
     TResult? Function(PoseRecordingVideo value)? recordingVideo,
+    TResult? Function(PoseVideoPicked value)? videoPicked,
     TResult? Function(PoseVideoProcessing value)? videoProcessing,
     TResult? Function(PoseVideoComplete value)? videoComplete,
     TResult? Function(PoseImageProcessing value)? imageProcessing,
@@ -2094,6 +2561,7 @@ class _$PoseVideoProcessingImpl implements PoseVideoProcessing {
     TResult Function(PoseSearching value)? searching,
     TResult Function(PoseActive value)? active,
     TResult Function(PoseRecordingVideo value)? recordingVideo,
+    TResult Function(PoseVideoPicked value)? videoPicked,
     TResult Function(PoseVideoProcessing value)? videoProcessing,
     TResult Function(PoseVideoComplete value)? videoComplete,
     TResult Function(PoseImageProcessing value)? imageProcessing,
@@ -2275,9 +2743,11 @@ class _$PoseVideoCompleteImpl implements PoseVideoComplete {
       PoseEntity pose,
       double averageConfidence,
       double fps,
+      List<PoseEntity> allPoses,
     )
     active,
     required TResult Function() recordingVideo,
+    required TResult Function(String path) videoPicked,
     required TResult Function(
       double progress,
       int framesProcessed,
@@ -2309,9 +2779,15 @@ class _$PoseVideoCompleteImpl implements PoseVideoComplete {
     TResult? Function()? noPermission,
     TResult? Function()? streaming,
     TResult? Function()? searching,
-    TResult? Function(PoseEntity pose, double averageConfidence, double fps)?
+    TResult? Function(
+      PoseEntity pose,
+      double averageConfidence,
+      double fps,
+      List<PoseEntity> allPoses,
+    )?
     active,
     TResult? Function()? recordingVideo,
+    TResult? Function(String path)? videoPicked,
     TResult? Function(
       double progress,
       int framesProcessed,
@@ -2343,9 +2819,15 @@ class _$PoseVideoCompleteImpl implements PoseVideoComplete {
     TResult Function()? noPermission,
     TResult Function()? streaming,
     TResult Function()? searching,
-    TResult Function(PoseEntity pose, double averageConfidence, double fps)?
+    TResult Function(
+      PoseEntity pose,
+      double averageConfidence,
+      double fps,
+      List<PoseEntity> allPoses,
+    )?
     active,
     TResult Function()? recordingVideo,
+    TResult Function(String path)? videoPicked,
     TResult Function(
       double progress,
       int framesProcessed,
@@ -2383,6 +2865,7 @@ class _$PoseVideoCompleteImpl implements PoseVideoComplete {
     required TResult Function(PoseSearching value) searching,
     required TResult Function(PoseActive value) active,
     required TResult Function(PoseRecordingVideo value) recordingVideo,
+    required TResult Function(PoseVideoPicked value) videoPicked,
     required TResult Function(PoseVideoProcessing value) videoProcessing,
     required TResult Function(PoseVideoComplete value) videoComplete,
     required TResult Function(PoseImageProcessing value) imageProcessing,
@@ -2405,6 +2888,7 @@ class _$PoseVideoCompleteImpl implements PoseVideoComplete {
     TResult? Function(PoseSearching value)? searching,
     TResult? Function(PoseActive value)? active,
     TResult? Function(PoseRecordingVideo value)? recordingVideo,
+    TResult? Function(PoseVideoPicked value)? videoPicked,
     TResult? Function(PoseVideoProcessing value)? videoProcessing,
     TResult? Function(PoseVideoComplete value)? videoComplete,
     TResult? Function(PoseImageProcessing value)? imageProcessing,
@@ -2427,6 +2911,7 @@ class _$PoseVideoCompleteImpl implements PoseVideoComplete {
     TResult Function(PoseSearching value)? searching,
     TResult Function(PoseActive value)? active,
     TResult Function(PoseRecordingVideo value)? recordingVideo,
+    TResult Function(PoseVideoPicked value)? videoPicked,
     TResult Function(PoseVideoProcessing value)? videoProcessing,
     TResult Function(PoseVideoComplete value)? videoComplete,
     TResult Function(PoseImageProcessing value)? imageProcessing,
@@ -2517,9 +3002,11 @@ class _$PoseImageProcessingImpl implements PoseImageProcessing {
       PoseEntity pose,
       double averageConfidence,
       double fps,
+      List<PoseEntity> allPoses,
     )
     active,
     required TResult Function() recordingVideo,
+    required TResult Function(String path) videoPicked,
     required TResult Function(
       double progress,
       int framesProcessed,
@@ -2551,9 +3038,15 @@ class _$PoseImageProcessingImpl implements PoseImageProcessing {
     TResult? Function()? noPermission,
     TResult? Function()? streaming,
     TResult? Function()? searching,
-    TResult? Function(PoseEntity pose, double averageConfidence, double fps)?
+    TResult? Function(
+      PoseEntity pose,
+      double averageConfidence,
+      double fps,
+      List<PoseEntity> allPoses,
+    )?
     active,
     TResult? Function()? recordingVideo,
+    TResult? Function(String path)? videoPicked,
     TResult? Function(
       double progress,
       int framesProcessed,
@@ -2585,9 +3078,15 @@ class _$PoseImageProcessingImpl implements PoseImageProcessing {
     TResult Function()? noPermission,
     TResult Function()? streaming,
     TResult Function()? searching,
-    TResult Function(PoseEntity pose, double averageConfidence, double fps)?
+    TResult Function(
+      PoseEntity pose,
+      double averageConfidence,
+      double fps,
+      List<PoseEntity> allPoses,
+    )?
     active,
     TResult Function()? recordingVideo,
+    TResult Function(String path)? videoPicked,
     TResult Function(
       double progress,
       int framesProcessed,
@@ -2625,6 +3124,7 @@ class _$PoseImageProcessingImpl implements PoseImageProcessing {
     required TResult Function(PoseSearching value) searching,
     required TResult Function(PoseActive value) active,
     required TResult Function(PoseRecordingVideo value) recordingVideo,
+    required TResult Function(PoseVideoPicked value) videoPicked,
     required TResult Function(PoseVideoProcessing value) videoProcessing,
     required TResult Function(PoseVideoComplete value) videoComplete,
     required TResult Function(PoseImageProcessing value) imageProcessing,
@@ -2647,6 +3147,7 @@ class _$PoseImageProcessingImpl implements PoseImageProcessing {
     TResult? Function(PoseSearching value)? searching,
     TResult? Function(PoseActive value)? active,
     TResult? Function(PoseRecordingVideo value)? recordingVideo,
+    TResult? Function(PoseVideoPicked value)? videoPicked,
     TResult? Function(PoseVideoProcessing value)? videoProcessing,
     TResult? Function(PoseVideoComplete value)? videoComplete,
     TResult? Function(PoseImageProcessing value)? imageProcessing,
@@ -2669,6 +3170,7 @@ class _$PoseImageProcessingImpl implements PoseImageProcessing {
     TResult Function(PoseSearching value)? searching,
     TResult Function(PoseActive value)? active,
     TResult Function(PoseRecordingVideo value)? recordingVideo,
+    TResult Function(PoseVideoPicked value)? videoPicked,
     TResult Function(PoseVideoProcessing value)? videoProcessing,
     TResult Function(PoseVideoComplete value)? videoComplete,
     TResult Function(PoseImageProcessing value)? imageProcessing,
@@ -2782,9 +3284,11 @@ class _$PoseImageCompleteImpl implements PoseImageComplete {
       PoseEntity pose,
       double averageConfidence,
       double fps,
+      List<PoseEntity> allPoses,
     )
     active,
     required TResult Function() recordingVideo,
+    required TResult Function(String path) videoPicked,
     required TResult Function(
       double progress,
       int framesProcessed,
@@ -2816,9 +3320,15 @@ class _$PoseImageCompleteImpl implements PoseImageComplete {
     TResult? Function()? noPermission,
     TResult? Function()? streaming,
     TResult? Function()? searching,
-    TResult? Function(PoseEntity pose, double averageConfidence, double fps)?
+    TResult? Function(
+      PoseEntity pose,
+      double averageConfidence,
+      double fps,
+      List<PoseEntity> allPoses,
+    )?
     active,
     TResult? Function()? recordingVideo,
+    TResult? Function(String path)? videoPicked,
     TResult? Function(
       double progress,
       int framesProcessed,
@@ -2850,9 +3360,15 @@ class _$PoseImageCompleteImpl implements PoseImageComplete {
     TResult Function()? noPermission,
     TResult Function()? streaming,
     TResult Function()? searching,
-    TResult Function(PoseEntity pose, double averageConfidence, double fps)?
+    TResult Function(
+      PoseEntity pose,
+      double averageConfidence,
+      double fps,
+      List<PoseEntity> allPoses,
+    )?
     active,
     TResult Function()? recordingVideo,
+    TResult Function(String path)? videoPicked,
     TResult Function(
       double progress,
       int framesProcessed,
@@ -2890,6 +3406,7 @@ class _$PoseImageCompleteImpl implements PoseImageComplete {
     required TResult Function(PoseSearching value) searching,
     required TResult Function(PoseActive value) active,
     required TResult Function(PoseRecordingVideo value) recordingVideo,
+    required TResult Function(PoseVideoPicked value) videoPicked,
     required TResult Function(PoseVideoProcessing value) videoProcessing,
     required TResult Function(PoseVideoComplete value) videoComplete,
     required TResult Function(PoseImageProcessing value) imageProcessing,
@@ -2912,6 +3429,7 @@ class _$PoseImageCompleteImpl implements PoseImageComplete {
     TResult? Function(PoseSearching value)? searching,
     TResult? Function(PoseActive value)? active,
     TResult? Function(PoseRecordingVideo value)? recordingVideo,
+    TResult? Function(PoseVideoPicked value)? videoPicked,
     TResult? Function(PoseVideoProcessing value)? videoProcessing,
     TResult? Function(PoseVideoComplete value)? videoComplete,
     TResult? Function(PoseImageProcessing value)? imageProcessing,
@@ -2934,6 +3452,7 @@ class _$PoseImageCompleteImpl implements PoseImageComplete {
     TResult Function(PoseSearching value)? searching,
     TResult Function(PoseActive value)? active,
     TResult Function(PoseRecordingVideo value)? recordingVideo,
+    TResult Function(PoseVideoPicked value)? videoPicked,
     TResult Function(PoseVideoProcessing value)? videoProcessing,
     TResult Function(PoseVideoComplete value)? videoComplete,
     TResult Function(PoseImageProcessing value)? imageProcessing,
@@ -3020,9 +3539,11 @@ class _$PoseReportGeneratingImpl implements PoseReportGenerating {
       PoseEntity pose,
       double averageConfidence,
       double fps,
+      List<PoseEntity> allPoses,
     )
     active,
     required TResult Function() recordingVideo,
+    required TResult Function(String path) videoPicked,
     required TResult Function(
       double progress,
       int framesProcessed,
@@ -3054,9 +3575,15 @@ class _$PoseReportGeneratingImpl implements PoseReportGenerating {
     TResult? Function()? noPermission,
     TResult? Function()? streaming,
     TResult? Function()? searching,
-    TResult? Function(PoseEntity pose, double averageConfidence, double fps)?
+    TResult? Function(
+      PoseEntity pose,
+      double averageConfidence,
+      double fps,
+      List<PoseEntity> allPoses,
+    )?
     active,
     TResult? Function()? recordingVideo,
+    TResult? Function(String path)? videoPicked,
     TResult? Function(
       double progress,
       int framesProcessed,
@@ -3088,9 +3615,15 @@ class _$PoseReportGeneratingImpl implements PoseReportGenerating {
     TResult Function()? noPermission,
     TResult Function()? streaming,
     TResult Function()? searching,
-    TResult Function(PoseEntity pose, double averageConfidence, double fps)?
+    TResult Function(
+      PoseEntity pose,
+      double averageConfidence,
+      double fps,
+      List<PoseEntity> allPoses,
+    )?
     active,
     TResult Function()? recordingVideo,
+    TResult Function(String path)? videoPicked,
     TResult Function(
       double progress,
       int framesProcessed,
@@ -3128,6 +3661,7 @@ class _$PoseReportGeneratingImpl implements PoseReportGenerating {
     required TResult Function(PoseSearching value) searching,
     required TResult Function(PoseActive value) active,
     required TResult Function(PoseRecordingVideo value) recordingVideo,
+    required TResult Function(PoseVideoPicked value) videoPicked,
     required TResult Function(PoseVideoProcessing value) videoProcessing,
     required TResult Function(PoseVideoComplete value) videoComplete,
     required TResult Function(PoseImageProcessing value) imageProcessing,
@@ -3150,6 +3684,7 @@ class _$PoseReportGeneratingImpl implements PoseReportGenerating {
     TResult? Function(PoseSearching value)? searching,
     TResult? Function(PoseActive value)? active,
     TResult? Function(PoseRecordingVideo value)? recordingVideo,
+    TResult? Function(PoseVideoPicked value)? videoPicked,
     TResult? Function(PoseVideoProcessing value)? videoProcessing,
     TResult? Function(PoseVideoComplete value)? videoComplete,
     TResult? Function(PoseImageProcessing value)? imageProcessing,
@@ -3172,6 +3707,7 @@ class _$PoseReportGeneratingImpl implements PoseReportGenerating {
     TResult Function(PoseSearching value)? searching,
     TResult Function(PoseActive value)? active,
     TResult Function(PoseRecordingVideo value)? recordingVideo,
+    TResult Function(PoseVideoPicked value)? videoPicked,
     TResult Function(PoseVideoProcessing value)? videoProcessing,
     TResult Function(PoseVideoComplete value)? videoComplete,
     TResult Function(PoseImageProcessing value)? imageProcessing,
@@ -3277,9 +3813,11 @@ class _$PoseReportReadyImpl implements PoseReportReady {
       PoseEntity pose,
       double averageConfidence,
       double fps,
+      List<PoseEntity> allPoses,
     )
     active,
     required TResult Function() recordingVideo,
+    required TResult Function(String path) videoPicked,
     required TResult Function(
       double progress,
       int framesProcessed,
@@ -3311,9 +3849,15 @@ class _$PoseReportReadyImpl implements PoseReportReady {
     TResult? Function()? noPermission,
     TResult? Function()? streaming,
     TResult? Function()? searching,
-    TResult? Function(PoseEntity pose, double averageConfidence, double fps)?
+    TResult? Function(
+      PoseEntity pose,
+      double averageConfidence,
+      double fps,
+      List<PoseEntity> allPoses,
+    )?
     active,
     TResult? Function()? recordingVideo,
+    TResult? Function(String path)? videoPicked,
     TResult? Function(
       double progress,
       int framesProcessed,
@@ -3345,9 +3889,15 @@ class _$PoseReportReadyImpl implements PoseReportReady {
     TResult Function()? noPermission,
     TResult Function()? streaming,
     TResult Function()? searching,
-    TResult Function(PoseEntity pose, double averageConfidence, double fps)?
+    TResult Function(
+      PoseEntity pose,
+      double averageConfidence,
+      double fps,
+      List<PoseEntity> allPoses,
+    )?
     active,
     TResult Function()? recordingVideo,
+    TResult Function(String path)? videoPicked,
     TResult Function(
       double progress,
       int framesProcessed,
@@ -3385,6 +3935,7 @@ class _$PoseReportReadyImpl implements PoseReportReady {
     required TResult Function(PoseSearching value) searching,
     required TResult Function(PoseActive value) active,
     required TResult Function(PoseRecordingVideo value) recordingVideo,
+    required TResult Function(PoseVideoPicked value) videoPicked,
     required TResult Function(PoseVideoProcessing value) videoProcessing,
     required TResult Function(PoseVideoComplete value) videoComplete,
     required TResult Function(PoseImageProcessing value) imageProcessing,
@@ -3407,6 +3958,7 @@ class _$PoseReportReadyImpl implements PoseReportReady {
     TResult? Function(PoseSearching value)? searching,
     TResult? Function(PoseActive value)? active,
     TResult? Function(PoseRecordingVideo value)? recordingVideo,
+    TResult? Function(PoseVideoPicked value)? videoPicked,
     TResult? Function(PoseVideoProcessing value)? videoProcessing,
     TResult? Function(PoseVideoComplete value)? videoComplete,
     TResult? Function(PoseImageProcessing value)? imageProcessing,
@@ -3429,6 +3981,7 @@ class _$PoseReportReadyImpl implements PoseReportReady {
     TResult Function(PoseSearching value)? searching,
     TResult Function(PoseActive value)? active,
     TResult Function(PoseRecordingVideo value)? recordingVideo,
+    TResult Function(PoseVideoPicked value)? videoPicked,
     TResult Function(PoseVideoProcessing value)? videoProcessing,
     TResult Function(PoseVideoComplete value)? videoComplete,
     TResult Function(PoseImageProcessing value)? imageProcessing,
@@ -3542,9 +4095,11 @@ class _$PoseReportFailedImpl implements PoseReportFailed {
       PoseEntity pose,
       double averageConfidence,
       double fps,
+      List<PoseEntity> allPoses,
     )
     active,
     required TResult Function() recordingVideo,
+    required TResult Function(String path) videoPicked,
     required TResult Function(
       double progress,
       int framesProcessed,
@@ -3576,9 +4131,15 @@ class _$PoseReportFailedImpl implements PoseReportFailed {
     TResult? Function()? noPermission,
     TResult? Function()? streaming,
     TResult? Function()? searching,
-    TResult? Function(PoseEntity pose, double averageConfidence, double fps)?
+    TResult? Function(
+      PoseEntity pose,
+      double averageConfidence,
+      double fps,
+      List<PoseEntity> allPoses,
+    )?
     active,
     TResult? Function()? recordingVideo,
+    TResult? Function(String path)? videoPicked,
     TResult? Function(
       double progress,
       int framesProcessed,
@@ -3610,9 +4171,15 @@ class _$PoseReportFailedImpl implements PoseReportFailed {
     TResult Function()? noPermission,
     TResult Function()? streaming,
     TResult Function()? searching,
-    TResult Function(PoseEntity pose, double averageConfidence, double fps)?
+    TResult Function(
+      PoseEntity pose,
+      double averageConfidence,
+      double fps,
+      List<PoseEntity> allPoses,
+    )?
     active,
     TResult Function()? recordingVideo,
+    TResult Function(String path)? videoPicked,
     TResult Function(
       double progress,
       int framesProcessed,
@@ -3650,6 +4217,7 @@ class _$PoseReportFailedImpl implements PoseReportFailed {
     required TResult Function(PoseSearching value) searching,
     required TResult Function(PoseActive value) active,
     required TResult Function(PoseRecordingVideo value) recordingVideo,
+    required TResult Function(PoseVideoPicked value) videoPicked,
     required TResult Function(PoseVideoProcessing value) videoProcessing,
     required TResult Function(PoseVideoComplete value) videoComplete,
     required TResult Function(PoseImageProcessing value) imageProcessing,
@@ -3672,6 +4240,7 @@ class _$PoseReportFailedImpl implements PoseReportFailed {
     TResult? Function(PoseSearching value)? searching,
     TResult? Function(PoseActive value)? active,
     TResult? Function(PoseRecordingVideo value)? recordingVideo,
+    TResult? Function(PoseVideoPicked value)? videoPicked,
     TResult? Function(PoseVideoProcessing value)? videoProcessing,
     TResult? Function(PoseVideoComplete value)? videoComplete,
     TResult? Function(PoseImageProcessing value)? imageProcessing,
@@ -3694,6 +4263,7 @@ class _$PoseReportFailedImpl implements PoseReportFailed {
     TResult Function(PoseSearching value)? searching,
     TResult Function(PoseActive value)? active,
     TResult Function(PoseRecordingVideo value)? recordingVideo,
+    TResult Function(PoseVideoPicked value)? videoPicked,
     TResult Function(PoseVideoProcessing value)? videoProcessing,
     TResult Function(PoseVideoComplete value)? videoComplete,
     TResult Function(PoseImageProcessing value)? imageProcessing,
@@ -3813,9 +4383,11 @@ class _$PoseErrorImpl implements PoseError {
       PoseEntity pose,
       double averageConfidence,
       double fps,
+      List<PoseEntity> allPoses,
     )
     active,
     required TResult Function() recordingVideo,
+    required TResult Function(String path) videoPicked,
     required TResult Function(
       double progress,
       int framesProcessed,
@@ -3847,9 +4419,15 @@ class _$PoseErrorImpl implements PoseError {
     TResult? Function()? noPermission,
     TResult? Function()? streaming,
     TResult? Function()? searching,
-    TResult? Function(PoseEntity pose, double averageConfidence, double fps)?
+    TResult? Function(
+      PoseEntity pose,
+      double averageConfidence,
+      double fps,
+      List<PoseEntity> allPoses,
+    )?
     active,
     TResult? Function()? recordingVideo,
+    TResult? Function(String path)? videoPicked,
     TResult? Function(
       double progress,
       int framesProcessed,
@@ -3881,9 +4459,15 @@ class _$PoseErrorImpl implements PoseError {
     TResult Function()? noPermission,
     TResult Function()? streaming,
     TResult Function()? searching,
-    TResult Function(PoseEntity pose, double averageConfidence, double fps)?
+    TResult Function(
+      PoseEntity pose,
+      double averageConfidence,
+      double fps,
+      List<PoseEntity> allPoses,
+    )?
     active,
     TResult Function()? recordingVideo,
+    TResult Function(String path)? videoPicked,
     TResult Function(
       double progress,
       int framesProcessed,
@@ -3921,6 +4505,7 @@ class _$PoseErrorImpl implements PoseError {
     required TResult Function(PoseSearching value) searching,
     required TResult Function(PoseActive value) active,
     required TResult Function(PoseRecordingVideo value) recordingVideo,
+    required TResult Function(PoseVideoPicked value) videoPicked,
     required TResult Function(PoseVideoProcessing value) videoProcessing,
     required TResult Function(PoseVideoComplete value) videoComplete,
     required TResult Function(PoseImageProcessing value) imageProcessing,
@@ -3943,6 +4528,7 @@ class _$PoseErrorImpl implements PoseError {
     TResult? Function(PoseSearching value)? searching,
     TResult? Function(PoseActive value)? active,
     TResult? Function(PoseRecordingVideo value)? recordingVideo,
+    TResult? Function(PoseVideoPicked value)? videoPicked,
     TResult? Function(PoseVideoProcessing value)? videoProcessing,
     TResult? Function(PoseVideoComplete value)? videoComplete,
     TResult? Function(PoseImageProcessing value)? imageProcessing,
@@ -3965,6 +4551,7 @@ class _$PoseErrorImpl implements PoseError {
     TResult Function(PoseSearching value)? searching,
     TResult Function(PoseActive value)? active,
     TResult Function(PoseRecordingVideo value)? recordingVideo,
+    TResult Function(PoseVideoPicked value)? videoPicked,
     TResult Function(PoseVideoProcessing value)? videoProcessing,
     TResult Function(PoseVideoComplete value)? videoComplete,
     TResult Function(PoseImageProcessing value)? imageProcessing,

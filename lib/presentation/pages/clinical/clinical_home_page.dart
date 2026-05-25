@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:poseweave/core/constants/app_colors.dart';
 import 'package:poseweave/core/constants/app_routes.dart';
 import 'package:poseweave/core/constants/app_theme.dart';
 import 'package:poseweave/domain/entities/clinical_patient.dart';
 import 'package:poseweave/presentation/widgets/app_top_bar.dart';
+import 'package:poseweave/presentation/widgets/clinical/clinical_bottom_nav.dart';
 import 'package:poseweave/presentation/widgets/clinical/patient_header.dart';
+import 'package:poseweave/presentation/widgets/glass_panel.dart';
 import 'package:poseweave/presentation/widgets/mode_selector_card.dart';
 
-/// Clinical hub: patient context + the four diagnostic modules, all reusing the
-/// existing pose pipeline under clinical chrome.
+/// Clinical hub: patient context + the four diagnostic modules as cards, with
+/// the shared bottom nav (no tab highlighted on the hub). Matches the
+/// `clinical_home_selector` mockup, which shows module cards *and* a bottom bar.
 class ClinicalHomePage extends StatelessWidget {
   const ClinicalHomePage({super.key});
 
@@ -17,17 +21,33 @@ class ClinicalHomePage extends StatelessWidget {
     return Scaffold(
       // Home (in AppTopBar) returns to the main shell; Log out lives in its menu.
       appBar: const AppTopBar(title: 'Diagnostic Suite'),
+      // No tab highlighted on the hub; tapping a tab opens that module.
+      bottomNavigationBar: const ClinicalBottomNav(current: -1),
       body: SafeArea(
         child: ListView(
           padding: const EdgeInsets.all(16),
           children: <Widget>[
             const PatientHeader(patient: patient, detailed: true),
             const SizedBox(height: 12),
-            Text('Patient — ${patient.ageYears}y · ${patient.heightCm}cm · '
-                '${patient.weightKg}kg · Observer ${patient.observer}',
-                style: AppTheme.labelCaps(fontSize: 9)),
+            Text(
+              'Patient — ${patient.ageYears}y · ${patient.heightCm}cm · '
+              '${patient.weightKg}kg · Observer ${patient.observer}',
+              style: AppTheme.labelCaps(fontSize: 9),
+            ),
+            const SizedBox(height: 12),
+            GlassPanel(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  _status('SESSION', 'ACTIVE', AppColors.success),
+                  _status('CALIBRATION', '99.8%', AppColors.primary),
+                  _status('ENVIRONMENT', 'OPTIMAL', AppColors.success),
+                ],
+              ),
+            ),
             const SizedBox(height: 16),
-            Text('DIAGNOSTIC MODULES', style: AppTheme.labelCaps()),
+            Text('SELECT DIAGNOSTIC MODULE', style: AppTheme.labelCaps()),
             const SizedBox(height: 12),
             ModeSelectorCard(
               icon: Icons.monitor_heart_outlined,
@@ -73,4 +93,13 @@ class ClinicalHomePage extends StatelessWidget {
       ),
     );
   }
+
+  Widget _status(String label, String value, Color color) => Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Text(label, style: AppTheme.labelCaps(fontSize: 8)),
+          const SizedBox(height: 2),
+          Text(value, style: AppTheme.mono(color: color, fontSize: 12)),
+        ],
+      );
 }

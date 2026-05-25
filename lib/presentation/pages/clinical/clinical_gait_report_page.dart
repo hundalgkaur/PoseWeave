@@ -19,6 +19,7 @@ import 'package:poseweave/presentation/bloc/pose_event.dart';
 import 'package:poseweave/presentation/bloc/pose_state.dart';
 import 'package:poseweave/presentation/bloc/recommendations_bloc.dart';
 import 'package:poseweave/presentation/widgets/app_top_bar.dart';
+import 'package:poseweave/presentation/widgets/clinical/clinical_bottom_nav.dart';
 import 'package:poseweave/presentation/widgets/clinical/patient_header.dart';
 import 'package:poseweave/presentation/widgets/clinical/rom_table.dart';
 import 'package:poseweave/presentation/widgets/clinical/status_metric_pod.dart';
@@ -50,17 +51,33 @@ class ClinicalGaitReportPage extends StatelessWidget {
   }
 }
 
-class _GaitView extends StatelessWidget {
+class _GaitView extends StatefulWidget {
   const _GaitView();
+
+  @override
+  State<_GaitView> createState() => _GaitViewState();
+}
+
+class _GaitViewState extends State<_GaitView> {
+  // Retain the last completed analysis. The same PoseBloc drives both video
+  // analysis and PDF generation, so when "Export PDF" fires the bloc leaves
+  // PoseVideoComplete for PoseReportGenerating/Ready. Without caching, the
+  // builder would fall through to the picker, unmounting the report and its
+  // export listener — so the share sheet would never open. Keeping the report
+  // mounted across the report states is what makes the export button work.
+  PoseVideoComplete? _lastComplete;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const AppTopBar(title: 'Clinical Gait Report'),
+      bottomNavigationBar: const ClinicalBottomNav(current: 3),
       body: SafeArea(
         child: BlocConsumer<PoseBloc, PoseState>(
           listener: (BuildContext context, PoseState state) {
-            if (state is PoseError) {
+            if (state is PoseVideoComplete) {
+              setState(() => _lastComplete = state);
+            } else if (state is PoseError) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(state.message),
@@ -76,8 +93,10 @@ class _GaitView extends StatelessWidget {
                 frame: state.framesProcessed,
               );
             }
-            if (state is PoseVideoComplete) {
-              if (state.poses.isEmpty) {
+            final PoseVideoComplete? complete =
+                state is PoseVideoComplete ? state : _lastComplete;
+            if (complete != null) {
+              if (complete.poses.isEmpty) {
                 return _Prompt(
                   note: 'No human detected in that clip. Try a clearer, '
                       'side-on walking video with the full body in frame.',
@@ -87,9 +106,9 @@ class _GaitView extends StatelessWidget {
                 );
               }
               return _Report(
-                params: GaitAnalyzer.analyze(state.poses),
-                poses: state.poses,
-                framePaths: state.framePaths,
+                params: GaitAnalyzer.analyze(complete.poses),
+                poses: complete.poses,
+                framePaths: complete.framePaths,
               );
             }
             return _Prompt(
@@ -384,7 +403,7 @@ class _ExportPdfButton extends StatelessWidget {
         final bool generating = state is PoseReportGenerating;
         return FilledButton.icon(
           style: FilledButton.styleFrom(
-            backgroundColor: AppColors.primary,
+            backgroundColor: AppColors.primaryContainer,
             foregroundColor: AppColors.onPrimary,
             padding: const EdgeInsets.symmetric(vertical: 12),
           ),

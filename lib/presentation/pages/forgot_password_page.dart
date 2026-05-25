@@ -84,7 +84,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
         const SizedBox(height: 20),
         FilledButton(
           style: FilledButton.styleFrom(
-            backgroundColor: AppColors.primary,
+            backgroundColor: AppColors.primaryContainer,
             foregroundColor: AppColors.onPrimary,
             padding: const EdgeInsets.symmetric(vertical: 14),
           ),
@@ -116,7 +116,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
         const SizedBox(height: 20),
         FilledButton(
           style: FilledButton.styleFrom(
-            backgroundColor: AppColors.primary,
+            backgroundColor: AppColors.primaryContainer,
             foregroundColor: AppColors.onPrimary,
           ),
           onPressed: () => Navigator.of(context).maybePop(),

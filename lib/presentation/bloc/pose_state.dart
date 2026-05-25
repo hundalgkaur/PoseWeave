@@ -27,10 +27,17 @@ class PoseState with _$PoseState {
     required PoseEntity pose,
     required double averageConfidence,
     required double fps,
+    // Everyone detected this frame (primary first) for drawing all skeletons +
+    // a person count. [pose] remains the primary for single-person features.
+    @Default(<PoseEntity>[]) List<PoseEntity> allPoses,
   }) = PoseActive;
 
   /// A video clip is being recorded from the live camera.
   const factory PoseState.recordingVideo() = PoseRecordingVideo;
+
+  /// A video was picked and is ready to be trimmed (the UI pushes the trim
+  /// screen with [path], then analyzes the trimmed file).
+  const factory PoseState.videoPicked(String path) = PoseVideoPicked;
 
   /// A video is being analyzed frame-by-frame.
   const factory PoseState.videoProcessing({

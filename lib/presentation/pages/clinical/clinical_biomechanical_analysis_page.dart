@@ -11,6 +11,7 @@ import 'package:poseweave/presentation/bloc/pose_bloc.dart';
 import 'package:poseweave/presentation/bloc/pose_event.dart';
 import 'package:poseweave/presentation/bloc/pose_state.dart';
 import 'package:poseweave/presentation/widgets/app_top_bar.dart';
+import 'package:poseweave/presentation/widgets/clinical/clinical_bottom_nav.dart';
 import 'package:poseweave/presentation/widgets/clinical/landmark_metrics_table.dart';
 import 'package:poseweave/presentation/widgets/clinical/patient_header.dart';
 import 'package:poseweave/presentation/widgets/glass_panel.dart';
@@ -39,6 +40,7 @@ class _BiomechView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const AppTopBar(title: 'Biomechanical Analysis'),
+      bottomNavigationBar: const ClinicalBottomNav(current: 1),
       body: SafeArea(
         child: BlocConsumer<PoseBloc, PoseState>(
           listener: (BuildContext context, PoseState state) {
@@ -190,27 +192,38 @@ class _Processing extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          Text('Analyzing · frame $frame',
-              style: AppTheme.mono(color: AppColors.onSurface)),
-          const SizedBox(height: 16),
-          SizedBox(
-            width: 240,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(999),
-              child: LinearProgressIndicator(
-                value: progress,
-                minHeight: 8,
-                backgroundColor: AppColors.surfaceContainerHigh,
-                valueColor: const AlwaysStoppedAnimation<Color>(
-                  AppColors.primaryContainer,
+      child: Padding(
+        padding: const EdgeInsets.all(24),
+        child: GlassPanel(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              const Icon(Icons.biotech, color: AppColors.primary, size: 40),
+              const SizedBox(height: 12),
+              Text('BIOMECHANICAL SCAN', style: AppTheme.labelCaps()),
+              const SizedBox(height: 4),
+              Text('Frame $frame',
+                  style: AppTheme.data(
+                      fontSize: 28, color: AppColors.primary)),
+              const SizedBox(height: 16),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(999),
+                child: LinearProgressIndicator(
+                  value: progress,
+                  minHeight: 8,
+                  backgroundColor: AppColors.surfaceContainerHigh,
+                  valueColor: const AlwaysStoppedAnimation<Color>(
+                    AppColors.primaryContainer,
+                  ),
                 ),
               ),
-            ),
+              const SizedBox(height: 8),
+              Text('${(progress * 100).round()}% · extracting landmarks',
+                  style: AppTheme.labelCaps(fontSize: 9)),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

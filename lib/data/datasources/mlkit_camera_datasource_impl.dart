@@ -11,6 +11,8 @@ import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart'
 import 'package:injectable/injectable.dart';
 import 'package:poseweave/core/camera_diagnostics.dart';
 import 'package:poseweave/core/errors/exceptions.dart';
+import 'package:poseweave/core/utils/one_euro_filter.dart';
+import 'package:poseweave/core/utils/person_tracker.dart';
 import 'package:poseweave/data/datasources/mlkit_camera_datasource.dart';
 import 'package:poseweave/data/models/landmark_model.dart';
 import 'package:poseweave/data/models/pose_model.dart';
@@ -38,6 +40,11 @@ class MLKitCameraDataSourceImpl implements MLKitCameraDataSource {
   bool _isBusy = false;
   bool _detecting = false;
   bool _mockMode = false;
+
+  /// All people detected in the most recent frame (primary first). Used to draw
+  /// every skeleton + show a person count, while the [poseStream] still carries
+  /// only the primary for single-person features.
+  List<PoseModel> _latestPoses = const <PoseModel>[];
   DateTime _lastProcessed = DateTime.fromMillisecondsSinceEpoch(0);
   Timer? _mockTimer;
 
@@ -47,10 +54,24 @@ class MLKitCameraDataSourceImpl implements MLKitCameraDataSource {
   CameraDiagnostics _diag = const CameraDiagnostics();
   DateTime _lastDiagEmit = DateTime.fromMillisecondsSinceEpoch(0);
 
-  /// Exponential-moving-average state per landmark index, to smooth jitter.
-  /// Higher [_alpha] = more responsive, less smoothing.
-  final Map<int, _Smoothed> _ema = <int, _Smoothed>{};
-  static const double _alpha = 0.4;
+  /// Adaptive (1€) smoothing per landmark axis, replacing the old fixed-alpha
+  /// EMA: low jitter when the subject is still, low lag when they move fast.
+  final LandmarkOneEuro _euro = LandmarkOneEuro();
+
+  /// Landmarks below this confidence aren't fed into the filter (they'd snap the
+  /// point toward (0,0) and rubber-band the skeleton); we hold the last good
+  /// geometry instead. Aligned with the painter draw threshold so we smooth
+  /// exactly what we draw.
+  static const double _kSmoothConfFloor = 0.3;
+
+  /// Centroid of the previous frame's primary person, for stable tracking — so
+  /// the "primary" pose doesn't swap between people across frames (ML Kit's
+  /// pose-list order isn't guaranteed). Null until the first detection.
+  PoseCentroid? _prevPrimaryCentroid;
+
+  /// How far (normalized) the primary may move between frames and still be
+  /// treated as the same person; beyond this we re-acquire.
+  static const double _kTrackMaxDistance = 0.25;
 
   /// Android device-orientation -> degrees, for rotation compensation.
   static const Map<DeviceOrientation, int> _orientations =
@@ -69,6 +90,9 @@ class MLKitCameraDataSourceImpl implements MLKitCameraDataSource {
 
   @override
   Stream<PoseModel> get poseStream => _poseController.stream;
+
+  @override
+  List<PoseModel> get latestPoses => _latestPoses;
 
   @override
   Stream<CameraDiagnostics> get diagnostics => _diagController.stream;
@@ -105,8 +129,13 @@ class MLKitCameraDataSourceImpl implements MLKitCameraDataSource {
       if (_cameras.isEmpty) {
         throw const CameraException('No cameras available on this device.');
       }
+      // Accurate model: higher-confidence landmarks (more of the skeleton
+      // clears the draw threshold) at the cost of a bit more compute per frame.
       _detector ??= PoseDetector(
-        options: PoseDetectorOptions(mode: PoseDetectionMode.stream),
+        options: PoseDetectorOptions(
+          model: PoseDetectionModel.accurate,
+          mode: PoseDetectionMode.stream,
+        ),
       );
       await _startController(_pickCamera(direction));
     } on TimeoutException {
@@ -169,7 +198,9 @@ class MLKitCameraDataSourceImpl implements MLKitCameraDataSource {
   @override
   Future<void> stopDetection() async {
     _detecting = false;
-    _ema.clear();
+    _euro.reset();
+    _prevPrimaryCentroid = null;
+    _latestPoses = const <PoseModel>[];
     _mockTimer?.cancel();
     _mockTimer = null;
     final CameraController? controller = _controller;
@@ -234,7 +265,8 @@ class MLKitCameraDataSourceImpl implements MLKitCameraDataSource {
       await controller.dispose();
     }
     _controller = null;
-    _ema.clear();
+    _euro.reset();
+    _prevPrimaryCentroid = null;
     await _detector?.close();
     _detector = null;
     // Close and replace so the next screen gets an open stream (see field note).
@@ -245,26 +277,67 @@ class MLKitCameraDataSourceImpl implements MLKitCameraDataSource {
     _diag = const CameraDiagnostics();
   }
 
-  /// Applies per-landmark EMA smoothing to reduce frame-to-frame jitter.
+  /// Applies adaptive (1€) smoothing per landmark to reduce frame-to-frame
+  /// jitter without lagging on fast motion. Confidence-gated: weak/absent
+  /// landmarks (which ML Kit reports as `(0,0,conf≈0)`) are not fed into the
+  /// filter — instead we hold the last good geometry but keep the *measured*
+  /// low confidence, so the painter still hides them and the rep counter still
+  /// skips them. These are still the raw (un-mirrored) detector coordinates;
+  /// the front-camera mirror is a display-only concern applied in the painter,
+  /// so mirrored coordinates must never be fed back into this math.
   PoseModel _smooth(PoseModel model) {
+    final double t = model.timestamp.millisecondsSinceEpoch / 1000.0;
     final List<LandmarkModel> smoothed =
         model.landmarks.map((LandmarkModel lm) {
           final int i = lm.type.index;
           final double z = lm.z ?? 0;
-          final _Smoothed? prev = _ema[i];
-          if (prev == null) {
-            _ema[i] = _Smoothed(lm.x, lm.y, z, lm.confidence);
-            return lm;
+          if (lm.confidence >= _kSmoothConfFloor) {
+            final ({double x, double y, double z}) s =
+                _euro.filter(i, lm.x, lm.y, z, t);
+            return lm.copyWith(x: s.x, y: s.y, z: s.z);
           }
-          final double sx = _alpha * lm.x + (1 - _alpha) * prev.x;
-          final double sy = _alpha * lm.y + (1 - _alpha) * prev.y;
-          final double sz = _alpha * z + (1 - _alpha) * prev.z;
-          final double sc =
-              _alpha * lm.confidence + (1 - _alpha) * prev.confidence;
-          _ema[i] = _Smoothed(sx, sy, sz, sc);
-          return lm.copyWith(x: sx, y: sy, z: sz, confidence: sc);
+          // Low confidence: hold last good point if we have one (don't advance
+          // the filter), otherwise pass the raw value through.
+          if (_euro.hasState(i)) {
+            final ({double x, double y, double z}) last = _euro.lastValue(i);
+            return lm.copyWith(x: last.x, y: last.y, z: last.z);
+          }
+          return lm;
         }).toList();
     return model.copyWith(landmarks: smoothed);
+  }
+
+  /// Confidence-weighted centre of the torso quad (shoulders + hips) with a
+  /// shoulder-to-hip span, used to keep the primary person stable across frames.
+  PoseCentroid _centroidOf(PoseModel model) {
+    final LandmarkModel ls = model.landmarks[PoseLandmarkType.leftShoulder.index];
+    final LandmarkModel rs =
+        model.landmarks[PoseLandmarkType.rightShoulder.index];
+    final LandmarkModel lh = model.landmarks[PoseLandmarkType.leftHip.index];
+    final LandmarkModel rh = model.landmarks[PoseLandmarkType.rightHip.index];
+    final List<LandmarkModel> quad = <LandmarkModel>[ls, rs, lh, rh];
+
+    double wsum = 0;
+    double cx = 0;
+    double cy = 0;
+    for (final LandmarkModel m in quad) {
+      final double w = m.confidence;
+      wsum += w;
+      cx += m.x * w;
+      cy += m.y * w;
+    }
+    if (wsum <= 0) {
+      // No confident torso points — fall back to the unweighted mean.
+      cx = quad.map((LandmarkModel m) => m.x).reduce((a, b) => a + b) / 4;
+      cy = quad.map((LandmarkModel m) => m.y).reduce((a, b) => a + b) / 4;
+    } else {
+      cx /= wsum;
+      cy /= wsum;
+    }
+    final double shoulderMidY = (ls.y + rs.y) / 2;
+    final double hipMidY = (lh.y + rh.y) / 2;
+    final double span = (hipMidY - shoulderMidY).abs();
+    return PoseCentroid(cx, cy, span);
   }
 
   // --- Real detection -------------------------------------------------------
@@ -286,21 +359,65 @@ class MLKitCameraDataSourceImpl implements MLKitCameraDataSource {
     _lastProcessed = now;
 
     try {
-      final InputImage? inputImage = _toInputImage(image);
+      final InputImageRotation? rotation = _rotationFor();
+      if (rotation == null) return;
+      // Time the YUV→NV21 conversion + the detector separately so the debug HUD
+      // shows the per-frame UI-isolate budget (the lever for throttle tuning).
+      final Stopwatch convSw = Stopwatch()..start();
+      final InputImage? inputImage = _toInputImage(image, rotation);
+      convSw.stop();
       if (inputImage == null) return;
       _diag = _diag.copyWith(
         framesSentToDetector: _diag.framesSentToDetector + 1,
+        lastConversionMs: convSw.elapsedMicroseconds / 1000.0,
       );
+      final Stopwatch detSw = Stopwatch()..start();
       final List<Pose> poses = await _detector!.processImage(inputImage);
+      detSw.stop();
+      _diag = _diag.copyWith(lastDetectorMs: detSw.elapsedMicroseconds / 1000.0);
       if (poses.isEmpty) return;
       _diag = _diag.copyWith(posesFound: _diag.posesFound + 1);
-      final PoseModel model = PoseModel.fromMLKitPose(
-        poses.first,
-        imageSize: Size(image.width.toDouble(), image.height.toDouble()),
-        source: PoseSource.camera,
-        timestamp: now,
+      // ML Kit returns landmark coordinates in the *upright* (rotated) image
+      // space, so for 90°/270° the effective frame width/height are swapped.
+      // Normalize against — and store — that rotated size; otherwise every
+      // coordinate is aspect-distorted, which both drifts the overlay off the
+      // body and corrupts the joint angles the rep counter relies on.
+      final bool swap = rotation == InputImageRotation.rotation90deg ||
+          rotation == InputImageRotation.rotation270deg;
+      final Size frameSize = swap
+          ? Size(image.height.toDouble(), image.width.toDouble())
+          : Size(image.width.toDouble(), image.height.toDouble());
+      // Map every detected person (raw, un-mirrored detector coordinates).
+      final List<PoseModel> models = poses
+          .map((Pose p) => PoseModel.fromMLKitPose(
+                p,
+                imageSize: frameSize,
+                source: PoseSource.camera,
+                timestamp: now,
+              ))
+          .toList();
+      // Keep the SAME human as "primary" across frames — ML Kit's list order is
+      // not stable, so plain `models.first` can swap people mid-rep. Match the
+      // current centroids to the previous primary's; on re-acquisition reset the
+      // smoother so two people's trajectories never blend.
+      final List<PoseCentroid> centroids =
+          models.map(_centroidOf).toList(growable: false);
+      final ({int index, bool reacquired}) pick = PersonTracker.indexOfClosest(
+        candidates: centroids,
+        previous: _prevPrimaryCentroid,
+        maxDistance: _kTrackMaxDistance,
       );
-      if (!_poseController.isClosed) _poseController.add(_smooth(model));
+      if (pick.reacquired) _euro.reset();
+      _prevPrimaryCentroid = centroids[pick.index];
+      // The primary is smoothed and drives the single-person features (rep
+      // counter, segments, gait); the rest stay raw for drawing all skeletons.
+      final PoseModel primary = _smooth(models[pick.index]);
+      final List<PoseModel> rest = <PoseModel>[
+        for (int i = 0; i < models.length; i++)
+          if (i != pick.index) models[i],
+      ];
+      _latestPoses = <PoseModel>[primary, ...rest];
+      if (!_poseController.isClosed) _poseController.add(primary);
     } catch (e) {
       // Never crash the stream on a bad frame — log and continue (PRD §7.3).
       _diag = _diag.copyWith(lastError: '$e');
@@ -310,32 +427,33 @@ class MLKitCameraDataSourceImpl implements MLKitCameraDataSource {
     }
   }
 
-  /// Converts a [CameraImage] to an ML Kit [InputImage], compensating for
-  /// sensor + device orientation and lens direction. Returns null for frames
-  /// whose format/layout ML Kit can't accept (those are simply skipped).
-  InputImage? _toInputImage(CameraImage image) {
+  /// The ML Kit input rotation for the active camera, compensating for sensor +
+  /// device orientation and lens direction. Null if no controller yet.
+  InputImageRotation? _rotationFor() {
     final CameraController? controller = _controller;
     if (controller == null) return null;
     final CameraDescription camera = controller.description;
     final int sensorOrientation = camera.sensorOrientation;
 
-    InputImageRotation? rotation;
     if (Platform.isIOS) {
-      rotation = InputImageRotationValue.fromRawValue(sensorOrientation);
-    } else {
-      // Default to 0 (portrait) rather than dropping the frame if the device
-      // reports an orientation we don't have mapped — dropping every frame is
-      // what makes detection silently produce nothing.
-      final int compensation =
-          _orientations[controller.value.deviceOrientation] ?? 0;
-      final int rotationCompensation =
-          camera.lensDirection == CameraLensDirection.front
-              ? (sensorOrientation + compensation) % 360
-              : (sensorOrientation - compensation + 360) % 360;
-      rotation = InputImageRotationValue.fromRawValue(rotationCompensation);
+      return InputImageRotationValue.fromRawValue(sensorOrientation);
     }
-    if (rotation == null) return null;
+    // Default to 0 (portrait) rather than dropping the frame if the device
+    // reports an orientation we don't have mapped — dropping every frame is
+    // what makes detection silently produce nothing.
+    final int compensation =
+        _orientations[controller.value.deviceOrientation] ?? 0;
+    final int rotationCompensation =
+        camera.lensDirection == CameraLensDirection.front
+            ? (sensorOrientation + compensation) % 360
+            : (sensorOrientation - compensation + 360) % 360;
+    return InputImageRotationValue.fromRawValue(rotationCompensation);
+  }
 
+  /// Converts a [CameraImage] to an ML Kit [InputImage] using the given
+  /// [rotation]. Returns null for frames whose format/layout ML Kit can't
+  /// accept (those are simply skipped).
+  InputImage? _toInputImage(CameraImage image, InputImageRotation rotation) {
     final InputImageFormat? rawFormat = InputImageFormatValue.fromRawValue(
       image.format.raw as int,
     );
@@ -410,7 +528,9 @@ class MLKitCameraDataSourceImpl implements MLKitCameraDataSource {
     _mockTimer = Timer.periodic(_kFrameInterval, (_) {
       if (_poseController.isClosed) return;
       final double t = DateTime.now().difference(start).inMilliseconds / 1000.0;
-      _poseController.add(_mockPose(t));
+      final PoseModel mock = _mockPose(t);
+      _latestPoses = <PoseModel>[mock];
+      _poseController.add(mock);
     });
   }
 
@@ -474,15 +594,6 @@ class MLKitCameraDataSourceImpl implements MLKitCameraDataSource {
       imageHeight: 1,
     );
   }
-}
-
-/// One landmark's smoothed EMA state.
-class _Smoothed {
-  const _Smoothed(this.x, this.y, this.z, this.confidence);
-  final double x;
-  final double y;
-  final double z;
-  final double confidence;
 }
 
 /// Repacks an Android `YUV_420_888` camera frame into a contiguous **NV21**

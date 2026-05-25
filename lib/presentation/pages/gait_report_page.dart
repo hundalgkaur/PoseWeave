@@ -401,7 +401,7 @@ class _ExportPdfButton extends StatelessWidget {
         final bool generating = state is PoseReportGenerating;
         return FilledButton.icon(
           style: FilledButton.styleFrom(
-            backgroundColor: AppColors.primary,
+            backgroundColor: AppColors.primaryContainer,
             foregroundColor: AppColors.onPrimary,
             padding: const EdgeInsets.symmetric(vertical: 14),
           ),

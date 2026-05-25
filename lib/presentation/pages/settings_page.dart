@@ -82,7 +82,7 @@ class _SettingsViewState extends State<_SettingsView> {
                           Expanded(
                             child: FilledButton(
                               style: FilledButton.styleFrom(
-                                backgroundColor: AppColors.primary,
+                                backgroundColor: AppColors.primaryContainer,
                                 foregroundColor: AppColors.onPrimary,
                               ),
                               onPressed:

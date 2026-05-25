@@ -9,6 +9,8 @@ class CameraDiagnostics {
     this.lastFormatRaw,
     this.lastPlaneCount = 0,
     this.lastError,
+    this.lastConversionMs = 0,
+    this.lastDetectorMs = 0,
   });
 
   /// Frames delivered by the camera image stream.
@@ -29,10 +31,20 @@ class CameraDiagnostics {
   /// Last error from conversion/detection, if any.
   final String? lastError;
 
+  /// Wall-clock cost of the last YUV→NV21 conversion (ms). 0 until measured.
+  final double lastConversionMs;
+
+  /// Wall-clock cost of the last ML Kit `processImage` call (ms). 0 until
+  /// measured. Together with [lastConversionMs] this is the per-frame budget on
+  /// the UI isolate — the lever for deciding whether the throttle has headroom.
+  final double lastDetectorMs;
+
   /// Compact one-line summary for the debug HUD.
   String get summary =>
       'fmt:${lastFormatRaw ?? '-'} planes:$lastPlaneCount · '
       'recv:$framesReceived sent:$framesSentToDetector found:$posesFound · '
+      'conv:${lastConversionMs.toStringAsFixed(1)}ms '
+      'det:${lastDetectorMs.toStringAsFixed(1)}ms · '
       'err:${lastError ?? '-'}';
 
   CameraDiagnostics copyWith({
@@ -42,6 +54,8 @@ class CameraDiagnostics {
     int? lastFormatRaw,
     int? lastPlaneCount,
     String? lastError,
+    double? lastConversionMs,
+    double? lastDetectorMs,
   }) {
     return CameraDiagnostics(
       framesReceived: framesReceived ?? this.framesReceived,
@@ -50,6 +64,8 @@ class CameraDiagnostics {
       lastFormatRaw: lastFormatRaw ?? this.lastFormatRaw,
       lastPlaneCount: lastPlaneCount ?? this.lastPlaneCount,
       lastError: lastError ?? this.lastError,
+      lastConversionMs: lastConversionMs ?? this.lastConversionMs,
+      lastDetectorMs: lastDetectorMs ?? this.lastDetectorMs,
     );
   }
 }
