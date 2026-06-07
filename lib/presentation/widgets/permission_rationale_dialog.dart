@@ -61,7 +61,7 @@ class PermissionRationaleDialog extends StatelessWidget {
                 const SizedBox(width: 8),
                 FilledButton(
                   style: FilledButton.styleFrom(
-                    backgroundColor: AppColors.primary,
+                    backgroundColor: AppColors.primaryContainer,
                     foregroundColor: AppColors.onPrimary,
                   ),
                   onPressed: () => Navigator.of(context).pop(true),

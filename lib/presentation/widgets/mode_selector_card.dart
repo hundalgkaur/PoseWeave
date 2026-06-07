@@ -50,17 +50,11 @@ class ModeSelectorCard extends StatelessWidget {
                   width: 3,
                   height: 44,
                   margin: const EdgeInsets.only(right: 14),
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: AppColors.primary,
-                    borderRadius: BorderRadius.circular(2),
-                    boxShadow: <BoxShadow>[
-                      BoxShadow(
-                        color: AppColors.primaryContainer.withValues(
-                          alpha: 0.8,
-                        ),
-                        blurRadius: 12,
-                      ),
-                    ],
+                    borderRadius: BorderRadius.all(Radius.circular(2)),
+                    // Shared cyan bloom for active/tracking states.
+                    boxShadow: AppColors.glow,
                   ),
                 ),
               Container(

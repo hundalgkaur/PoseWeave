@@ -1,4 +1,3 @@
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,16 +8,16 @@ import 'package:poseweave/injection.dart';
 import 'package:poseweave/presentation/bloc/pose_bloc.dart';
 import 'package:poseweave/presentation/bloc/pose_event.dart';
 import 'package:poseweave/presentation/bloc/pose_state.dart';
+import 'package:poseweave/presentation/widgets/camera_pose_view.dart';
+import 'package:poseweave/presentation/widgets/clinical/clinical_bottom_nav.dart';
 import 'package:poseweave/presentation/widgets/clinical/hud_frame.dart';
 import 'package:poseweave/presentation/widgets/clinical/kinematics_panel.dart';
 import 'package:poseweave/presentation/widgets/clinical/patient_header.dart';
 import 'package:poseweave/presentation/widgets/clinical/sensor_status_panel.dart';
 import 'package:poseweave/presentation/widgets/confidence_indicator.dart';
-import 'package:poseweave/presentation/widgets/detection_debug_hud.dart';
 import 'package:poseweave/presentation/widgets/loading_overlay.dart';
 import 'package:poseweave/presentation/widgets/no_person_banner.dart';
 import 'package:poseweave/presentation/widgets/permission_rationale_dialog.dart';
-import 'package:poseweave/presentation/widgets/pose_overlay_painter.dart';
 
 /// Clinical live diagnostic feed: reuses [PoseBloc] camera detection +
 /// [PoseOverlayPainter], wrapped in clinical chrome (patient header, calibration
@@ -43,6 +42,7 @@ class _LiveView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.surfaceContainerLowest,
+      bottomNavigationBar: const ClinicalBottomNav(current: 0),
       body: BlocConsumer<PoseBloc, PoseState>(
         listener: (BuildContext context, PoseState state) async {
           if (state is PoseNoPermission) {
@@ -72,15 +72,7 @@ class _LiveView extends StatelessWidget {
           return Stack(
             fit: StackFit.expand,
             children: <Widget>[
-              _Background(bloc: bloc),
-              if (state is PoseActive)
-                CustomPaint(
-                  painter: PoseOverlayPainter(
-                    landmarks: state.pose.landmarks,
-                    imageSize: state.pose.imageSize ?? const Size(1, 1),
-                    mirror: bloc.lensDirection == CameraLensDirection.front,
-                  ),
-                ),
+              CameraPoseView(bloc: bloc, state: state),
               if (state is PoseSearching)
                 const NoPersonBanner(
                   message: 'Position the patient in frame, full body visible',
@@ -118,36 +110,12 @@ class _LiveView extends StatelessWidget {
                     const SizedBox(height: 20),
                   ],
                 ),
-              ),
-              DetectionDebugHud(diagnostics: bloc.detectionDiagnostics),
-              if (state is PoseLoading)
+              ),              if (state is PoseLoading)
                 const LoadingOverlay(message: 'Initializing sensors…'),
             ],
           );
         },
       ),
-    );
-  }
-}
-
-class _Background extends StatelessWidget {
-  const _Background({required this.bloc});
-  final PoseBloc bloc;
-
-  @override
-  Widget build(BuildContext context) {
-    final CameraController? controller = bloc.cameraController;
-    if (controller != null && controller.value.isInitialized) {
-      return Center(child: CameraPreview(controller));
-    }
-    return ColoredBox(
-      color: AppColors.surfaceContainerLowest,
-      child: bloc.isMockMode
-          ? Center(
-              child: Text('MOCK MODE',
-                  style: AppTheme.labelCaps(color: AppColors.outline)),
-            )
-          : null,
     );
   }
 }

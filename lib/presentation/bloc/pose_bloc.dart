@@ -37,6 +37,7 @@ class PoseBloc extends Bloc<PoseEvent, PoseState> {
     on<PoseLost>(_onPoseLost);
     on<PickAndAnalyzeVideo>(_onPickAndAnalyzeVideo);
     on<AnalyzeVideoFile>(_onAnalyzeVideoFile);
+    on<PickVideoForTrim>(_onPickVideoForTrim);
     on<PickAndAnalyzeImage>(_onPickAndAnalyzeImage);
     on<GenerateReport>(_onGenerateReport);
   }
@@ -205,6 +206,9 @@ class PoseBloc extends Bloc<PoseEvent, PoseState> {
 
   void _onPoseReceived(PoseReceived event, Emitter<PoseState> emit) {
     _updateFps();
+    // All people detected this frame, for rendering every skeleton + a count.
+    // Falls back to just the primary if the list is momentarily empty.
+    final List<PoseEntity> all = _repository.latestPoses;
     emit(
       PoseState.active(
         // A new pose every frame keeps the skeleton animating; the 15 FPS
@@ -213,6 +217,7 @@ class PoseBloc extends Bloc<PoseEvent, PoseState> {
         pose: event.pose,
         averageConfidence: event.pose.averageConfidence,
         fps: _fps,
+        allPoses: all.isNotEmpty ? all : <PoseEntity>[event.pose],
       ),
     );
   }
@@ -234,6 +239,19 @@ class PoseBloc extends Bloc<PoseEvent, PoseState> {
     AnalyzeVideoFile event,
     Emitter<PoseState> emit,
   ) => _analyze(event.filePath, emit);
+
+  Future<void> _onPickVideoForTrim(
+    PickVideoForTrim event,
+    Emitter<PoseState> emit,
+  ) async {
+    final Either<Failure, String?> picked = await _repository.pickVideo();
+    final String? path = picked.fold((Failure f) {
+      emit(PoseState.error(message: f.message, isRecoverable: f.isRecoverable));
+      return null;
+    }, (String? p) => p);
+    if (path == null) return; // cancelled or failed
+    emit(PoseState.videoPicked(path));
+  }
 
   Future<void> _onPickAndAnalyzeImage(
     PickAndAnalyzeImage event,

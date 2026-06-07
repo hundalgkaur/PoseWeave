@@ -5,6 +5,7 @@ import 'package:poseweave/core/constants/app_theme.dart';
 import 'package:poseweave/injection.dart';
 import 'package:poseweave/presentation/bloc/settings_bloc.dart';
 import 'package:poseweave/presentation/widgets/api_key_field.dart';
+import 'package:poseweave/presentation/widgets/app_top_bar.dart';
 import 'package:poseweave/presentation/widgets/glass_panel.dart';
 
 /// BYOK settings: store / test / clear the user's Anthropic API key, with a
@@ -40,13 +41,7 @@ class _SettingsViewState extends State<_SettingsView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Settings'),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.of(context).maybePop(),
-        ),
-      ),
+      appBar: const AppTopBar(title: 'Settings'),
       body: SafeArea(
         child: BlocConsumer<SettingsBloc, SettingsState>(
           listener: (BuildContext context, SettingsState state) {
@@ -82,7 +77,7 @@ class _SettingsViewState extends State<_SettingsView> {
                           Expanded(
                             child: FilledButton(
                               style: FilledButton.styleFrom(
-                                backgroundColor: AppColors.primary,
+                                backgroundColor: AppColors.primaryContainer,
                                 foregroundColor: AppColors.onPrimary,
                               ),
                               onPressed:

@@ -71,7 +71,7 @@ class ClinicalConsentPage extends StatelessWidget {
                     const SizedBox(height: 20),
                     FilledButton(
                       style: FilledButton.styleFrom(
-                        backgroundColor: AppColors.primary,
+                        backgroundColor: AppColors.primaryContainer,
                         foregroundColor: AppColors.onPrimary,
                         padding: const EdgeInsets.symmetric(vertical: 14),
                       ),

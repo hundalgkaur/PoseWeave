@@ -1,10 +1,17 @@
 import 'dart:io';
 
+import 'package:dartz/dartz.dart' hide State;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:poseweave/core/constants/app_colors.dart';
 import 'package:poseweave/core/constants/app_theme.dart';
+import 'package:poseweave/core/errors/failures.dart';
+import 'package:poseweave/core/utils/gait_analyzer.dart';
+import 'package:poseweave/core/utils/segment_aggregator.dart';
+import 'package:poseweave/data/models/report_data.dart';
+import 'package:poseweave/data/services/pdf_report_service.dart';
 import 'package:poseweave/domain/entities/pose_entity.dart';
+import 'package:poseweave/domain/repositories/pose_repository.dart';
 import 'package:poseweave/injection.dart';
 import 'package:poseweave/presentation/bloc/pose_bloc.dart';
 import 'package:poseweave/presentation/bloc/pose_event.dart';
@@ -14,6 +21,7 @@ import 'package:poseweave/presentation/widgets/glass_panel.dart';
 import 'package:poseweave/presentation/widgets/joint_angles_panel.dart';
 import 'package:poseweave/presentation/widgets/landmark_table.dart';
 import 'package:poseweave/presentation/widgets/pose_overlay_painter.dart';
+import 'package:share_plus/share_plus.dart';
 
 /// Detect a pose in a single still image and inspect it three ways
 /// (skeleton overlay, joint angles, landmark coordinates).
@@ -203,10 +211,67 @@ class _ImageResultState extends State<_ImageResult> {
             onSelectionChanged:
                 (Set<_View> s) => setState(() => _view = s.first),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: 8),
+          Row(
+            children: <Widget>[
+              Text('EXPORT', style: AppTheme.labelCaps()),
+              const Spacer(),
+              IconButton(
+                tooltip: 'Export PDF report',
+                icon: const Icon(Icons.picture_as_pdf,
+                    color: AppColors.primary, size: 20),
+                onPressed: () => _exportPdf(pose),
+              ),
+              IconButton(
+                tooltip: 'Export pose as JSON',
+                icon: const Icon(Icons.download,
+                    color: AppColors.primary, size: 20),
+                onPressed: () => _exportJson(pose),
+              ),
+            ],
+          ),
+          const SizedBox(height: 4),
           Expanded(child: _body(pose)),
         ],
       ],
+    );
+  }
+
+  Future<void> _exportJson(PoseEntity pose) async {
+    final ScaffoldMessengerState messenger = ScaffoldMessenger.of(context);
+    final Either<Failure, String> result = await getIt<PoseRepository>()
+        .exportPosesToJson(<PoseEntity>[pose]);
+    if (!mounted) return;
+    result.fold(
+      (Failure f) => messenger.showSnackBar(
+        SnackBar(content: Text(f.message), backgroundColor: AppColors.error),
+      ),
+      (String jsonPath) => Share.shareXFiles(
+        <XFile>[XFile(jsonPath), XFile(widget.imagePath)],
+        subject: 'PoseWeave image export',
+      ),
+    );
+  }
+
+  Future<void> _exportPdf(PoseEntity pose) async {
+    final ScaffoldMessengerState messenger = ScaffoldMessenger.of(context);
+    final Either<Failure, String> result =
+        await getIt<PdfReportService>().generateReport(
+      ReportData(
+        generatedAt: DateTime.now(),
+        exerciseType: 'Image pose analysis',
+        gait: GaitAnalyzer.analyze(<PoseEntity>[pose]),
+        segments: SegmentAggregator.summarize(<PoseEntity>[pose]),
+        framePaths: <String>[widget.imagePath],
+      ),
+    );
+    if (!mounted) return;
+    result.fold(
+      (Failure f) => messenger.showSnackBar(
+        SnackBar(content: Text(f.message), backgroundColor: AppColors.error),
+      ),
+      (String path) =>
+          Share.shareXFiles(<XFile>[XFile(path)], subject: 'PoseWeave report'),
     );
   }
 
@@ -226,7 +291,7 @@ class _ImageResultState extends State<_ImageResult> {
 
   Widget _pickButton() => FilledButton.icon(
     style: FilledButton.styleFrom(
-      backgroundColor: AppColors.primary,
+      backgroundColor: AppColors.primaryContainer,
       foregroundColor: AppColors.onPrimary,
     ),
     onPressed: widget.onPick,

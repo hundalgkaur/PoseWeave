@@ -110,7 +110,7 @@ class _LoginPageState extends State<LoginPage> {
                     const SizedBox(height: 20),
                     FilledButton(
                       style: FilledButton.styleFrom(
-                        backgroundColor: AppColors.primary,
+                        backgroundColor: AppColors.primaryContainer,
                         foregroundColor: AppColors.onPrimary,
                         padding: const EdgeInsets.symmetric(vertical: 14),
                       ),
@@ -129,6 +129,14 @@ class _LoginPageState extends State<LoginPage> {
                       child: const Text(
                         'Forgot password?',
                         style: TextStyle(color: AppColors.onSurfaceVariant),
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () =>
+                          Navigator.of(context).pushNamed(AppRoutes.register),
+                      child: const Text(
+                        'Create an account',
+                        style: TextStyle(color: AppColors.primary),
                       ),
                     ),
                     const Divider(color: AppColors.outlineVariant, height: 24),

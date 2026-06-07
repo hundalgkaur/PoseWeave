@@ -5,6 +5,7 @@ import 'dart:ui' as ui;
 
 import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart'
     hide PoseLandmarkType;
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:injectable/injectable.dart';
 import 'package:path_provider/path_provider.dart';
@@ -72,7 +73,21 @@ class VideoFrameDataSourceImpl implements VideoFrameDataSource {
   Future<String?> pickImage() async {
     try {
       final XFile? file = await _picker.pickImage(source: ImageSource.gallery);
-      return file?.path;
+      if (file == null) return null;
+      // Offer a crop step so the user can frame the subject before detection.
+      final CroppedFile? cropped = await ImageCropper().cropImage(
+        sourcePath: file.path,
+        uiSettings: <PlatformUiSettings>[
+          AndroidUiSettings(
+            toolbarTitle: 'Crop image',
+            lockAspectRatio: false,
+            hideBottomControls: false,
+          ),
+          IOSUiSettings(title: 'Crop image'),
+        ],
+      );
+      // If the user skips/cancels the cropper, fall back to the original.
+      return cropped?.path ?? file.path;
     } catch (e) {
       throw VideoException('Failed to pick image: $e');
     }

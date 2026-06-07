@@ -26,8 +26,11 @@ import 'package:poseweave/data/services/pdf_report_service.dart' as _i962;
 import 'package:poseweave/data/services/recommendation_service.dart' as _i340;
 import 'package:poseweave/domain/repositories/pose_repository.dart' as _i154;
 import 'package:poseweave/presentation/bloc/pose_bloc.dart' as _i1064;
+import 'package:poseweave/presentation/bloc/pose_classifier_bloc.dart' as _i597;
+import 'package:poseweave/presentation/bloc/pose_match_bloc.dart' as _i70;
 import 'package:poseweave/presentation/bloc/profile_cubit.dart' as _i995;
 import 'package:poseweave/presentation/bloc/recommendations_bloc.dart' as _i490;
+import 'package:poseweave/presentation/bloc/rep_counter_bloc.dart' as _i986;
 import 'package:poseweave/presentation/bloc/settings_bloc.dart' as _i790;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -37,6 +40,9 @@ extension GetItInjectableX on _i174.GetIt {
     _i526.EnvironmentFilter? environmentFilter,
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
+    gh.factory<_i986.RepCounterBloc>(() => _i986.RepCounterBloc());
+    gh.factory<_i597.PoseClassifierBloc>(() => _i597.PoseClassifierBloc());
+    gh.factory<_i70.PoseMatchBloc>(() => _i70.PoseMatchBloc());
     gh.lazySingleton<_i1058.TokenStorage>(() => _i1058.TokenStorage());
     gh.lazySingleton<_i297.ApiKeyService>(() => _i297.ApiKeyService());
     gh.lazySingleton<_i962.PdfReportService>(() => _i962.PdfReportService());

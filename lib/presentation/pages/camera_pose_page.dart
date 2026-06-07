@@ -1,4 +1,3 @@
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,12 +8,11 @@ import 'package:poseweave/presentation/bloc/pose_bloc.dart';
 import 'package:poseweave/presentation/bloc/pose_event.dart';
 import 'package:poseweave/presentation/bloc/pose_state.dart';
 import 'package:poseweave/presentation/widgets/body_region_legend.dart';
+import 'package:poseweave/presentation/widgets/camera_pose_view.dart';
 import 'package:poseweave/presentation/widgets/confidence_indicator.dart';
-import 'package:poseweave/presentation/widgets/detection_debug_hud.dart';
 import 'package:poseweave/presentation/widgets/loading_overlay.dart';
 import 'package:poseweave/presentation/widgets/no_person_banner.dart';
 import 'package:poseweave/presentation/widgets/permission_rationale_dialog.dart';
-import 'package:poseweave/presentation/widgets/pose_overlay_painter.dart';
 import 'package:poseweave/presentation/widgets/pose_results_view.dart';
 
 /// Full-screen live camera with the skeleton overlay and HUD controls, plus a
@@ -74,15 +72,7 @@ class _CameraView extends StatelessWidget {
           return Stack(
             fit: StackFit.expand,
             children: <Widget>[
-              _Background(bloc: bloc),
-              if (state is PoseActive)
-                CustomPaint(
-                  painter: PoseOverlayPainter(
-                    landmarks: state.pose.landmarks,
-                    imageSize: state.pose.imageSize ?? const Size(1, 1),
-                    mirror: bloc.lensDirection == CameraLensDirection.front,
-                  ),
-                ),
+              CameraPoseView(bloc: bloc, state: state),
               if (state is PoseSearching) const NoPersonBanner(),
               const _HudCorners(),
               SafeArea(
@@ -109,9 +99,7 @@ class _CameraView extends StatelessWidget {
                   padding: EdgeInsets.only(right: 8),
                   child: BodyRegionLegend(),
                 ),
-              ),
-              DetectionDebugHud(diagnostics: bloc.detectionDiagnostics),
-              if (state is PoseLoading)
+              ),              if (state is PoseLoading)
                 const LoadingOverlay(message: 'Initializing camera…'),
             ],
           );
@@ -121,30 +109,6 @@ class _CameraView extends StatelessWidget {
   }
 }
 
-class _Background extends StatelessWidget {
-  const _Background({required this.bloc});
-  final PoseBloc bloc;
-
-  @override
-  Widget build(BuildContext context) {
-    final CameraController? controller = bloc.cameraController;
-    if (controller != null && controller.value.isInitialized) {
-      return Center(child: CameraPreview(controller));
-    }
-    return ColoredBox(
-      color: AppColors.surfaceContainerLowest,
-      child:
-          bloc.isMockMode
-              ? Center(
-                child: Text(
-                  'MOCK MODE',
-                  style: AppTheme.labelCaps(color: AppColors.outline),
-                ),
-              )
-              : null,
-    );
-  }
-}
 
 class _TopBar extends StatelessWidget {
   const _TopBar({required this.confidence, required this.fps});
@@ -220,7 +184,8 @@ class _Controls extends StatelessWidget {
           if (recording) const SizedBox(height: 8),
           FilledButton.icon(
             style: FilledButton.styleFrom(
-              backgroundColor: detecting ? AppColors.error : AppColors.primary,
+              backgroundColor:
+                  detecting ? AppColors.error : AppColors.primaryContainer,
               foregroundColor:
                   detecting ? AppColors.onError : AppColors.onPrimary,
               padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 14),

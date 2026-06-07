@@ -7,7 +7,8 @@ plugins {
 
 android {
     namespace = "com.poseweave.poseweave"
-    compileSdk = flutter.compileSdkVersion
+    // image_cropper requires compileSdk 36 (backward compatible with our minSdk).
+    compileSdk = 36
     // All native plugins (camera, ML Kit, etc.) require NDK 27; pin it so the
     // build doesn't fall back to Flutter's older default and warn.
     ndkVersion = "27.0.12077973"

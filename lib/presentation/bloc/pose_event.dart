@@ -37,6 +37,10 @@ class PoseEvent with _$PoseEvent {
   /// Open the gallery picker, then analyze the chosen video.
   const factory PoseEvent.pickAndAnalyzeVideo() = PickAndAnalyzeVideo;
 
+  /// Open the gallery picker for a video to **trim** before analyzing (the UI
+  /// then pushes a trim screen and dispatches [AnalyzeVideoFile] on the result).
+  const factory PoseEvent.pickVideoForTrim() = PickVideoForTrim;
+
   /// Analyze a specific video file path.
   const factory PoseEvent.analyzeVideoFile(String filePath) = AnalyzeVideoFile;
 

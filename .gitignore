@@ -3,7 +3,14 @@
 *.log
 *.pyc
 *.swp
+
+# macOS artifacts (resource forks, Finder metadata, archive cruft).
 .DS_Store
+._*
+__MACOSX/
+.AppleDouble
+.Spotlight-V100
+.Trashes
 
 # Secrets — local API keys (Gemini, etc.). Commit .env.example, never .env.
 .env
@@ -46,3 +53,6 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# FVM Version Cache
+.fvm/

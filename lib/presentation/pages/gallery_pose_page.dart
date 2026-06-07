@@ -6,6 +6,7 @@ import 'package:poseweave/injection.dart';
 import 'package:poseweave/presentation/bloc/pose_bloc.dart';
 import 'package:poseweave/presentation/bloc/pose_event.dart';
 import 'package:poseweave/presentation/bloc/pose_state.dart';
+import 'package:poseweave/presentation/pages/video_trim_page.dart';
 import 'package:poseweave/presentation/widgets/app_top_bar.dart';
 import 'package:poseweave/presentation/widgets/glass_panel.dart';
 import 'package:poseweave/presentation/widgets/pose_results_view.dart';
@@ -34,10 +35,28 @@ class _GalleryView extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(20),
-          child: BlocBuilder<PoseBloc, PoseState>(
+          child: BlocConsumer<PoseBloc, PoseState>(
+            listener: (BuildContext context, PoseState state) async {
+              if (state is PoseVideoPicked) {
+                // Push the trim screen; analyze the trimmed file it returns.
+                final String? trimmed = await Navigator.of(context).push<String>(
+                  MaterialPageRoute<String>(
+                    builder: (_) => VideoTrimPage(sourcePath: state.path),
+                  ),
+                );
+                if (trimmed != null && context.mounted) {
+                  context
+                      .read<PoseBloc>()
+                      .add(PoseEvent.analyzeVideoFile(trimmed));
+                }
+              }
+            },
             builder: (BuildContext context, PoseState state) {
               if (state is PoseVideoProcessing) {
                 return _Processing(state: state);
+              }
+              if (state is PoseVideoPicked) {
+                return const Center(child: CircularProgressIndicator());
               }
               if (state is PoseVideoComplete) {
                 return PoseResultsView(
@@ -70,37 +89,49 @@ class _UploadZone extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: GestureDetector(
-        onTap:
-            () => context.read<PoseBloc>().add(
-              const PoseEvent.pickAndAnalyzeVideo(),
-            ),
-        child: GlassPanel(
-          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 48),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              const Icon(
-                Icons.movie_outlined,
-                color: AppColors.primary,
-                size: 48,
-              ),
-              const SizedBox(height: 16),
-              Text(
-                'Tap to select a video',
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
-              const SizedBox(height: 8),
-              Text(
-                'Frames are sampled and analyzed on-device',
-                style: AppTheme.mono(
-                  color: AppColors.onSurfaceVariant,
-                  fontSize: 12,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          GestureDetector(
+            onTap: () => context.read<PoseBloc>().add(
+                  const PoseEvent.pickAndAnalyzeVideo(),
                 ),
+            child: GlassPanel(
+              padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 48),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  const Icon(
+                    Icons.movie_outlined,
+                    color: AppColors.primary,
+                    size: 48,
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    'Tap to select a video',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    'Frames are sampled and analyzed on-device',
+                    style: AppTheme.mono(
+                      color: AppColors.onSurfaceVariant,
+                      fontSize: 12,
+                    ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
+          const SizedBox(height: 16),
+          OutlinedButton.icon(
+            onPressed: () => context.read<PoseBloc>().add(
+                  const PoseEvent.pickVideoForTrim(),
+                ),
+            icon: const Icon(Icons.content_cut),
+            label: const Text('TRIM FIRST, THEN ANALYZE'),
+          ),
+        ],
       ),
     );
   }
@@ -163,7 +194,7 @@ class _ErrorView extends StatelessWidget {
           const SizedBox(height: 16),
           FilledButton(
             style: FilledButton.styleFrom(
-              backgroundColor: AppColors.primary,
+              backgroundColor: AppColors.primaryContainer,
               foregroundColor: AppColors.onPrimary,
             ),
             onPressed:

@@ -21,33 +21,36 @@ class RadialGauge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final double fraction = (valueDeg / maxDeg).clamp(0.0, 1.0);
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        SizedBox(
-          width: 64,
-          height: 64,
-          child: Stack(
-            alignment: Alignment.center,
-            children: <Widget>[
-              CustomPaint(
-                size: const Size(64, 64),
-                painter: _GaugePainter(fraction),
-              ),
-              Text(
-                '${valueDeg.round()}°',
-                style: AppTheme.mono(
-                  fontSize: 14,
-                  color: AppColors.primary,
-                  weight: FontWeight.w700,
+    return Semantics(
+      label: '$label ${valueDeg.round()} degrees',
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          SizedBox(
+            width: 64,
+            height: 64,
+            child: Stack(
+              alignment: Alignment.center,
+              children: <Widget>[
+                CustomPaint(
+                  size: const Size(64, 64),
+                  painter: _GaugePainter(fraction),
                 ),
-              ),
-            ],
+                Text(
+                  '${valueDeg.round()}°',
+                  style: AppTheme.mono(
+                    fontSize: 14,
+                    color: AppColors.primary,
+                    weight: FontWeight.w700,
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
-        const SizedBox(height: 6),
-        Text(label, style: AppTheme.labelCaps(fontSize: 10)),
-      ],
+          const SizedBox(height: 6),
+          Text(label, style: AppTheme.labelCaps(fontSize: 10)),
+        ],
+      ),
     );
   }
 }

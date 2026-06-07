@@ -3,6 +3,7 @@ import 'package:poseweave/core/constants/app_colors.dart';
 import 'package:poseweave/core/constants/app_theme.dart';
 import 'package:poseweave/core/utils/segment_aggregator.dart';
 import 'package:poseweave/presentation/widgets/glass_panel.dart';
+import 'package:poseweave/presentation/widgets/metric_row.dart';
 
 /// Per-segment range-of-motion table (avg / max / classification) from a pose
 /// sequence's [SegmentSummary] map.
@@ -45,16 +46,14 @@ class RomTable extends StatelessWidget {
     bool header = false,
     bool risk = false,
   }) {
-    final Color color = header
-        ? AppColors.onSurfaceVariant
-        : (risk ? AppColors.error : AppColors.onSurface);
-    final TextStyle style = AppTheme.mono(fontSize: 12, color: color);
-    return Row(
-      children: <Widget>[
-        Expanded(flex: 4, child: Text(a, style: style)),
-        Expanded(flex: 2, child: Text(b, style: style)),
-        Expanded(flex: 2, child: Text(c, style: style)),
-        Expanded(flex: 3, child: Text(d, style: style, textAlign: TextAlign.right)),
+    return MetricRow(
+      header: header,
+      risk: risk,
+      cells: <MetricCell>[
+        MetricCell(a, flex: 4),
+        MetricCell(b, flex: 2),
+        MetricCell(c, flex: 2),
+        MetricCell(d, flex: 3, align: TextAlign.right),
       ],
     );
   }

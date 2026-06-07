@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:poseweave/core/constants/app_colors.dart';
 import 'package:poseweave/core/constants/app_theme.dart';
 import 'package:poseweave/domain/entities/landmark_entity.dart';
+import 'package:poseweave/presentation/widgets/metric_row.dart';
 
 /// Clinical-style landmark depth table: relative depth (mm, **uncalibrated** —
 /// derived from ML Kit Z), a neutral reference, and the deviation. Low-
@@ -73,16 +74,14 @@ class LandmarkMetricsTable extends StatelessWidget {
     bool header = false,
     bool risk = false,
   }) {
-    final Color color = header
-        ? AppColors.onSurfaceVariant
-        : (risk ? AppColors.error : AppColors.onSurface);
-    final TextStyle style = AppTheme.mono(fontSize: 12, color: color);
-    return Row(
-      children: <Widget>[
-        Expanded(flex: 5, child: Text(a, style: style)),
-        Expanded(flex: 3, child: Text(b, style: style, textAlign: TextAlign.right)),
-        Expanded(flex: 2, child: Text(c, style: style, textAlign: TextAlign.right)),
-        Expanded(flex: 2, child: Text(d, style: style, textAlign: TextAlign.right)),
+    return MetricRow(
+      header: header,
+      risk: risk,
+      cells: <MetricCell>[
+        MetricCell(a, flex: 5),
+        MetricCell(b, flex: 3, align: TextAlign.right),
+        MetricCell(c, flex: 2, align: TextAlign.right),
+        MetricCell(d, flex: 2, align: TextAlign.right),
       ],
     );
   }

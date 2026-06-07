@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:poseweave/core/constants/app_colors.dart';
-import 'package:poseweave/core/constants/app_theme.dart';
+import 'package:poseweave/core/constants/app_spacing.dart';
 import 'package:poseweave/domain/entities/landmark_entity.dart';
+import 'package:poseweave/presentation/widgets/metric_row.dart';
 
 /// Scrollable list of the 33 landmarks with their normalized X/Y/Z and a
 /// confidence dot (cyan, or error-red when below the visibility threshold).
@@ -30,34 +31,30 @@ class _LandmarkRow extends StatelessWidget {
     final bool low = landmark.confidence < 0.5;
     final Color dotColor = low ? AppColors.error : AppColors.primaryContainer;
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-      child: Row(
-        children: <Widget>[
-          Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.md,
+        vertical: AppSpacing.sm - 2,
+      ),
+      child: MetricRow(
+        fontSize: 11,
+        leading: Semantics(
+          label: low ? 'Low confidence landmark' : 'Tracked landmark',
+          child: Container(
             width: 8,
             height: 8,
-            decoration: BoxDecoration(color: dotColor, shape: BoxShape.circle),
+            decoration:
+                BoxDecoration(color: dotColor, shape: BoxShape.circle),
           ),
-          const SizedBox(width: 10),
-          Expanded(
-            flex: 4,
-            child: Text(
-              landmark.type.name,
-              style: AppTheme.mono(fontSize: 12, color: AppColors.onSurface),
-            ),
-          ),
-          Expanded(
+        ),
+        cells: <MetricCell>[
+          MetricCell(landmark.type.name, flex: 4, color: AppColors.onSurface),
+          MetricCell(
+            'X ${landmark.x.toStringAsFixed(3)}  '
+            'Y ${landmark.y.toStringAsFixed(3)}  '
+            'Z ${(landmark.z ?? 0).toStringAsFixed(3)}',
             flex: 6,
-            child: Text(
-              'X ${landmark.x.toStringAsFixed(3)}  '
-              'Y ${landmark.y.toStringAsFixed(3)}  '
-              'Z ${(landmark.z ?? 0).toStringAsFixed(3)}',
-              textAlign: TextAlign.right,
-              style: AppTheme.mono(
-                fontSize: 11,
-                color: low ? AppColors.error : AppColors.onSurfaceVariant,
-              ),
-            ),
+            align: TextAlign.right,
+            color: low ? AppColors.error : AppColors.onSurfaceVariant,
           ),
         ],
       ),

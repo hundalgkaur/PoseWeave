@@ -8,6 +8,9 @@ import 'package:poseweave/core/constants/app_colors.dart';
 import 'package:poseweave/core/constants/app_theme.dart';
 import 'package:poseweave/core/errors/failures.dart';
 import 'package:poseweave/core/utils/gait_analyzer.dart';
+import 'package:poseweave/core/utils/segment_aggregator.dart';
+import 'package:poseweave/data/models/report_data.dart';
+import 'package:poseweave/data/services/pdf_report_service.dart';
 import 'package:poseweave/domain/entities/pose_entity.dart';
 import 'package:poseweave/domain/repositories/pose_repository.dart';
 import 'package:poseweave/injection.dart';
@@ -106,6 +109,30 @@ class _PoseResultsViewState extends State<PoseResultsView> {
         ];
         Share.shareXFiles(files, subject: 'PoseWeave export');
       },
+    );
+  }
+
+  /// Generates a PDF report for any analyzed clip (metrics + segment summary +
+  /// frame snapshots) and opens the share sheet — not just gait videos.
+  Future<void> _exportPdf() async {
+    final ScaffoldMessengerState messenger = ScaffoldMessenger.of(context);
+    final Either<Failure, String> result =
+        await getIt<PdfReportService>().generateReport(
+      ReportData(
+        generatedAt: DateTime.now(),
+        exerciseType: 'Pose session',
+        gait: GaitAnalyzer.analyze(widget.poses),
+        segments: SegmentAggregator.summarize(widget.poses),
+        framePaths: widget.framePaths,
+      ),
+    );
+    if (!mounted) return;
+    result.fold(
+      (Failure f) => messenger.showSnackBar(
+        SnackBar(content: Text(f.message), backgroundColor: AppColors.error),
+      ),
+      (String path) =>
+          Share.shareXFiles(<XFile>[XFile(path)], subject: 'PoseWeave report'),
     );
   }
 
@@ -221,6 +248,15 @@ class _PoseResultsViewState extends State<PoseResultsView> {
             if (widget.videoPath != null)
               Text('+ VIDEO', style: AppTheme.labelCaps(fontSize: 10)),
             IconButton(
+              tooltip: 'Export PDF report',
+              icon: const Icon(
+                Icons.picture_as_pdf,
+                color: AppColors.primary,
+                size: 20,
+              ),
+              onPressed: _exportPdf,
+            ),
+            IconButton(
               tooltip:
                   'Export ${widget.poses.length} poses as JSON'
                   '${widget.videoPath != null ? ' + video' : ''}',
@@ -250,7 +286,7 @@ class _PoseResultsViewState extends State<PoseResultsView> {
 
   Widget _restartButton() => FilledButton(
     style: FilledButton.styleFrom(
-      backgroundColor: AppColors.primary,
+      backgroundColor: AppColors.primaryContainer,
       foregroundColor: AppColors.onPrimary,
     ),
     onPressed: widget.onRestart,
