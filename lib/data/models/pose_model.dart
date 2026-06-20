@@ -10,7 +10,7 @@ import 'package:poseweave/domain/entities/pose_entity.dart';
 part 'pose_model.freezed.dart';
 part 'pose_model.g.dart';
 
-/// Serializable data-layer counterpart of [PoseEntity].
+/// Serializable data-layer counterport of [PoseEntity].
 ///
 /// The frame size is stored as width/height (not `Size`, which isn't JSON
 /// serializable) and rebuilt in [toEntity].
